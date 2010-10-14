@@ -6,6 +6,15 @@ in the filesystem. If the child-process exits due to an error, the supervisor wa
 modification before it attempts to re-spawn it. The output written to stderr is captured and 
 scanned for stack-traces. If an error is detected it is displayed as Growl notification.
 
+Installation
+============
+
+The node-dev supervisor can be installed via [npm](http://github.com/isaacs/npm):
+
+    npm install node-dev
+
+This will add the `node-dev` executable to your PATH.
+
 Usage
 =====
 
