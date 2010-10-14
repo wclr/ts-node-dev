@@ -1,0 +1,19 @@
+{
+	name: "node-dev",
+	homepage: "http://github.com/fgnass/node-dev",
+	author: {
+		name: "Felix Gnass",
+		url: "http://fgnass.posterous.com"
+	},
+	bin: {
+		"node-dev": "./node-dev"
+	},
+	main: "./node-dev",
+	repository: {
+		"type": "git",
+		"url" : "http://github.com/fgnass/node-dev.git"
+	},
+	description: "Node.js supervisor with Growl notifications",
+	keywords: ["supervisor", "restart", "reload", "auto-reload"],
+	version: "0.0.1"
+}
