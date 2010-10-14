@@ -3,6 +3,7 @@
 	homepage: "http://github.com/fgnass/node-dev",
 	author: {
 		name: "Felix Gnass",
+		email: "felix.gnass@neteye.de"
 		url: "http://fgnass.posterous.com"
 	},
 	bin: {
@@ -15,5 +16,5 @@
 	},
 	description: "Node.js supervisor with Growl notifications",
 	keywords: ["supervisor", "restart", "reload", "auto-reload"],
-	version: "0.0.1"
+	version: "0.0.2"
 }
