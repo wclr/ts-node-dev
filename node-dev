@@ -43,7 +43,6 @@ function start(title, msg) {
 	server.stderr.addListener('data', function(data) {
 		var s = data.toString(), stack, src, m, file, line, col;
 		
-		sys.print(data);
 		error += s;
 		
 		stack = s.match(/^(.+): (.*)\n\s+at.+\((.*?):(\d+):(\d+)/m);
@@ -70,6 +69,7 @@ function start(title, msg) {
 			notify(stack[2] + '\n  @' + file + ',' + line + ':' + col, stack[1], 'error');
 			error = '';
 		}
+		sys.print(data);
 	});
 
 }
@@ -80,7 +80,7 @@ function start(title, msg) {
 function watchFiles() {
 	files.forEach(fs.unwatchFile);
 	files = [];
-	walk(__dirname, function(file) {
+	walk(process.cwd(), function(file) {
 		files.push(file);
 		fs.watchFile(file, {interval : 500}, function(curr, prev) {
 			if (curr.mtime.valueOf() != prev.mtime.valueOf() || curr.ctime.valueOf() != prev.ctime.valueOf()) {
@@ -120,7 +120,7 @@ function walk(filename, callback) {
 */
 function notify(msg, title, level) {
 	level = level || 'info';
-	log(title, msg, level);
+	log(title || msg, level);
 	child_process.spawn('growlnotify', [
 		'-m', msg,
 		'--image', __dirname + '/icons/node_' + level + '.png',
@@ -131,11 +131,8 @@ function notify(msg, title, level) {
  * Logs a message to the console. The level is displayed in ANSI colors,
  * either bright red in case of an error or green otherwise.
  */
-function log(title, msg, level) {
+function log(msg, level) {
 	var csi = level == 'error' ? '1;31' : '32';
-	if (title) {
-		msg = title + ': ' + msg;
-	}
 	sys.log('[\x1B[' + csi + 'm' + level.toUpperCase() + '\x1B[0m] ' + msg);
 }
 
