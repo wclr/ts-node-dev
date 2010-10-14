@@ -1,10 +1,10 @@
 About
 =====
 
-Node.js supervisor that spawns a node child-process and restarts it when changes are detected 
-in the filesystem. If the child-process exits due to an error, the supervisor waits for another
+Node-dev is a supervisor for Node.js that spawns a node child-process and restarts it when changes are
+detected in the filesystem. If the child-process exits due to an error, the supervisor waits for another
 modification before it attempts to re-spawn it. The output written to stderr is captured and 
-scanned for stack-traces. If an error is detected it is displayed as Growl notification.
+scanned for stack-traces. If an error is detected it is displayed as [Growl notification](http://growl.info/about.php).
 
 Installation
 ============
@@ -14,6 +14,8 @@ The node-dev supervisor can be installed via [npm](http://github.com/isaacs/npm)
     npm install node-dev
 
 This will add the `node-dev` executable to your PATH.
+
+In order to use Growl notifications [growlnotify](http://growl.info/extras.php#growlnotify) (form the Extras folder on the Growl disk image) must be installed on your system.
 
 Usage
 =====
