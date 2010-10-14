@@ -3,7 +3,7 @@
 	homepage: "http://github.com/fgnass/node-dev",
 	author: {
 		name: "Felix Gnass",
-		email: "felix.gnass@neteye.de"
+		email: "felix.gnass@neteye.de",
 		url: "http://fgnass.posterous.com"
 	},
 	bin: {
