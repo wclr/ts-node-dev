@@ -51,9 +51,10 @@ function watchFiles() {
 							start('Restarting', 'File modified: ' + file);
 				        }
 					});
-					server.kill();
+					server.kill('SIGHUP');
 				}
 				else {
+					// Server not running, attempt to start it
 					start();
 				}
 			}
