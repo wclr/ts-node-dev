@@ -46,7 +46,7 @@ function watchFiles() {
 		fs.watchFile(file, {interval : 500}, function(curr, prev) {
 			if (curr.mtime.valueOf() != prev.mtime.valueOf() || curr.ctime.valueOf() != prev.ctime.valueOf()) {
 				if (server) {
-					server.addListener('exit', function (code, signal) {
+					server.on('exit', function (code, signal) {
 						if (signal) {
 							start('Restarting', 'File modified: ' + file);
 				        }
@@ -79,7 +79,7 @@ function setTitle(s) {
 }
 
 // Reset title on exit
-process.addListener('SIGINT', function() {
+process.on('SIGINT', function() {
 	setTitle('');
 	process.exit(0);
 });
@@ -108,12 +108,12 @@ function start(title, msg) {
     server = child_process.spawn(cmd, args, {customFds: [-1, 1, -1]});
 	notify(msg || 'Started', title);
 
-	server.addListener('exit', function (code, signal) {
+	server.on('exit', function (code, signal) {
 		server = null;
 	});
 	
 	// Data sent to stderr is scanned for stack-traces ...
-	server.stderr.addListener('data', function(data) {
+	server.stderr.on('data', function(data) {
 		var s = data.toString(), stack, src, m, file, line, col;
 		
 		error += s;
