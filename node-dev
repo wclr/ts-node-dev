@@ -21,6 +21,83 @@ var fs = require('fs'),
 
 args.shift();
 
+function walk(filename, callback) {
+    var stats = fs.statSync(filename);
+	if(stats.isFile() && filename.match(/\.js$/)) {
+	    callback(filename);
+	}
+	else if(stats.isDirectory()) {
+	    fs.readdir(filename, function(err, files) {
+	        files.forEach(function(f) {
+	            walk(fs.realpathSync(filename + '/' + f), callback);
+	        });
+	    });
+	}
+}
+
+/**
+ * Watches all .js files and restarts the server if a modification is detected.
+ */
+function watchFiles() {
+	files.forEach(fs.unwatchFile);
+	files = [];
+	walk(process.cwd(), function(file) {
+		files.push(file);
+		fs.watchFile(file, {interval : 500}, function(curr, prev) {
+			if (curr.mtime.valueOf() != prev.mtime.valueOf() || curr.ctime.valueOf() != prev.ctime.valueOf()) {
+				if (server) {
+					server.addListener('exit', function (code, signal) {
+						if (signal) {
+							start('Restarting', 'File modified: ' + file);
+				        }
+					});
+					server.kill();
+				}
+				else {
+					start();
+				}
+			}
+		});
+	});
+}
+
+/**
+ * Logs a message to the console. The level is displayed in ANSI colors,
+ * either bright red in case of an error or green otherwise.
+ */
+function log(msg, level) {
+	var csi = level == 'error' ? '1;31' : '32';
+	sys.log('[\x1B[' + csi + 'm' + level.toUpperCase() + '\x1B[0m] ' + msg);
+}
+
+/**
+ * Sets the terminal title.
+ */
+function setTitle(s) {
+	sys.print('\033]0;' + s + '\007');
+}
+
+// Reset title on exit
+process.addListener('SIGINT', function() {
+	setTitle('');
+	process.exit(0);
+});
+
+/**
+ * Displays a message as Growl notification.
+ * Requires http://growl.info/extras.php#growlnotify
+*/
+function notify(msg, title, level) {
+	level = level || 'info';
+	log(title || msg, level);
+	child_process.spawn('growlnotify', [
+		'-m', msg,
+		'--image', __dirname + '/icons/node_' + level + '.png',
+		title || 'node.js']);
+		
+	setTitle('node-dev');
+}
+
 /**
  * Spawns a node child-process.
  */
@@ -71,69 +148,6 @@ function start(title, msg) {
 		}
 		sys.print(data);
 	});
-
-}
-
-/**
- * Watches all .js files and restarts the server if a modification is detected.
- */
-function watchFiles() {
-	files.forEach(fs.unwatchFile);
-	files = [];
-	walk(process.cwd(), function(file) {
-		files.push(file);
-		fs.watchFile(file, {interval : 500}, function(curr, prev) {
-			if (curr.mtime.valueOf() != prev.mtime.valueOf() || curr.ctime.valueOf() != prev.ctime.valueOf()) {
-				if (server) {
-					server.addListener('exit', function (code, signal) {
-						if (signal) {
-							start('Restarting', 'File modified: ' + file);
-				        }
-					});
-					server.kill();
-				}
-				else {
-					start();
-				}
-			}
-		});
-	});
-}
-
-function walk(filename, callback) {
-    var stats = fs.statSync(filename);
-	if(stats.isFile() && filename.match(/\.js$/)) {
-	    callback(filename);
-	} 
-	else if(stats.isDirectory()) {
-	    fs.readdir(filename, function(err, files) {
-	        files.forEach(function(f) {
-	            walk(fs.realpathSync(filename + '/' + f), callback);
-	        });
-	    });
-	}
-}
-
-/**
- * Displays a message as Growl notification.
- * Requires http://growl.info/extras.php#growlnotify
-*/
-function notify(msg, title, level) {
-	level = level || 'info';
-	log(title || msg, level);
-	child_process.spawn('growlnotify', [
-		'-m', msg,
-		'--image', __dirname + '/icons/node_' + level + '.png',
-		title || 'node.js']);
-}
-
-/**
- * Logs a message to the console. The level is displayed in ANSI colors,
- * either bright red in case of an error or green otherwise.
- */
-function log(msg, level) {
-	var csi = level == 'error' ? '1;31' : '32';
-	sys.log('[\x1B[' + csi + 'm' + level.toUpperCase() + '\x1B[0m] ' + msg);
 }
 
 if (args.length > 0) {
