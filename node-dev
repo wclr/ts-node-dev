@@ -104,18 +104,13 @@ function notify(msg, title, level) {
 function start(title, msg) {
 	watchFiles();
 	
-    server = child_process.spawn(cmd, args);
+    server = child_process.spawn(cmd, args, {customFds: [-1, 1, -1]});
 	notify(msg || 'Started', title);
 
 	server.addListener('exit', function (code, signal) {
 		server = null;
 	});
 	
-	// Print data written to stdout
-	server.stdout.addListener('data', function(data) {
-		process.stdout.write(data);
-	});
-
 	// Data sent to stderr is scanned for stack-traces ...
 	server.stderr.addListener('data', function(data) {
 		var s = data.toString(), stack, src, m, file, line, col;
