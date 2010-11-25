@@ -22,16 +22,20 @@ var fs = require('fs'),
 args.shift();
 
 function walk(filename, callback) {
-    var stats = fs.statSync(filename);
+	var stats = fs.statSync(filename);
 	if(stats.isFile() && filename.match(/\.js$/)) {
-	    callback(filename);
+		callback(filename);
 	}
 	else if(stats.isDirectory()) {
-	    fs.readdir(filename, function(err, files) {
-	        files.forEach(function(f) {
-	            walk(fs.realpathSync(filename + '/' + f), callback);
-	        });
-	    });
+		fs.readdir(filename, function(err, files) {
+			files.forEach(function(f) {
+				fs.realpath(filename + '/' + f, function(err, path) {
+					if (!err) {
+						walk(path, callback);
+					}
+				});
+			});
+		});
 	}
 }
 
