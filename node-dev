@@ -85,6 +85,7 @@ function setTitle(s) {
 // Reset title on exit
 process.on('SIGINT', function() {
 	setTitle('');
+	server.kill('SIGHUP');
 	process.exit(0);
 });
 
