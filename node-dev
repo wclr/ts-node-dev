@@ -117,6 +117,9 @@ function start(title, msg) {
 		server = null;
 	});
 
+  // pump stdin to child-process
+  sys.pump(process.openStdin(), server.stdin);
+
 	// Data sent to stderr is scanned for stack-traces ...
 	server.stderr.on('data', function(data) {
 		var s = data.toString(), stack, src, m, file, line, col;
