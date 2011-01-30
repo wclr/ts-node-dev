@@ -104,6 +104,15 @@ function notify(msg, title, level) {
 	setTitle('node-dev');
 }
 
+// pump stdin to child-process
+var stdin = process.openStdin();
+stdin.on('data', function(chunk){
+  if (server){
+    server.stdin.write(chunk);
+  }
+});
+
+
 /**
  * Spawns a node child-process.
  */
@@ -116,9 +125,6 @@ function start(title, msg) {
 	server.on('exit', function (code, signal) {
 		server = null;
 	});
-
-  // pump stdin to child-process
-  sys.pump(process.openStdin(), server.stdin);
 
 	// Data sent to stderr is scanned for stack-traces ...
 	server.stderr.on('data', function(data) {
