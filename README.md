@@ -6,7 +6,7 @@ detected in the filesystem. If the child-process exits due to an error, the supe
 modification before it attempts to re-spawn it. The output written to stderr is captured and 
 scanned for stack-traces. If an error is detected it is displayed as [Growl notification](http://growl.info/about.php).
 
-![Screenshot](http://posterous.com/getfile/files.posterous.com/temp-2010-10-11/ewzojubvHbeGggHnwnGahtqHCGeIcIGyivdDptgotIbqyIjjcFejGlgblJHE/screenshot.png)
+![Screenshot](http://cloud.github.com/downloads/fgnass/fgnass.github.com/node-dev.png)
 
 Installation
 ============
