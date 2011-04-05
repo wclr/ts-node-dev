@@ -1,18 +1,17 @@
 About
 =====
 
-Node-dev is a supervisor for Node.js that automatically restarts the node process when a script is modified.
+Node-dev is a supervisor for Node.js that automatically restarts the node process when a script is modified. Status and error messages are displayed as [Growl notifications](http://growl.info/about.php).
 
-The output written to stderr is captured and scanned for stack-traces. If an error is detected, node-dev displays the error message as [Growl notification](http://growl.info/about.php) and waits until one of the files referenced in the stack-trace is modified again, before it tries to re-span the child-proccess.
+Node-dev hooks into the `require()` function to determine which files need to be monitored. Hence it also works with linked modules that live outside of your project directory and doesn't cause any unnecessary server restarts when client-side JavaScript files are modified. 
+
 
 ![Screenshot](http://fgnass.github.com/images/node-dev.png)
 
 Usage
 =====
 
-Use the `node-dev` binary as you would normally use `node`.
-
-All command-line arguments are passed on to the child-process: `node-dev —-debug app.js foo` will start the child-process with `--debug` and pass `foo` as first argument. Hence your app will be debugged and not the supervisor itself.
+Simply use the `node-dev` binary as you would normally use `node`.
 
 Installation
 ============
