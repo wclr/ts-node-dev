@@ -5,7 +5,7 @@ Node-dev is a supervisor for Node.js that automatically restarts the node proces
 
 The output written to stderr is captured and scanned for stack-traces. If an error is detected, node-dev displays the error message as [Growl notification](http://growl.info/about.php) and waits until one of the files referenced in the stack-trace is modified again, before it tries to re-span the child-proccess.
 
-![Screenshot](http://cloud.github.com/downloads/fgnass/fgnass.github.com/node-dev.png)
+![Screenshot](http://d24z2fz21y4fag.cloudfront.net/downloads/fgnass/fgnass.github.com/node-dev.png)
 
 Usage
 =====
