@@ -7,19 +7,12 @@ The output written to stderr is captured and scanned for stack-traces. If an err
 
 ![Screenshot](http://cloud.github.com/downloads/fgnass/fgnass.github.com/node-dev.png)
 
-Important
-=========
-
-Since version 0.1.0 node-dev instruments node's `require()` function to keep track of the files to watch. This way hot-reloading also works with modules that live outside of your project's directory. Therefore you have to make your scripts _node-dev aware_ by requiring the `node-dev` module (see usage instructions below). 
-
 Usage
 =====
 
-Insert `require('node-dev')` __at the top__ of your __main script__ file. Then run your script using the `node-dev` binary (instead of `node`).
+Use the `node-dev` binary as you would normally use `node`.
 
-All command-line arguments are passed on to the child-process: `node-dev —debug app.js foo` will start the child-process with `--debug` and pass `foo` as first argument. Hence your app will be debugged and not the supervisor itself.
-
-The node-dev module does nothing, if the process was not spawned by the `node-dev` binary, hence it's safe to require it even in production environments.
+All command-line arguments are passed on to the child-process: `node-dev —-debug app.js foo` will start the child-process with `--debug` and pass `foo` as first argument. Hence your app will be debugged and not the supervisor itself.
 
 Installation
 ============

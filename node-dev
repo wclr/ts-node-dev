@@ -1,8 +1,7 @@
 #! /usr/bin/env node
 /*
  * Node.js supervisor that spawns a node child-process and restarts
- * it when the worker commits suicide. In order to work, your main
- * script must require('node-dev') before loading any other modules.
+ * it when the worker commits suicide.
  *
  * Author: Felix Gnass [fgnass at neteye dot de]
  * License: MIT
@@ -20,6 +19,13 @@ var sys = require('sys'),
   cmd = args.shift();
 
 args.shift();
+
+for (var i=0; i < args.length; i++) {
+  if (!/^-/.test(args[i])) {
+    args.splice(i, 0, __dirname + '/wrapper.js');
+    break;
+  }
+}
 
 process.stdin.on('data', function (chunk) {
   if (server) {
@@ -50,12 +56,13 @@ function notify(msg, title, level) {
   log(title || msg, level);
   child_process.spawn('growlnotify', [
     '-m', msg,
-    '--image', __dirname + '/../icons/node_' + level + '.png',
+    '--image', __dirname + '/icons/node_' + level + '.png',
     title || 'node.js']);
 }
 
 function start(title, msg) {
   /** Spawn a node child-process */
+  console.log("exec:", cmd, args);
   server = child_process.spawn(cmd, args, {customFds: [-1, 1, -1]});
   notify(msg || 'Started', title);
   server.on('exit', function (code) {

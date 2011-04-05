@@ -7,14 +7,13 @@
 		"url": "http://fgnass.posterous.com"
 	},
 	"bin": {
-		"node-dev": "./bin/node-dev"
+		"node-dev": "./node-dev"
 	},
-	"main": "./lib/index.js",
 	"repository": {
 		"type": "git",
 		"url" : "http://github.com/fgnass/node-dev.git"
 	},
 	"description": "Node.js supervisor with Growl notifications",
 	"keywords": ["supervisor", "restart", "reload", "auto-reload"],
-	"version": "0.1.0"
+	"version": "0.1.1"
 }
