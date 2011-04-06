@@ -73,7 +73,7 @@ function start(title, msg) {
       /** Worker exited due to an error */
       files.forEach(function(file) {
         fs.watchFile(file, function(cur, prev) {
-          if (+cur.mtime !== +prev.mtime) {
+          if (files && +cur.mtime !== +prev.mtime) {
             /** Stop watching the files */
             files.forEach(function(file) {
               fs.unwatchFile(file);
