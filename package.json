@@ -15,5 +15,5 @@
 	},
 	"description": "Node.js supervisor with Growl notifications",
 	"keywords": ["supervisor", "restart", "reload", "auto-reload"],
-	"version": "0.1.1"
+	"version": "0.1.2"
 }
