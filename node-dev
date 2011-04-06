@@ -62,7 +62,6 @@ function notify(msg, title, level) {
 
 function start(title, msg) {
   /** Spawn a node child-process */
-  console.log("exec:", cmd, args);
   server = child_process.spawn(cmd, args, {customFds: [-1, 1, -1]});
   notify(msg || 'Started', title);
   server.on('exit', function (code) {
