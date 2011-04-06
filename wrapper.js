@@ -23,9 +23,14 @@ function watch(module) {
   }
 }
 
-//['node', '/pathto/wrapper.js', '--option1', '--optionN', 'script', 'arg1', 'argN']
+/**
+ * This is how the argv array looks like:
+ * `['node', '/path/to/wrapper.js', '--option1', '--optionN', 'script', 'arg1', 'argN']`
+ * ... so we remove ourself:
+ */
 process.argv.splice(1, 1);
 
+/** Find the first arg that is not an option, starting at index 1 */
 var arg;
 for (var i=1; i < process.argv.length; i++) {
   arg = process.argv[i];
@@ -33,11 +38,11 @@ for (var i=1; i < process.argv.length; i++) {
     break;
   }
 }
+
+/** Resolve the location of the main script relative to cwd */
 var main = Path.resolve(process.cwd(), arg);
 
-/**
- * Hook into `require`.
- */
+/** Hook into `require()` */
 var requireJs = require.extensions['.js'];
 require.extensions['.js'] = function(module, filename) {
   if (module.id == main) {
@@ -48,4 +53,5 @@ require.extensions['.js'] = function(module, filename) {
   requireJs(module, filename);
 };
 
+/** Load the wrapped script */
 require(main);
