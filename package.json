@@ -13,7 +13,7 @@
 		"type": "git",
 		"url" : "http://github.com/fgnass/node-dev.git"
 	},
-	"description": "Node.js supervisor with Growl notifications",
+	"description": "Node.js supervisor with desktop notifications",
 	"keywords": ["supervisor", "restart", "reload", "auto-reload"],
-	"version": "0.1.3"
+	"version": "0.1.4"
 }

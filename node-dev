@@ -48,16 +48,16 @@ function log(msg, level) {
 }
 
 /**
- * Displays a message as Growl notification.
- * Requires http://growl.info/extras.php#growlnotify
+ * Displays a desktop notification
  */
 function notify(msg, title, level) {
   level = level || 'info';
   log(title || msg, level);
-  child_process.spawn('growlnotify', [
-    '-m', msg,
-    '--image', __dirname + '/icons/node_' + level + '.png',
-    title || 'node.js']);
+  child_process.spawn(__dirname + '/notify.sh', [
+    title || 'node.js',
+    msg,
+    __dirname + '/icons/node_' + level + '.png'
+  ]);
 }
 
 function start(title, msg) {
