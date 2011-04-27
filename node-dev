@@ -71,6 +71,7 @@ function start(title, msg) {
       start('Restarting', 'Restarting');
     }
     else if (files) {
+			console.log(util.inspect(files));
       /** Worker exited due to an error */
       files.forEach(function(file) {
         fs.watchFile(file, function(cur, prev) {
@@ -94,7 +95,7 @@ function start(title, msg) {
 
     error += s;
 
-    stack = s.match(/^(.+): (.*)\n\s+at.+\((.*?):(\d+):(\d+)/m);
+    stack = s.match(/^(.+): (.*)\n\s+at\s?.+?\s\(?(.*?):(\d+):(\d+)/m);
     if (stack) {
 
       // file:line
@@ -119,7 +120,9 @@ function start(title, msg) {
       /** Extract all file paths from the stack-trace */
       files = [];
       (error.match(/\(\/.*?:\d+:\d+\)/mg) || []).forEach(function(line) {
-        files.push(line.match(/(\/.*?):/)[1]);
+			  // only watch files in current dir
+        if (line.indexOf(process.cwd()) >= 0)
+          files.push(line.match(/(\/.*?):/)[1]);
       });
       error = '';
     }
