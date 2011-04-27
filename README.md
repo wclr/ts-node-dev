@@ -1,7 +1,7 @@
 About
 =====
 
-Node-dev is a supervisor for Node.js that automatically restarts the node process when a script is modified. Status and error messages are displayed as [Growl notifications](http://growl.info/about.php).
+Node-dev is a supervisor for Node.js that automatically restarts the node process when a script is modified. Status and error messages are displayed as desktop notification using either [Growl](http://growl.info/about.php) or [libnotify](http://developer.gnome.org/libnotify/).
 
 Node-dev hooks into the `require()` function to determine which files need to be monitored. Hence it also works with linked modules that live outside of your project directory and doesn't cause any unnecessary server restarts when client-side JavaScript files are modified. 
 
