@@ -116,9 +116,12 @@ function start(title, msg) {
       notify(stack[2] + '\n  @' + file + ',' + line + ':' + col, stack[1], 'error');
 
       /** Extract all file paths from the stack-trace */
-      files = [];
+      files = [file];
       (error.match(/\(\/.*?:\d+:\d+\)/mg) || []).forEach(function(line) {
-        files.push(line.match(/(\/.*?):/)[1]);
+        file = line.match(/(\/.*?):/)[1];
+        if (!~files.indexOf(file)) {
+          files.push(file);
+        }
       });
       error = '';
     }
