@@ -23,3 +23,11 @@ The node-dev supervisor can be installed via [npm](http://github.com/isaacs/npm)
 This will add the `node-dev` executable to your PATH.
 
 In order to use Growl notifications [growlnotify](http://growl.info/extras.php#growlnotify) (form the Extras folder on the Growl disk image) must be installed on your system.
+
+
+Contributors
+============
+
+* [Ricardo Tomasi](https://github.com/ricardobeat) (CoffeeScript support)
+* [Sergey Ovechkin](https://github.com/pomeo) (libnotify support)
+* [Piotr Sokólski](https://github.com/pyetras) (stdin pumping)
