@@ -118,9 +118,7 @@ function start(title, msg) {
       /** Extract all file paths from the stack-trace */
       files = [];
       (error.match(/\(\/.*?:\d+:\d+\)/mg) || []).forEach(function(line) {
-        // only watch files in current dir
-        if (line.indexOf(process.cwd()) >= 0)
-          files.push(line.match(/(\/.*?):/)[1]);
+        files.push(line.match(/(\/.*?):/)[1]);
       });
       error = '';
     }
