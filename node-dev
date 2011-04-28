@@ -70,7 +70,6 @@ function start(title, msg) {
       start('Restarting', 'Restarting');
     }
     else if (files) {
-			console.log(util.inspect(files));
       /** Worker exited due to an error */
       files.forEach(function(file) {
         fs.watchFile(file, function(cur, prev) {
