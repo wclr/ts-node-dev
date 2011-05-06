@@ -42,21 +42,27 @@ for (var i=1; i < process.argv.length; i++) {
 /** Resolve the location of the main script relative to cwd */
 var main = Path.resolve(process.cwd(), arg);
 
-var ext = Path.extname(main);
-if (ext == '.coffee') {
+if (Path.extname(main) == '.coffee') {
   require('coffee-script');
 }
 
 /** Hook into `require()` */
-var _require = require.extensions[ext];
-require.extensions[ext] = function(module, filename) {
-  if (module.id == main) {
-    module.id = '.';
-    module.parent = null;
-  }
-  watch(module);
-  _require(module, filename);
-};
+function hookInto(ext) {
+  var extensionHandler = require.extensions[ext];
+  require.extensions[ext] = function(module, filename) {
+    if (module.id == main) {
+      module.id = '.';
+      module.parent = null;
+    }
+    watch(module);
+    extensionHandler(module, filename);
+    if (ext == '.js' && Path.basename(filename, ext) == 'coffee-script') {
+      hookInto('.coffee');
+    }
+  };
+}
+
+hookInto('.js');
 
 /** Load the wrapped script */
 require(main);
