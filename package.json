@@ -9,6 +9,7 @@
 	"bin": {
 		"node-dev": "./node-dev"
 	},
+	"preferGlobal": true,
 	"repository": {
 		"type": "git",
 		"url" : "http://github.com/fgnass/node-dev.git"
