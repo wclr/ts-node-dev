@@ -20,7 +20,7 @@ Installation
 
 The node-dev supervisor can be installed via [npm](http://github.com/isaacs/npm):
 
-    npm install -g node-dev
+    npm install node-dev
 
 This will add the `node-dev` executable to your PATH.
 
