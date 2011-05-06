@@ -8,6 +8,8 @@ Node-dev hooks into the `require()` function to determine which files need to be
 
 ![Screenshot](http://fgnass.github.com/images/node-dev.png)
 
+![Screenshot](http://fgnass.github.com/images/node-dev-linux.png)
+
 Usage
 =====
 
