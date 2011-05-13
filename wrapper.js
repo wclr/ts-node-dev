@@ -15,7 +15,7 @@ var Path = require('path');
  */
 function watch(module) {
   if (!module.loaded) {
-    fs.watchFile(module.filename, {interval : 500}, function(cur, prev) {
+    fs.watchFile(module.filename, {interval : 500, persistent: false}, function(cur, prev) {
       if (cur && +cur.mtime !== +prev.mtime) {
         process.exit(101);
       }
