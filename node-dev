@@ -100,7 +100,7 @@ function start(title, msg) {
       // source-code
       //       ^^^^^
       // ErrorType: Message
-      src = error.match(/^\s*(.+):(\d+)\n(.*)\n(\s*)\^/);
+      src = error.match(/^\s*(.+):(\d+)\n(.*)\n(\s*)\^/m);
 
       if (src && !src[3].match(/throw/)) {
         file = src[1];
