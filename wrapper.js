@@ -53,6 +53,7 @@ function hookInto(ext) {
     if (module.id == main) {
       module.id = '.';
       module.parent = null;
+      process.mainModule = module;
     }
     watch(module);
     extensionHandler(module, filename);
