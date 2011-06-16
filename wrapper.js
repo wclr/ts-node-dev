@@ -42,10 +42,6 @@ for (var i=1; i < process.argv.length; i++) {
 /** Resolve the location of the main script relative to cwd */
 var main = Path.resolve(process.cwd(), arg);
 
-if (Path.extname(main) == '.coffee') {
-  require('coffee-script');
-}
-
 /** Hook into `require()` */
 function hookInto(ext) {
   var extensionHandler = require.extensions[ext];
@@ -64,6 +60,10 @@ function hookInto(ext) {
 }
 
 hookInto('.js');
+
+if (Path.extname(main) == '.coffee') {
+  require('coffee-script');
+}
 
 /** Load the wrapped script */
 require(main);
