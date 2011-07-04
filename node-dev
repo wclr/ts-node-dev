@@ -93,7 +93,7 @@ function start(title, msg) {
 
     error += s;
 
-    stack = s.match(/^(.+): (.*)\n\s+at\s?.+?\s\(?(.*?):(\d+):(\d+)/m);
+    stack = s.match(/^(.+): (.*)\n\s+at\s.*?((?:\S|\\\s)+?):(\d+):(\d+)/m);
     if (stack) {
 
       // file:line
@@ -117,7 +117,7 @@ function start(title, msg) {
 
       /** Extract all file paths from the stack-trace */
       files = [file];
-      (error.match(/\(\/.*?:\d+:\d+\)/mg) || []).forEach(function(line) {
+      (error.match(/\/(?:\S|\\\s)+?:\d+:\d+/mg) || []).forEach(function(line) {
         file = line.match(/(\/.*?):/)[1];
         if (!~files.indexOf(file)) {
           files.push(file);
