@@ -6,6 +6,11 @@
 		"email": "felix.gnass@neteye.de",
 		"url": "http://fgnass.posterous.com"
 	},
+	"contributors": [{
+		"name": "Aseem Kishore",
+		"email": "aseem.kishore@gmail.com",
+		"url": "http://aseemk.com"
+	}],
 	"bin": {
 		"node-dev": "./node-dev"
 	},
