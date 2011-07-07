@@ -14,6 +14,13 @@
 	"bin": {
 		"node-dev": "./node-dev"
 	},
+	"devDependencies": {
+		"coffee-script": "1.1.x",
+		"streamline": "0.1.x"
+	},
+	"scripts": {
+		"test": "./node-dev test/app"
+	},
 	"preferGlobal": true,
 	"repository": {
 		"type": "git",
