@@ -6,8 +6,20 @@
 		"email": "felix.gnass@neteye.de",
 		"url": "http://fgnass.posterous.com"
 	},
+	"contributors": [{
+		"name": "Aseem Kishore",
+		"email": "aseem.kishore@gmail.com",
+		"url": "http://aseemk.com"
+	}],
 	"bin": {
 		"node-dev": "./node-dev"
+	},
+	"devDependencies": {
+		"coffee-script": "1.1.x",
+		"streamline": "0.1.x"
+	},
+	"scripts": {
+		"test": "./node-dev test/app"
 	},
 	"preferGlobal": true,
 	"repository": {
