@@ -42,24 +42,35 @@ for (var i=1; i < process.argv.length; i++) {
 /** Resolve the location of the main script relative to cwd */
 var main = Path.resolve(process.cwd(), arg);
 
-/** Hook into `require()` */
-function hookInto(ext) {
-  var extensionHandler = require.extensions[ext];
-  require.extensions[ext] = function(module, filename) {
-    if (module.id == main) {
-      module.id = '.';
-      module.parent = null;
-      process.mainModule = module;
-    }
-    watch(module);
-    extensionHandler(module, filename);
-    if (ext == '.js' && Path.basename(filename, ext) == 'coffee-script') {
-      hookInto('.coffee');
-    }
-  };
+var handlers = require.extensions;
+var origs = {};
+var hooks = {};
+
+function getOrCreateHook(ext) {
+    return hooks[ext] || (hooks[ext] = function (module, filename) {
+        if (module.id == main) {
+          module.id = '.';
+          module.parent = null;
+          process.mainModule = module;
+        }
+        watch(module);
+        origs[ext](module, filename);
+        updateHooks();
+    });
 }
 
-hookInto('.js');
+function updateHooks() {
+    for (var ext in handlers) {
+        var handler = handlers[ext];
+        var hook = getOrCreateHook(ext);
+        if (handler !== hook) {
+            origs[ext] = handler;
+            handlers[ext] = hook;
+        }
+    }
+}
+
+updateHooks();
 
 if (Path.extname(main) == '.coffee') {
   require('coffee-script');
