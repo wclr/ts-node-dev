@@ -7,8 +7,7 @@
  * License: MIT
  * See http://github.com/fgnass/node-dev
  */
-var sys = require('sys'),
-  fs = require('fs'),
+var fs = require('fs'),
   path = require('path'),
   child_process = require('child_process'),
   util = require('util'),
@@ -44,7 +43,7 @@ process.on('SIGINT', function() {
  */
 function log(msg, level) {
   var csi = level == 'error' ? '1;31' : '32';
-  sys.log('[\x1B[' + csi + 'm' + level.toUpperCase() + '\x1B[0m] ' + msg);
+  util.log('[\x1B[' + csi + 'm' + level.toUpperCase() + '\x1B[0m] ' + msg);
 }
 
 /**
@@ -125,7 +124,7 @@ function start(title, msg) {
       });
       error = '';
     }
-    sys.print(data);
+    util.print(data);
   });
 }
 
@@ -133,5 +132,5 @@ if (args.length > 0) {
   start();
 }
 else {
-  sys.print('Usage: node-dev [options] script.js [arguments]\n');
+  util.print('Usage: node-dev [options] script.js [arguments]\n');
 }
