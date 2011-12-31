@@ -7,4 +7,4 @@ icon=$3
 
 
 which growlnotify && growlnotify --image "$icon" -m "$message" "$title" || \
-which notify-send && notify-send "$title" "$message" -i "$icon"
+which notify-send && notify-send --hint=int:transient:1 "$title" "$message" -i "$icon"
