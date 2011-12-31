@@ -4,6 +4,7 @@
 
 var fs = require('fs');
 var Path = require('path');
+var vm = require('vm');
 
 /**
  * This is how the argv array looks like:
@@ -24,6 +25,11 @@ for (var i=1; i < process.argv.length; i++) {
 /** Resolve the location of the main script relative to cwd */
 var main = Path.resolve(process.cwd(), arg);
 
+/** Notifies the parent process */
+function watch(file) {
+  process.send({watch: file});
+}
+
 var origs = {};
 var hooks = {};
 
@@ -36,8 +42,7 @@ function createHook(ext) {
       process.mainModule = module;
     }
     if (!module.loaded) {
-      /** Notify the parent process */
-      process.send({watch: module.filename});
+      watch(module.filename);
     }
     /** Invoke the original handler */
     origs[ext](module, filename);
@@ -59,8 +64,28 @@ function updateHooks() {
     }
   }
 }
-
 updateHooks();
+
+/**
+ * Patches the specified method to watch the file at the given argument
+ * index.
+ */
+function patch(obj, method, fileArgIndex) {
+  var orig = obj[method];
+  obj[method] = function() {
+    var file = arguments[fileArgIndex];
+    if (file) {
+      watch(file);
+    }
+    return orig.apply(this, arguments);
+  };
+}
+
+/** Patch the vm module to watch files executed via one of these methods: */
+patch (vm, 'createScript', 1);
+patch(vm, 'runInThisContext', 1);
+patch(vm, 'runInNewContext', 2);
+patch(vm, 'runInContext', 2);
 
 /** Support for coffee-script files */
 if (Path.extname(main) == '.coffee') {
