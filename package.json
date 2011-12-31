@@ -1,32 +1,33 @@
 {
-	"name": "node-dev",
-	"homepage": "http://github.com/fgnass/node-dev",
-	"author": {
-		"name": "Felix Gnass",
-		"email": "felix.gnass@neteye.de",
-		"url": "http://fgnass.posterous.com"
-	},
-	"contributors": [{
-		"name": "Aseem Kishore",
-		"email": "aseem.kishore@gmail.com",
-		"url": "http://aseemk.com"
-	}],
-	"bin": {
-		"node-dev": "./node-dev"
-	},
-	"devDependencies": {
-		"coffee-script": "1.1.x",
-		"streamline": "0.1.x"
-	},
-	"scripts": {
-		"test": "./node-dev test/app"
-	},
-	"preferGlobal": true,
-	"repository": {
-		"type": "git",
-		"url" : "http://github.com/fgnass/node-dev.git"
-	},
-	"description": "Node.js supervisor with desktop notifications",
-	"keywords": ["supervisor", "restart", "reload", "auto-reload"],
-	"version": "0.1.9"
+  "name": "node-dev",
+  "homepage": "http://github.com/fgnass/node-dev",
+  "author": {
+    "name": "Felix Gnass",
+    "email": "felix.gnass@neteye.de",
+    "url": "http://fgnass.posterous.com"
+  },
+  "contributors": [{
+    "name": "Aseem Kishore",
+    "email": "aseem.kishore@gmail.com",
+    "url": "http://aseemk.com"
+  }],
+  "bin": {
+    "node-dev": "./node-dev"
+  },
+  "engine": ">=0.6.0",
+  "devDependencies": {
+    "coffee-script": "1.1.x",
+    "streamline": "0.1.x"
+  },
+  "scripts": {
+    "test": "./node-dev test/app"
+  },
+  "preferGlobal": true,
+  "repository": {
+    "type": "git",
+    "url" : "http://github.com/fgnass/node-dev.git"
+  },
+  "description": "Node.js supervisor with desktop notifications",
+  "keywords": ["supervisor", "restart", "reload", "auto-reload"],
+  "version": "0.2.0"
 }
