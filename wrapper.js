@@ -1,27 +1,9 @@
 /**
- * Hooks into `require()` to watch for modifications of the required
- * file. If a modification is detected, the process exits with code
- * `101`.
+ * Wrapper that hooks into `require()` to notify the parent process.
  */
 
-/**
- * Module dependencies.
- */
 var fs = require('fs');
 var Path = require('path');
-
-/**
- * Watches the given module's filename.
- */
-function watch(module) {
-  if (!module.loaded) {
-    fs.watchFile(module.filename, {interval : 500, persistent: false}, function(cur, prev) {
-      if (cur && +cur.mtime !== +prev.mtime) {
-        process.exit(101);
-      }
-    });
-  }
-}
 
 /**
  * This is how the argv array looks like:
@@ -42,39 +24,55 @@ for (var i=1; i < process.argv.length; i++) {
 /** Resolve the location of the main script relative to cwd */
 var main = Path.resolve(process.cwd(), arg);
 
-var handlers = require.extensions;
 var origs = {};
 var hooks = {};
 
-function getOrCreateHook(ext) {
-    return hooks[ext] || (hooks[ext] = function (module, filename) {
-        if (module.id == main) {
-          module.id = '.';
-          module.parent = null;
-          process.mainModule = module;
-        }
-        watch(module);
-        origs[ext](module, filename);
-        updateHooks();
-    });
+function createHook(ext) {
+  return function(module, filename) {
+    if (module.id == main) {
+      /** If the main module is required conceal the wrapper */
+      module.id = '.';
+      module.parent = null;
+      process.mainModule = module;
+    }
+    if (!module.loaded) {
+      /** Notify the parent process */
+      process.send({watch: module.filename});
+    }
+    /** Invoke the original handler */
+    origs[ext](module, filename);
+    /** Make sure the module did not hijack the handler */
+    updateHooks();
+  };
 }
 
 function updateHooks() {
-    for (var ext in handlers) {
-        var handler = handlers[ext];
-        var hook = getOrCreateHook(ext);
-        if (handler !== hook) {
-            origs[ext] = handler;
-            handlers[ext] = hook;
-        }
+  var handlers = require.extensions;
+  for (var ext in handlers) {
+    // Get or create the hook for the extension
+    var hook = hooks[ext] || (hooks[ext] = createHook(ext));
+    if (handlers[ext] !== hook) {
+      // Save a reference to the original handler
+      origs[ext] = handlers[ext];
+      // and replace the handler by our hook
+      handlers[ext] = hook;
     }
+  }
 }
 
 updateHooks();
 
+/** Support for coffee-script files */
 if (Path.extname(main) == '.coffee') {
   require('coffee-script');
 }
+
+/** Catch uncaught exceptions, notify the parent process and exit */
+process.on('uncaughtException', function (err) {
+  process.send({error: {name: err.name, message: err.message}});
+  console.error(err.stack || err);
+  process.exit(1);
+});
 
 /** Load the wrapped script */
 require(main);

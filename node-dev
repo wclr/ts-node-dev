@@ -7,35 +7,50 @@
  * License: MIT
  * See http://github.com/fgnass/node-dev
  */
-var sys = require('sys'),
-  fs = require('fs'),
-  path = require('path'),
-  child_process = require('child_process'),
-  util = require('util'),
-  server = null,
-  error = '',
-  files,
-  args = [].concat(process.argv),
-  cmd = args.shift();
+var fs = require('fs');
+var ChildProcess = require('child_process');
 
-args.shift();
+/** The child process */
+var child;
 
+/** List of watched files */
+var files;
+
+/** The main script to be run */
+var main;
+
+/**
+ * The `args` array passed to ChildProcess.fork() - start by removing the first
+ * two entries which are the `node` binary and the `node-dev` script.
+ */
+var args = process.argv.slice(2);
+
+/** Look for the first argument that's not an option ... */
 for (var i=0; i < args.length; i++) {
   if (!/^-/.test(args[i])) {
+    /** This is the actual script to be run */
+    main = args[i];
+    /** Inject the wrapper script */
     args.splice(i, 0, __dirname + '/wrapper.js');
     break;
   }
 }
 
-process.stdin.on('data', function (chunk) {
-  if (server) {
-    server.stdin.write('data: ' + chunk);
-  }
-});
+/** 
+ * The modulePath passed to ChildProcess.fork() - usually this will be
+ * `wrapper.js`, unless VM options have been specified, in which case it 
+ * will contain the first VM option and the actual module will be somewhere
+ * in the `args` array.
+ */
+var modulePath = args.shift();
 
+/** Kill the child process upon SIGINT */
 process.on('SIGINT', function() {
-  server.kill('SIGHUP');
-  process.exit(0);
+  child.on('exit', function() {
+    notify('Stopped', main);
+    process.exit(0);
+  });
+  child.kill('SIGHUP');
 });
 
 /**
@@ -44,94 +59,75 @@ process.on('SIGINT', function() {
  */
 function log(msg, level) {
   var csi = level == 'error' ? '1;31' : '32';
-  sys.log('[\x1B[' + csi + 'm' + level.toUpperCase() + '\x1B[0m] ' + msg);
+  console.log('[\x1B[' + csi + 'm' + level.toUpperCase() + '\x1B[0m] ' + msg);
 }
 
 /**
- * Displays a desktop notification
+ * Displays a desktop notification (see notify.sh)
  */
-function notify(msg, title, level) {
+function notify(title, msg, level) {
   level = level || 'info';
   log(title || msg, level);
-  child_process.spawn(__dirname + '/notify.sh', [
+  ChildProcess.spawn(__dirname + '/notify.sh', [
     title || 'node.js',
     msg,
     __dirname + '/icons/node_' + level + '.png'
   ]);
 }
 
-function start(title, msg) {
-  /** Spawn a node child-process */
-  server = child_process.spawn(cmd, args, {customFds: [-1, 1, -1]});
-  notify(msg || 'Started', title);
-  server.on('exit', function (code) {
-    if (code == 101) {
-      /** Worker committed suicide */
-      start('Restarting', 'Restarting');
-    }
-    else if (files) {
-      /** Worker exited due to an error */
+function createWatchCallback(file) {
+  return function(cur, prev) {
+    if (cur && +cur.mtime !== +prev.mtime) {
+      var msg = file + ' has been modified';
+      /** Unwatch all files */
       files.forEach(function(file) {
-        fs.watchFile(file, function(cur, prev) {
-          if (files && +cur.mtime !== +prev.mtime) {
-            /** Stop watching the files */
-            files.forEach(function(file) {
-              fs.unwatchFile(file);
-            });
-            files = null;
-            /** Resume */
-            start("Resuming");
-          }
-        });
+        fs.unwatchFile(file);
       });
-    }
-  });
-
-  /** Scan stderr for stack-traces */
-  server.stderr.on('data', function(data) {
-    var s = data.toString(), stack, src, m, file, line, col;
-
-    error += s;
-
-    stack = s.match(/^(.+): (.*)\n\s+at\s.*?((?:\S|\\\s)+?):(\d+):(\d+)/m);
-    if (stack) {
-
-      // file:line
-      // source-code
-      //       ^^^^^
-      // ErrorType: Message
-      src = error.match(/^\s*(.+):(\d+)\n(.*)\n(\s*)\^/m);
-
-      if (src && !src[3].match(/throw/)) {
-        file = src[1];
-        line = src[2];
-        col = src[4].length;
+      /** Kill child if it's still running */
+      if (child.exitCode === child.signalCode) {
+        child.kill();
+        /** Restart upon exit */
+        child.on('exit', function() {
+          start('Restarting', msg);
+        });
       }
       else {
-        /** No source-code or error was rethrown */
-        file = stack[3];
-        line = stack[4];
-        col = stack[5];
+        console.dir(child);
+        /** Child previously exited due to an error, resume */
+        start('Resuming', msg);
       }
-      notify(stack[2] + '\n  @' + file + ',' + line + ':' + col, stack[1], 'error');
-
-      /** Extract all file paths from the stack-trace */
-      files = [file];
-      (error.match(/\/(?:\S|\\\s)+?:\d+:\d+/mg) || []).forEach(function(line) {
-        file = line.match(/(\/.*?):/)[1];
-        if (!~files.indexOf(file)) {
-          files.push(file);
-        }
-      });
-      error = '';
     }
-    sys.print(data);
+  };
+}
+
+/**
+ * Spawns the child process and displays a notification with the
+ * given title/message.
+ */
+function start(title, message) {
+  files = [];
+  child = ChildProcess.fork(modulePath, args, {
+    cwd: process.cwd,
+    env: process.env
+  });
+  notify(title || 'Started', message || main);
+  child.on('message', function(msg) {
+    var file = msg.watch;
+    var err = msg.error;
+    if (file) {
+      files.push(file);
+      fs.watchFile(file, {interval : 500, persistent: true}, createWatchCallback(file));
+    }
+    else if (err) {
+      notify(err.name, err.message, 'error');
+    }
   });
 }
 
-if (args.length > 0) {
+/** Spawn child if at least one argument is given, display usage otherwise */
+if (args.length) {
   start();
 }
 else {
-  sys.print('Usage: node-dev [options] script.js [arguments]\n');
+  console.log('Usage: node-dev [options] script.js [arguments]\n');
 }
