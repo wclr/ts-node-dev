@@ -32,4 +32,3 @@ Contributors
 
 * [Ricardo Tomasi](https://github.com/ricardobeat) (CoffeeScript support)
 * [Sergey Ovechkin](https://github.com/pomeo) (libnotify support)
-* [Piotr Sokólski](https://github.com/pyetras) (stdin pumping)
