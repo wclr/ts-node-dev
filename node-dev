@@ -1,145 +1,33 @@
 #! /usr/bin/env node
-/*
- * Node.js supervisor that spawns a node child-process and restarts
- * it when the worker commits suicide.
- *
- * Author: Felix Gnass [fgnass at neteye dot de]
- * License: MIT
- * See http://github.com/fgnass/node-dev
- */
-var fs = require('fs');
-var ChildProcess = require('child_process');
+var spawn = require('child_process').spawn;
 
-/** The child process */
-var child;
+var args = process.argv.slice(0);
 
-/** List of watched files */
-var files;
-
-/** The main script to be run */
-var main;
-
-/**
- * The `args` array passed to ChildProcess.fork() - start by removing the first
- * two entries which are the `node` binary and the `node-dev` script.
- */
-var args = process.argv.slice(2);
-
-/** Look for the first argument that's not an option ... */
-for (var i=0; i < args.length; i++) {
-  if (!/^-/.test(args[i])) {
-    /** This is the actual script to be run */
-    main = args[i];
-    /** Inject the wrapper script */
-    args.splice(i, 0, __dirname + '/wrapper.js');
-    break;
-  }
-}
-
-/** 
- * The modulePath passed to ChildProcess.fork() - usually this will be
- * `wrapper.js`, unless VM options have been specified, in which case it 
- * will contain the first VM option and the actual module will be somewhere
- * in the `args` array.
- */
-var modulePath = args.shift();
-
-/** Kill the child process upon SIGINT */
-process.on('SIGINT', function() {
-  if (isRunning()) {
-    child.on('exit', function() {
-      notify('Stopped', main);
-      process.exit(0);
-    });
-    child.kill('SIGHUP');
-  }
-  else {
-    process.exit(0);
-  }
-});
-
-/**
- * Logs a message to the console. The level is displayed in ANSI colors,
- * either bright red in case of an error or green otherwise.
- */
-function log(msg, level) {
-  var csi = level == 'error' ? '1;31' : '32';
-  console.log('[\x1B[' + csi + 'm' + level.toUpperCase() + '\x1B[0m] ' + msg);
-}
-
-/**
- * Displays a desktop notification (see notify.sh)
- */
-function notify(title, msg, level) {
-  level = level || 'info';
-  log(title || msg, level);
-  ChildProcess.spawn(__dirname + '/notify.sh', [
-    title || 'node.js',
-    msg,
-    __dirname + '/icons/node_' + level + '.png'
-  ]);
-}
-
-function createWatchCallback(file) {
-  return function(cur, prev) {
-    if (cur && +cur.mtime !== +prev.mtime) {
-      var msg = file + ' has been modified';
-      /** Unwatch all files */
-      files.forEach(function(file) {
-        fs.unwatchFile(file);
-      });
-      /** Kill child if it's still running */
-      if (isRunning()) {
-        child.kill();
-        /** Restart upon exit */
-        child.on('exit', function() {
-          start('Restarting', msg);
-        });
-      }
-      else {
-        /** Child previously exited due to an error, resume */
-        start('Resuming', msg);
-      }
-    }
-  };
-}
-
-/**
- * Returns whether the child process is running.
- */
-function isRunning() {
-  // True, if both exitCode and signalCode are null
-  return child && child.exitCode === child.signalCode;
-}
-
-/**
- * Spawns the child process and displays a notification with the
- * given title/message.
- */
-function start(title, message) {
-  files = [];
-  child = ChildProcess.fork(modulePath, args, {
-    cwd: process.cwd,
-    env: process.env
-  });
-  notify(title || 'Started', message || main);
-  child.on('message', function(msg) {
-    var file = msg.watch;
-    var err = msg.error;
-    if (file) {
-      files.push(file);
-      fs.watchFile(file, {interval : 500, persistent: true}, createWatchCallback(file));
-    }
-    else if (err) {
-      notify(err.name, err.message, 'error');
-    }
-  });
-}
-
-/** Spawn child if at least one argument is given, display usage otherwise */
-if (args.length) {
-  start();
-}
-else {
+if (args.length < 3) {
   console.log('Usage: node-dev [options] script.js [arguments]\n');
+  process.exit(1);
 }
+
+/** Remove the node binary from the args */
+var node = args.shift();
+
+/** Replace node-dev with wrapper.js */
+args[0] = __dirname + '/wrapper.js';
+
+function start() {
+  var child = spawn(node, args, {
+    cwd: process.cwd,
+    env: process.env,
+    customFds: [0, 1, 2]
+  });
+  child.on('exit', function(code) {
+    if (code === 101) {
+      process.nextTick(start);
+    }
+    else {
+      process.exit(code);
+    }
+  });
+}
+
+start();

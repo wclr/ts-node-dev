@@ -1,23 +1,21 @@
 /**
- * Wrapper that hooks into `require()` to notify the parent process.
+ * Hooks into `require()` to watch for modifications of required files.
+ * If a modification is detected, the process exits with code `101`.
  */
-
 var fs = require('fs');
 var Path = require('path');
 var vm = require('vm');
+var spawn = require('child_process').spawn;
 
-/**
- * This is how the argv array looks like:
- * `['node', '/path/to/wrapper.js', '--option1', '--optionN', 'script', 'arg1', 'argN']`
- * ... so we remove ourself:
- */
-process.argv.splice(1, 1);
 
-/** Find the first arg that is not an option, starting at index 1 */
+/** Find the first arg that is not an option, starting at index 2 */
 var arg;
-for (var i=1; i < process.argv.length; i++) {
+for (var i=2; i < process.argv.length; i++) {
   arg = process.argv[i];
   if (!/^-/.test(arg)) {
+    /* Move arg to index 1 overwriting wrapper.js */
+    process.argv.splice(i, 1);
+    process.argv[1] = arg;
     break;
   }
 }
@@ -25,9 +23,57 @@ for (var i=1; i < process.argv.length; i++) {
 /** Resolve the location of the main script relative to cwd */
 var main = Path.resolve(process.cwd(), arg);
 
-/** Notifies the parent process */
+/**
+ * Logs a message to the console. The level is displayed in ANSI colors,
+ * either bright red in case of an error or green otherwise.
+ */
+function log(msg, level) {
+  var csi = level == 'error' ? '1;31' : '32';
+  console.log('[\x1B[' + csi + 'm' + level.toUpperCase() + '\x1B[0m] ' + msg);
+}
+
+/**
+ * Displays a desktop notification (see notify.sh)
+ */
+function notify(title, msg, level) {
+  level = level || 'info';
+  log(title || msg, level);
+  spawn(__dirname + '/notify.sh', [
+    title || 'node.js',
+    msg,
+    __dirname + '/icons/node_' + level + '.png'
+  ]);
+}
+
+/**
+ * Triggers a restart by terminating the process with a special exit code.
+ */
+function triggerRestart() {
+  process.removeListener('exit', checkExitCode);
+  process.exit(101);
+}
+
+/**
+ * Sanity check to prevent an infinite loop in case the program
+ * calls `process.exit(101)`.
+ */
+function checkExitCode(code) {
+  if (code == 101) {
+    notify('Invalid Exit Code', 'The exit code (101) has been rewritten to prevent an infinite loop.', 'error');
+    process.reallyExit(1);
+  }
+}
+
+/**
+ * Watches the specified file and triggers a restart upon modification.
+ */
 function watch(file) {
-  process.send({watch: file});
+  fs.watchFile(file, {interval: 500, persistent: false}, function(cur, prev) {
+    if (cur && +cur.mtime !== +prev.mtime) {
+      notify('Restarting', file + ' has been modified');
+      triggerRestart();
+    }
+  });
 }
 
 var origs = {};
@@ -45,12 +91,20 @@ function createHook(ext) {
       watch(module.filename);
     }
     /** Invoke the original handler */
-    origs[ext](module, filename);
+    try {
+      origs[ext](module, filename);
+    }
+    catch(err) {
+      handleError(err);
+    }
     /** Make sure the module did not hijack the handler */
     updateHooks();
   };
 }
 
+/**
+ * (Re-)installs hooks for all registered file extensions.
+ */
 function updateHooks() {
   var handlers = require.extensions;
   for (var ext in handlers) {
@@ -87,17 +141,19 @@ patch(vm, 'runInThisContext', 1);
 patch(vm, 'runInNewContext', 2);
 patch(vm, 'runInContext', 2);
 
-/** Support for coffee-script files */
+/**
+ * Error handler that displays a notification and logs the stack to stderr.
+ */
+function handleError(err) {
+  notify(err.name, err.message, 'error');
+  console.error(err.stack || err);
+}
+
+process.on('uncaughtException', handleError);
+process.on('exit', checkExitCode);
+
 if (Path.extname(main) == '.coffee') {
   require('coffee-script');
 }
 
-/** Catch uncaught exceptions, notify the parent process and exit */
-process.on('uncaughtException', function (err) {
-  process.send({error: {name: err.name, message: err.message}});
-  console.error(err.stack || err);
-  process.exit(1);
-});
-
-/** Load the wrapped script */
 require(main);
