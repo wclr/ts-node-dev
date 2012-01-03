@@ -29,5 +29,5 @@
   },
   "description": "Node.js supervisor with desktop notifications",
   "keywords": ["supervisor", "restart", "reload", "auto-reload"],
-  "version": "0.2.0"
+  "version": "0.2.1"
 }
