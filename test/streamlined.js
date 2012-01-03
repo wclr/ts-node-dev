@@ -1,4 +1,4 @@
 require('coffee-script');
 require('streamline');
 
-require('./app_.coffee');
+require('./streamlined_.coffee');
