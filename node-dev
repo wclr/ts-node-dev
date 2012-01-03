@@ -46,11 +46,16 @@ var modulePath = args.shift();
 
 /** Kill the child process upon SIGINT */
 process.on('SIGINT', function() {
-  child.on('exit', function() {
-    notify('Stopped', main);
+  if (isRunning()) {
+    child.on('exit', function() {
+      notify('Stopped', main);
+      process.exit(0);
+    });
+    child.kill('SIGHUP');
+  }
+  else {
     process.exit(0);
-  });
-  child.kill('SIGHUP');
+  }
 });
 
 /**
@@ -84,7 +89,7 @@ function createWatchCallback(file) {
         fs.unwatchFile(file);
       });
       /** Kill child if it's still running */
-      if (child.exitCode === child.signalCode) {
+      if (isRunning()) {
         child.kill();
         /** Restart upon exit */
         child.on('exit', function() {
@@ -98,6 +103,14 @@ function createWatchCallback(file) {
       }
     }
   };
+}
+
+/**
+ * Returns whether the child process is running.
+ */
+function isRunning() {
+  // True, if both exitCode and signalCode are null
+  return child && child.exitCode === child.signalCode;
 }
 
 /**
