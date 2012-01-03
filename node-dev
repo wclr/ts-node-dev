@@ -97,7 +97,6 @@ function createWatchCallback(file) {
         });
       }
       else {
-        console.dir(child);
         /** Child previously exited due to an error, resume */
         start('Resuming', msg);
       }
