@@ -7,21 +7,11 @@ var Path = require('path');
 var vm = require('vm');
 var spawn = require('child_process').spawn;
 
-
-/** Find the first arg that is not an option, starting at index 2 */
-var arg;
-for (var i=2; i < process.argv.length; i++) {
-  arg = process.argv[i];
-  if (!/^-/.test(arg)) {
-    /* Move arg to index 1 overwriting wrapper.js */
-    process.argv.splice(i, 1);
-    process.argv[1] = arg;
-    break;
-  }
-}
+/** Remove wrapper.js from the argv array */
+process.argv.splice(1, 1);
 
 /** Resolve the location of the main script relative to cwd */
-var main = Path.resolve(process.cwd(), arg);
+var main = Path.resolve(process.cwd(), process.argv[1]);
 
 /**
  * Logs a message to the console. The level is displayed in ANSI colors,

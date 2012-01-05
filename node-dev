@@ -1,18 +1,20 @@
 #! /usr/bin/env node
 var spawn = require('child_process').spawn;
+var node = process.argv[0];
+var args = process.argv.slice(2);
 
-var args = process.argv.slice(0);
-
-if (args.length < 3) {
+if (!args.length) {
   console.log('Usage: node-dev [options] script.js [arguments]\n');
   process.exit(1);
 }
 
-/** Remove the node binary from the args */
-var node = args.shift();
-
-/** Replace node-dev with wrapper.js */
-args[0] = __dirname + '/wrapper.js';
+/** Find the first arg that is not an option */
+for (var i=0; i < args.length; i++) {
+  if (!/^-/.test(args[i])) {
+    args.splice(i, 0, __dirname + '/wrapper.js');
+    break;
+  }
+}
 
 function start() {
   var child = spawn(node, args, {
