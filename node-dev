@@ -16,7 +16,7 @@ args[0] = __dirname + '/wrapper.js';
 
 function start() {
   var child = spawn(node, args, {
-    cwd: process.cwd,
+    cwd: process.cwd(),
     env: process.env,
     customFds: [0, 1, 2]
   });
