@@ -5,8 +5,7 @@
   "homepage": "http://github.com/fgnass/node-dev",
   "author": {
     "name": "Felix Gnass",
-    "email": "felix.gnass@neteye.de",
-    "url": "http://fgnass.posterous.com"
+    "url": "https://twitter.com/fgnass"
   },
   "contributors": [{
     "name": "Aseem Kishore",
@@ -17,7 +16,9 @@
     "node-dev": "./node-dev"
   },
   "preferGlobal": true,
-  "engine": ">=0.4.0",
+  "engines": {
+    "node": ">=0.4.0"
+  },
   "devDependencies": {
     "coffee-script": "1.1.x",
     "streamline": "0.1.x"
