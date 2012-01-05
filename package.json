@@ -1,5 +1,7 @@
 {
   "name": "node-dev",
+  "version": "0.2.1",
+  "description": "Smart application reloading ♻ with Growl notifications and CoffeeScript support",
   "homepage": "http://github.com/fgnass/node-dev",
   "author": {
     "name": "Felix Gnass",
@@ -14,6 +16,7 @@
   "bin": {
     "node-dev": "./node-dev"
   },
+  "preferGlobal": true,
   "engine": ">=0.4.0",
   "devDependencies": {
     "coffee-script": "1.1.x",
@@ -22,12 +25,9 @@
   "scripts": {
     "test": "./node-dev test/app"
   },
-  "preferGlobal": true,
   "repository": {
     "type": "git",
     "url" : "http://github.com/fgnass/node-dev.git"
   },
-  "description": "Node.js supervisor with desktop notifications",
-  "keywords": ["supervisor", "restart", "reload", "auto-reload"],
-  "version": "0.2.1"
+  "keywords": ["development", "restart", "reload", "supervisor", "monitor", "watch", "forever"]
 }
