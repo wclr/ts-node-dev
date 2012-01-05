@@ -14,7 +14,7 @@
   "bin": {
     "node-dev": "./node-dev"
   },
-  "engine": ">=0.6.0",
+  "engine": ">=0.4.0",
   "devDependencies": {
     "coffee-script": "1.1.x",
     "streamline": "0.1.x"
