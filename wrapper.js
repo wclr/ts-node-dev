@@ -81,12 +81,8 @@ function createHook(ext) {
       watch(module.filename);
     }
     /** Invoke the original handler */
-    try {
-      origs[ext](module, filename);
-    }
-    catch(err) {
-      handleError(err);
-    }
+    origs[ext](module, filename);
+
     /** Make sure the module did not hijack the handler */
     updateHooks();
   };
@@ -134,12 +130,11 @@ patch(vm, 'runInContext', 2);
 /**
  * Error handler that displays a notification and logs the stack to stderr.
  */
-function handleError(err) {
-  notify(err.name, err.message, 'error');
-  console.error(err.stack || err);
-}
+process.on('uncaughtException', function(err) {
+ notify(err.name, err.message, 'error');
+ console.error(err.stack || err);
+});
 
-process.on('uncaughtException', handleError);
 process.on('exit', checkExitCode);
 
 if (Path.extname(main) == '.coffee') {
