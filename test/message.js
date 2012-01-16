@@ -1,1 +1,1 @@
-module.exports = "Hello world! Try changing me while the server is running.";
+module.exports = "Hello world! Try changing message.js while the process is running.";

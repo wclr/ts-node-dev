@@ -19,4 +19,4 @@ server = http.createServer (req, resp, _) ->
 server.listen 8080
 
 console.log 'Listening at http://localhost:8080/ ...'
-console.log 'Try changing test/message.js; the server should restart.'
+console.log message
