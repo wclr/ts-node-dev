@@ -58,7 +58,7 @@ function checkExitCode(code) {
  * Watches the specified file and triggers a restart upon modification.
  */
 function watch(file) {
-  fs.watchFile(file, {interval: 500, persistent: false}, function(cur, prev) {
+  fs.watchFile(file, {interval: 500, persistent: true}, function(cur, prev) {
     if (cur && +cur.mtime !== +prev.mtime) {
       notify('Restarting', file + ' has been modified');
       triggerRestart();
