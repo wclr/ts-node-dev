@@ -4,18 +4,13 @@ var http = require('http');
 if (cluster.isMaster) {
   for (var i = 0; i < 2; i++) {
     console.log('Forking worker', i);
-    cluster.fork();
+    var worker = cluster.fork();
+    worker.on('message', function(msg) {
+      console.log('Message from worker:', msg);
+    });
   }
-
-  cluster.on('death', function(worker) {
-    console.log('worker ' + worker.pid + ' died');
-  });
 }
 else {
-  console.log('Worker started');
-  // Worker processes have a http server.
-  http.Server(function(req, res) {
-    res.writeHead(200);
-    res.end("hello world\n");
-  }).listen(8000);
+  process.send('*** Worker started! ***');
+  require('./server');
 }
