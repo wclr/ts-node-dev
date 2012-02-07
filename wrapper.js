@@ -10,6 +10,9 @@ var spawn = require('child_process').spawn;
 /** Remove wrapper.js from the argv array */
 process.argv.splice(1, 1);
 
+/** Set the execPath so that forked child processes will also uses node-dev */
+process.argv[0] = process.execPath = process.env.NODE_DEV;
+
 /** Resolve the location of the main script relative to cwd */
 var main = Path.resolve(process.cwd(), process.argv[1]);
 

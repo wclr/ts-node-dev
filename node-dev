@@ -1,6 +1,11 @@
 #! /usr/bin/env node
 var spawn = require('child_process').spawn;
+var env = process.env;
 var node = process.argv[0];
+
+/* Pass the location of the node-dev script to the child process */
+env.NODE_DEV = process.argv[1];
+
 var args = process.argv.slice(2);
 
 if (!args.length) {
@@ -19,7 +24,7 @@ for (var i=0; i < args.length; i++) {
 function start() {
   var child = spawn(node, args, {
     cwd: process.cwd(),
-    env: process.env,
+    env: env,
     customFds: [0, 1, 2]
   });
   child.on('exit', function(code) {
