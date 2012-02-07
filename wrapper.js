@@ -61,11 +61,44 @@ function checkExitCode(code) {
  * Watches the specified file and triggers a restart upon modification.
  */
 function watch(file) {
-  fs.watchFile(file, {interval: 500, persistent: true}, function(cur, prev) {
-    if (cur && +cur.mtime !== +prev.mtime) {
-      notify('Restarting', file + ' has been modified');
-      triggerRestart();
+  watchFile(file, function() {
+    notify('Restarting', file + ' has been modified');
+    triggerRestart();
+  });
+}
+
+var watchFileSupported = !!fs.watchFile;
+function watchFile(file, onChange) {
+
+  fs.stat(file, function(err, stats) {
+    if (err) throw err;
+    if (watchFileSupported) {
+      try {
+        fs.watchFile(file, {interval: 500, persistent: true}, function(cur, prev) {
+          if (cur && +cur.mtime !== +prev.mtime) {
+            onChange();
+          }
+        });
+        return;
+      }
+      catch (e) {
+        watchFileSupported = false;
+      }
     }
+
+    /* No fs.watchFile support, fall back to fs.watch */
+    fs.watch(file, function(ev) {
+      if (ev == 'change') {
+        fs.stat(file, function(err, cur) {
+          if (err) throw err;
+          if (cur.size !== stats.size || +cur.mtime !== +stats.mtime) {
+            stats = cur;
+            onChange();
+          }
+        });
+      }
+    });
+
   });
 }
 
