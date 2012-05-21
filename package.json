@@ -1,6 +1,6 @@
 {
   "name": "node-dev",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Smart application reloading ♻ with Growl notifications and CoffeeScript support",
   "homepage": "http://github.com/fgnass/node-dev",
   "author": {
@@ -24,7 +24,7 @@
     "streamline": "0.1.x"
   },
   "scripts": {
-    "test": "./node-dev test/app"
+    "test": "./node-dev test/server"
   },
   "repository": {
     "type": "git",
