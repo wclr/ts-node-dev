@@ -1,5 +1,6 @@
 #! /usr/bin/env node
 var spawn = require('child_process').spawn;
+var fs = require('fs');
 var env = process.env;
 var node = process.argv[0];
 
@@ -9,8 +10,13 @@ env.NODE_DEV = process.argv[1];
 var args = process.argv.slice(2);
 
 if (!args.length) {
-  console.log('Usage: node-dev [options] script.js [arguments]\n');
-  process.exit(1);
+  try {
+    args.push(JSON.parse(fs.readFileSync('./package.json', 'utf8')).main);
+  }
+  catch (err) {
+    console.log('Usage: node-dev [options] script.js [arguments]\n');
+    process.exit(1);
+  }
 }
 
 /** Find the first arg that is not an option */
