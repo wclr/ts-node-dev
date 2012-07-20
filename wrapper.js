@@ -6,6 +6,7 @@ var fs = require('fs');
 var Path = require('path');
 var vm = require('vm');
 var spawn = require('child_process').spawn;
+var clearScreen = /true|yes|on|1/i.test(process.env.NODE_DEV_CLEARSCREEN);
 
 /** Remove wrapper.js from the argv array */
 process.argv.splice(1, 1);
@@ -62,6 +63,7 @@ function checkExitCode(code) {
  */
 function watch(file) {
   watchFile(file, function() {
+    if (clearScreen) process.stdout.write('\033[2J\033[H');
     notify('Restarting', file + ' has been modified');
     triggerRestart();
   });

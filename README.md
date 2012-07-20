@@ -39,6 +39,11 @@ This will install `node-dev` and make it globally available (note the `-g` optio
 
 In order to use Growl notifications [growlnotify](http://growl.info/extras.php#growlnotify) must be installed on your system.
 
+Settings
+========
+
+You can set the `NODE_DEV_CLEARSCREEN` environment variable to `true` if in order to automatically clear the terminal screen upon restarts.
+
 
 Contributors
 ============
