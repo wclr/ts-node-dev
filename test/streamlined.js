@@ -1,4 +1,4 @@
-require('coffee-script');
-require('streamline');
+require('coffee-script')
+require('streamline')
 
-require('./streamlined_.coffee');
+require('./streamlined_.coffee')
