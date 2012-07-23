@@ -8,6 +8,7 @@ var fs = require('fs')
   , vm = require('vm')
   , spawn = require('child_process').spawn
   , clearScreen = /true|yes|on|1/i.test(process.env.NODE_DEV_CLEARSCREEN)
+  , wrapper = module    // Save a reference to this module
 
 // Remove wrapper.js from the argv array
 process.argv.splice(1, 1)
@@ -110,7 +111,7 @@ var origs = {}
 
 function createHook(ext) {
   return function(module, filename) {
-    if (module.id == main) {
+    if (module.parent == wrapper) {
       // If the main module is required conceal the wrapper
       module.id = '.'
       module.parent = null
