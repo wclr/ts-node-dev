@@ -7,6 +7,7 @@ var fs = require('fs')
   , Path = require('path')
   , vm = require('vm')
   , spawn = require('child_process').spawn
+  , growl = require('growl')
   , clearScreen = /true|yes|on|1/i.test(process.env.NODE_DEV_CLEARSCREEN)
   , wrapper = module    // Save a reference to this module
 
@@ -29,16 +30,12 @@ function log(msg, level) {
 }
 
 /**
- * Displays a desktop notification (see notify.sh)
+ * Displays a desktop notification.
  */
 function notify(title, msg, level) {
   level = level || 'info'
   log(title || msg, level)
-  spawn(__dirname + '/notify.sh', [
-    title || 'node.js',
-    msg,
-    __dirname + '/icons/node_' + level + '.png'
-  ])
+  growl(msg, { title: title || 'node.js', image: __dirname + '/icons/node_' + level + '.png' })
 }
 
 /**

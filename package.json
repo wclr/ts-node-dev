@@ -1,17 +1,19 @@
 {
   "name": "node-dev",
-  "version": "0.2.5",
-  "description": "Smart application reloading ♻ with Growl notifications and CoffeeScript support",
+  "version": "0.2.6",
+  "description": "N♻DE — Restarts your app when files are modified",
   "homepage": "http://github.com/fgnass/node-dev",
   "author": {
     "name": "Felix Gnass",
     "url": "https://twitter.com/fgnass"
   },
-  "contributors": [{
-    "name": "Aseem Kishore",
-    "email": "aseem.kishore@gmail.com",
-    "url": "http://aseemk.com"
-  }],
+  "contributors": [
+    {
+      "name": "Aseem Kishore",
+      "email": "aseem.kishore@gmail.com",
+      "url": "http://aseemk.com"
+    }
+  ],
   "bin": {
     "node-dev": "./node-dev"
   },
@@ -19,12 +21,20 @@
   "engines": {
     "node": ">=0.4.0"
   },
-  "scripts": {
-    "test": "./node-dev test/server"
-  },
   "repository": {
     "type": "git",
-    "url" : "http://github.com/fgnass/node-dev.git"
+    "url": "http://github.com/fgnass/node-dev.git"
   },
-  "keywords": ["development", "restart", "reload", "supervisor", "monitor", "watch", "forever"]
+  "keywords": [
+    "development",
+    "restart",
+    "reload",
+    "supervisor",
+    "monitor",
+    "watch",
+    "forever"
+  ],
+  "dependencies": {
+    "growl": "~1.5.1"
+  }
 }
