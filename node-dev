@@ -9,13 +9,17 @@ var spawn = require('child_process').spawn
 env.NODE_DEV = process.argv[1]
 
 var args = process.argv.slice(2)
-
 if (!args.length) {
   try {
-    args.push(JSON.parse(fs.readFileSync('./package.json', 'utf8')).main)
+    var json = JSON.parse(fs.readFileSync('./package.json', 'utf8'))
+    if (!json.main) {
+      console.log('Error: package.json does not specify a "main" script.')
+      throw new Error()
+    }
+    args.push(json.main)
   }
   catch (err) {
-    console.log('Usage: node-dev [options] script.js [arguments]\n')
+    console.log('Usage: node-dev [options] script [arguments]\n')
     process.exit(1)
   }
 }
