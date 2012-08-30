@@ -4,9 +4,19 @@ var spawn = require('child_process').spawn
   , fs = require('fs')
   , env = process.env
   , node = process.argv[0]
+  , child
 
 // Pass the location of the node-dev script to the child process
 env.NODE_DEV = process.argv[1]
+
+try {
+  var cluster = require('cluster')
+  // Re-expose the id so that child process knows about being a worker
+  if (cluster.worker) env.NODE_UNIQUE_ID = cluster.worker.id
+}
+catch (err) {
+  // The cluster module does not exist in 0.4.x
+}
 
 var args = process.argv.slice(2)
 if (!args.length) {
@@ -32,13 +42,22 @@ for (var i=0; i < args.length; i++) {
   }
 }
 
+// Relay IPC messages
+process.on('message', function(m) {
+  if (child && child.send) child.send(m)
+})
+
 function start() {
-  var child = spawn(node, args, {
+  child = spawn(node, args, {
     cwd: process.cwd(),
     env: env,
-    customFds: [0, 1, 2]
+    customFds: [0, 1, 2],
+    stdio: [0, 1, 2, 'ipc']
   })
-  child.on('exit', function(code) {
+  .on('message', function(m) {
+    process.send(m)
+  })
+  .on('exit', function(code) {
     if (code === 101) process.nextTick(start)
     else process.exit(code)
   })
