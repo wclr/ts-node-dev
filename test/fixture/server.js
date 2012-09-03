@@ -7,6 +7,11 @@ var server = http.createServer(function (req, res) {
   res.end('\n')
 })
 
-server.listen(8000)
-console.log('Server running at http://127.0.0.1:8000/')
-console.log(message)
+server.on('listening', function() {
+  var addr = this.address()
+  console.log('Server listening on %s:%s', addr.address, addr.port)
+  console.log(message)
+})
+.listen(0)
+
+

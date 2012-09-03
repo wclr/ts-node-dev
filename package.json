@@ -1,6 +1,6 @@
 {
   "name": "node-dev",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "N♻DE — Restarts your app when files are modified",
   "homepage": "http://github.com/fgnass/node-dev",
   "author": {
@@ -15,11 +15,11 @@
     }
   ],
   "bin": {
-    "node-dev": "./node-dev"
+    "node-dev": "./bin/node-dev"
   },
   "preferGlobal": true,
   "engines": {
-    "node": ">=0.4.0"
+    "node": ">=0.6.0"
   },
   "repository": {
     "type": "git",
@@ -36,5 +36,9 @@
   ],
   "dependencies": {
     "growl": "~1.5.1"
+  },
+  "devDependencies": {
+    "should": "~1.1.0",
+    "mocha": "~1.4.1"
   }
 }

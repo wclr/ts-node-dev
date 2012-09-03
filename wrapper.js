@@ -76,7 +76,7 @@ function watchFile(file, onChange) {
     if (watchFileSupported) {
       try {
         fs.watchFile(file, {interval: 500, persistent: true}, function(cur, prev) {
-          if (cur && +cur.mtime !== +prev.mtime) {
+          if (cur && +cur.mtime > +prev.mtime) {
             onChange()
           }
         })
