@@ -35,6 +35,6 @@
     "forever"
   ],
   "dependencies": {
-    "growl": "~1.5.1"
+    "growl": "~1.6.0"
   }
 }
