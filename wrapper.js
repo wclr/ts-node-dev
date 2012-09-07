@@ -76,7 +76,7 @@ function watchFile(file, onChange) {
     if (watchFileSupported) {
       try {
         fs.watchFile(file, {interval: 500, persistent: true}, function(cur, prev) {
-          if (cur && +cur.mtime !== +prev.mtime) {
+          if (cur && +cur.mtime > +prev.mtime) {
             onChange()
           }
         })
@@ -92,7 +92,7 @@ function watchFile(file, onChange) {
       if (ev == 'change') {
         fs.stat(file, function(err, cur) {
           if (err) throw err
-          if (cur.size !== stats.size || +cur.mtime !== +stats.mtime) {
+          if (cur.size !== stats.size || +cur.mtime > +stats.mtime) {
             stats = cur
             onChange()
           }
