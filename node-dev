@@ -55,7 +55,7 @@ function start() {
     stdio: [0, 1, 2, 'ipc']
   })
   .on('message', function(m) {
-    process.send(m)
+    if (process.send) process.send(m)
   })
   .on('exit', function(code) {
     if (code === 101) process.nextTick(start)
