@@ -87,7 +87,7 @@ function watchFile(file, onChange) {
       }
     }
 
-    // No fs.watchFile support, fall back to fs.watch *
+    // No fs.watchFile support, fall back to fs.watch
     fs.watch(file, function(ev) {
       if (ev == 'change') {
         fs.stat(file, function(err, cur) {
@@ -157,7 +157,7 @@ function patch(obj, method, fileArgIndex) {
 }
 
 // Monkey-patch the vm module to watch files executed via one of these methods:
-patch (vm, 'createScript', 1)
+patch(vm, 'createScript', 1)
 patch(vm, 'runInThisContext', 1)
 patch(vm, 'runInNewContext', 2)
 patch(vm, 'runInContext', 2)
