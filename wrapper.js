@@ -72,7 +72,7 @@ var watchFileSupported = !!fs.watchFile
 function watchFile(file, onChange) {
 
   fs.stat(file, function(err, stats) {
-    if (err) throw err
+    if (err) return // Probably not a real filename, ignore it.
     if (watchFileSupported) {
       try {
         fs.watchFile(file, {interval: 500, persistent: true}, function(cur, prev) {
