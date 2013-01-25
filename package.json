@@ -1,7 +1,7 @@
 {
   "name": "node-dev",
-  "version": "0.2.9",
-  "description": "N♻DE — Restarts your app when files are modified",
+  "version": "0.2.10",
+  "description": "Restarts your app when files are modified",
   "homepage": "http://github.com/fgnass/node-dev",
   "author": {
     "name": "Felix Gnass",
@@ -35,6 +35,6 @@
     "forever"
   ],
   "dependencies": {
-    "growl": "~1.6.0"
+    "growl": "~1.7.0"
   }
 }
