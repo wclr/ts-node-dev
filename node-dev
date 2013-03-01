@@ -47,6 +47,13 @@ process.on('message', function(m) {
   if (child && child.send) child.send(m)
 })
 
+// Relay signals
+;['SIGTERM', 'SIGKILL'].forEach(function(sig) {
+  process.on(sig, function() {
+    if (child) child.kill(sig)
+  })
+})
+
 function start() {
   child = spawn(node, args, {
     cwd: process.cwd(),
