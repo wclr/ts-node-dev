@@ -1,6 +1,6 @@
 {
   "name": "node-dev",
-  "version": "0.2.10",
+  "version": "0.3.0",
   "description": "Restarts your app when files are modified",
   "homepage": "http://github.com/fgnass/node-dev",
   "author": {
