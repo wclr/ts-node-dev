@@ -9,7 +9,7 @@ function spawn(cmd, cb) {
   var ps = child.spawn(bin, cmd.split(' '), { cwd: dir })
     , out = ''
 
-  ps.stdout.on('data', function(data) {
+  if (cb) ps.stdout.on('data', function(data) {
     out += data.toString()
     var ret = cb.call(ps, out)
     if (typeof ret == 'function') cb = ret
@@ -116,6 +116,25 @@ describe('node-dev', function() {
       this.kill()
       done()
     }).stdin.write('foo')
+  })
+
+  it('should kill the forked processes', function(done) {
+    spawn('pid.js', function(out) {
+      var pid = parseInt(out, 10)
+      this.on('exit', function() {
+        setTimeout(function() {
+          try {
+            process.kill(pid)
+            done('child must no longer run')
+          }
+          catch(e) {
+            done()
+          }
+        }, 500)
+      })
+      this.kill()
+
+    })
   })
 
 })

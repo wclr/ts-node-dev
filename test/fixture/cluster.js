@@ -11,6 +11,7 @@ if (cluster.isMaster) {
   }
 }
 else {
-  process.send('*** Worker started! ***')
+  console.log('Worker started.')
+  process.send('Hello')
   require('./server')
 }
