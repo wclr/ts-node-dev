@@ -1,44 +1,39 @@
 {
   "name": "node-dev",
-  "version": "0.2.8",
-  "description": "N♻DE — Restarts your app when files are modified",
-  "homepage": "http://github.com/fgnass/node-dev",
-  "author": {
-    "name": "Felix Gnass",
-    "url": "https://twitter.com/fgnass"
-  },
-  "contributors": [
-    {
-      "name": "Aseem Kishore",
-      "email": "aseem.kishore@gmail.com",
-      "url": "http://aseemk.com"
-    }
-  ],
-  "bin": {
-    "node-dev": "./bin/node-dev"
-  },
-  "preferGlobal": true,
-  "engines": {
-    "node": ">=0.6.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "http://github.com/fgnass/node-dev.git"
-  },
+  "version": "0.4.0",
+  "private": "true",
+  "description": "Auto-restart node when files are modified",
   "keywords": [
-    "development",
     "restart",
     "reload",
     "supervisor",
     "monitor",
-    "watch",
-    "forever"
+    "watch"
   ],
+  "author": "Felix Gnass",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/fgnass/node-dev.git"
+  },
+  "bin": {
+    "node-dev": "./bin/node-dev"
+  },
+  "main": "./lib",
+  "preferGlobal": true,
+  "engines": {
+    "node": ">=0.6.0"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha"
+  },
   "dependencies": {
-    "growl": "~1.5.1"
+    "growl": "~1.7.0",
+    "dateformat": "~1.0.4-1.2.3"
   },
   "devDependencies": {
-    "should": "~1.1.0",
-    "mocha": "~1.4.1"
+    "mocha": "~1.4.1",
+    "expect.js": "~0.2.0",
+    "touch": "0.0.2",
+    "coffee-script": "~1.5.0"
   }
 }

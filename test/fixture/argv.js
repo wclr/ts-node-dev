@@ -1,1 +1,1 @@
-console.log('argv.js', process.argv)
+console.log(process.argv)
