@@ -1,5 +1,6 @@
-About
-=====
+[![Build Status](https://secure.travis-ci.org/fgnass/node-dev.png)](http://travis-ci.org/fgnass/node-dev)
+
+# node-dev
 
 Node-dev is a development tool for [Node.js](http://nodejs.org) that automatically restarts the node process when a script is modified.
 
