@@ -3,26 +3,19 @@ About
 
 Node-dev is a development tool for [Node.js](http://nodejs.org) that automatically restarts the node process when a script is modified.
 
-It's an alternative to tools like [supervisor](https://github.com/isaacs/node-supervisor) or [nodemon](https://github.com/remy/nodemon) and doesn't require any configuration. You neither have to specify which files to monitor nor which files to ignore. Node-dev hooks into Node's module system and watches only the files that have been actually required.
+It's an alternative to tools like [supervisor](https://github.com/isaacs/node-supervisor) or [nodemon](https://github.com/remy/nodemon) that doesn't require any configuration. Just run `node-dev foo.js` as you would normally run `node` and it will automatically figure out which files need to be watched.
+
+You may also use node-dev with [CoffeeScript](http://http://coffeescript.org/) or [LiveScript](http://livescript.net/) apps. Just run `node-dev app.coffee` or `node-dev app.ls`. You may also register additional language flavors by adding them to the extensions list in your [.node-dev.json](#settings) config file.
+
 
 Desktop Notifications
 =====================
 
-Status and error messages are displayed as desktop notification using either [Growl](http://growl.info/about.php) or [libnotify](http://developer.gnome.org/libnotify/).
+Status and error messages can be displayed as desktop notification using either [Growl](http://growl.info/about.php) or [libnotify](http://developer.gnome.org/libnotify/).
 
 ![Screenshot](http://fgnass.github.com/images/node-dev.png)
 
 ![Screenshot](http://fgnass.github.com/images/node-dev-linux.png)
-
-
-Usage
-=====
-
-Simply use the `node-dev` binary as you would normally use `node`.
-
-__Note:__ All arguments are passed on to the child-process. `node-dev --debug app.js` will debug your application, not the node-dev process itself.
-
-You may also use node-dev with [CoffeeScript](http://http://coffeescript.org/) or [LiveScript](http://livescript.net/) apps. Just run `node-dev app.coffee` or `node-dev app.ls` -- that's all.
 
 
 Installation
