@@ -1,0 +1,10 @@
+#!/usr/bin/env node
+var dev = require('..')
+  , args = process.argv.slice(2)
+
+if (!args.length) {
+  console.log('Usage: node-dev [options] script [arguments]\n')
+  process.exit(1)
+}
+
+dev(args)
