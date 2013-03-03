@@ -1,6 +1,6 @@
 {
   "name": "node-dev",
-  "version": "0.3.0",
+  "version": "2.0.0",
   "description": "Restarts your app when files are modified",
   "keywords": [
     "restart",
@@ -20,7 +20,7 @@
   "main": "./lib",
   "preferGlobal": true,
   "engines": {
-    "node": ">=0.6.0"
+    "node": ">=0.8.0"
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha"
