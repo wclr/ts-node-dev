@@ -13,6 +13,7 @@ function spawn(cmd, cb) {
     out += data.toString()
     var ret = cb.call(ps, out)
     if (typeof ret == 'function') cb = ret
+    else if (ret == 'kill') cb = null, ps.kill()
   })
   return ps
 }
@@ -62,6 +63,7 @@ describe('node-dev', function() {
           if (out.match(/Restarting/)) {
             this.kill()
             done()
+            return false
           }
         }
       }
@@ -71,16 +73,16 @@ describe('node-dev', function() {
   it('should watch if no such module', function(done) {
     spawn('noSuchModule.js', function(out) {
       expect(out).to.match(/ERROR/)
-      this.kill()
       done()
+      return 'kill'
     })
   })
 
   it('should ignore caught errors', function(done) {
     spawn('catchNoSuchModule.js', function(out) {
       expect(out).to.match(/Caught/)
-      this.kill()
       done()
+      return 'kill'
     })
   })
 
@@ -90,8 +92,8 @@ describe('node-dev', function() {
       expect(argv[0]).to.match(/.*?node$/)
       expect(argv[1]).to.equal('argv.js')
       expect(argv[2]).to.equal('foo')
-      this.kill()
       done()
+      return 'kill'
     })
   })
 
@@ -113,8 +115,8 @@ describe('node-dev', function() {
   it('should relay stdin', function(done) {
     spawn('echo.js', function(out) {
       expect(out).to.equal('foo')
-      this.kill()
       done()
+      return 'kill'
     }).stdin.write('foo')
   })
 
@@ -132,8 +134,7 @@ describe('node-dev', function() {
           }
         }, 500)
       })
-      this.kill()
-
+      return 'kill'
     })
   })
 
