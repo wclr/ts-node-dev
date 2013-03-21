@@ -19,7 +19,7 @@ function spawn(cmd, cb) {
 }
 
 function touchFile() {
-  setTimeout(function() { touch(dir + '/message.js') }, 500)
+  setTimeout(function() { touch(dir + '/message.js') }, 800)
 }
 
 function run(cmd, cb) {
