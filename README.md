@@ -28,6 +28,10 @@ Node-dev can be installed via [npm](http://github.com/isaacs/npm):
 
 In order to use Growl notifications [growlnotify](http://growl.info/extras.php#growlnotify) must be installed on your system.
 
+To use OSX's built in notifications:
+
+    sudo gem install terminal-notifier
+
 Settings
 ========
 
