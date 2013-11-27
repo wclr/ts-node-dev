@@ -24,7 +24,7 @@
     "node": ">=0.8.0"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha"
+    "test": "mocha"
   },
   "dependencies": {
     "growl": "~1.7.0",
