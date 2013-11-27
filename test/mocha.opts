@@ -1,2 +1,2 @@
---timeout 4000
---slow 4000
+--timeout 10000
+--slow 5000
