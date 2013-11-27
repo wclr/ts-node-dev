@@ -1,6 +1,8 @@
-var child = require('child_process')
+var fs = require('fs')
+  , child = require('child_process')
   , touch = require('touch')
   , expect = require('expect.js')
+
 
 var dir = __dirname + '/fixture'
   , bin = __dirname + '/../bin/node-dev'
@@ -13,23 +15,22 @@ function spawn(cmd, cb) {
     out += data.toString()
     var ret = cb.call(ps, out)
     if (typeof ret == 'function') cb = ret
-    else if (ret == 'kill') cb = null, ps.kill()
+    else if (ret && ret.exit) {
+      ps.stdout.removeAllListeners('data')
+      ps.on('exit', function() { setTimeout(ret.exit, 1000) })
+      ps.kill()
+    }
   })
   return ps
 }
 
-function touchFile() {
-  setTimeout(function() { touch(dir + '/message.js') }, 800)
-}
-
-function run(cmd, cb) {
+function run(cmd, done) {
   spawn(cmd, function(out) {
     if (out.match(/touch message.js/)) {
-      touchFile()
+      touch(dir + '/message.js')
       return function(out) {
         if (out.match(/Restarting/)) {
-          this.kill()
-          cb(null, out)
+          return { exit: done }
         }
       }
     }
@@ -55,15 +56,32 @@ describe('node-dev', function() {
     run('server.coffee', done)
   })
 
+  it('should restart when a file is renamed', function(done) {
+    var f = dir + '/message.js'
+      , tmp = dir + '/message.tmp'
+      , msg = fs.readFileSync(f)
+
+    fs.writeFileSync(tmp, msg)
+
+    spawn('log.js', function(out) {
+      if (out.match(/touch message.js/)) {
+        fs.rename(tmp, f)
+        return function(out) {
+          if (out.match(/Restarting/)) {
+            return { exit: done }
+          }
+        }
+      }
+    })
+  })
+
   it('should handle errors', function(done) {
     spawn('error.js', function(out) {
       if (out.match(/ERROR/)) {
-        touchFile()
+        setTimeout(function() { touch(dir + '/message.js') }, 1000)
         return function(out) {
           if (out.match(/Restarting/)) {
-            this.kill()
-            done()
-            return false
+            return { exit: done }
           }
         }
       }
@@ -73,16 +91,14 @@ describe('node-dev', function() {
   it('should watch if no such module', function(done) {
     spawn('noSuchModule.js', function(out) {
       expect(out).to.match(/ERROR/)
-      done()
-      return 'kill'
+      return { exit: done }
     })
   })
 
   it('should ignore caught errors', function(done) {
     spawn('catchNoSuchModule.js', function(out) {
       expect(out).to.match(/Caught/)
-      done()
-      return 'kill'
+      return { exit: done }
     })
   })
 
@@ -92,8 +108,7 @@ describe('node-dev', function() {
       expect(argv[0]).to.match(/.*?node$/)
       expect(argv[1]).to.equal('argv.js')
       expect(argv[2]).to.equal('foo')
-      done()
-      return 'kill'
+      return { exit: done }
     })
   })
 
@@ -115,8 +130,7 @@ describe('node-dev', function() {
   it('should relay stdin', function(done) {
     spawn('echo.js', function(out) {
       expect(out).to.equal('foo')
-      done()
-      return 'kill'
+      return { exit: done }
     }).stdin.write('foo')
   })
 
@@ -134,7 +148,7 @@ describe('node-dev', function() {
           }
         }, 500)
       })
-      return 'kill'
+      return { exit: done }
     })
   })
 
