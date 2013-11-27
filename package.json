@@ -1,6 +1,6 @@
 {
   "name": "node-dev",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Restarts your app when files are modified",
   "keywords": [
     "restart",
