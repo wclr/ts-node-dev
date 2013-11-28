@@ -1,14 +1,18 @@
 var fs = require('fs')
   , child = require('child_process')
-  , touch = require('touch')
   , expect = require('expect.js')
 
-
-var dir = __dirname + '/fixture'
+var dir = __dirname +  '/fixture'
   , bin = __dirname + '/../bin/node-dev'
+  , msgFile = dir + '/message.js'
+  , msg = 'module.exports = "Please touch message.js now"\n'
+
+function touch() {
+  fs.writeFileSync(msgFile, msg)
+}
 
 function spawn(cmd, cb) {
-  var ps = child.spawn(bin, cmd.split(' '), { cwd: dir })
+  var ps = child.spawn('node', [bin].concat(cmd.split(' ')), { cwd: dir })
     , out = ''
 
   if (cb) ps.stdout.on('data', function(data) {
@@ -27,7 +31,7 @@ function spawn(cmd, cb) {
 function run(cmd, done) {
   spawn(cmd, function(out) {
     if (out.match(/touch message.js/)) {
-      touch(dir + '/message.js')
+      setTimeout(touch, 500)
       return function(out) {
         if (out.match(/Restarting/)) {
           return { exit: done }
@@ -57,15 +61,11 @@ describe('node-dev', function() {
   })
 
   it('should restart when a file is renamed', function(done) {
-    var f = dir + '/message.js'
-      , tmp = dir + '/message.tmp'
-      , msg = fs.readFileSync(f)
-
+    var tmp = dir + '/message.tmp'
     fs.writeFileSync(tmp, msg)
-
     spawn('log.js', function(out) {
       if (out.match(/touch message.js/)) {
-        fs.rename(tmp, f)
+        fs.renameSync(tmp, msgFile)
         return function(out) {
           if (out.match(/Restarting/)) {
             return { exit: done }
@@ -78,7 +78,7 @@ describe('node-dev', function() {
   it('should handle errors', function(done) {
     spawn('error.js', function(out) {
       if (out.match(/ERROR/)) {
-        setTimeout(function() { touch(dir + '/message.js') }, 1000)
+        setTimeout(touch, 500)
         return function(out) {
           if (out.match(/Restarting/)) {
             return { exit: done }
@@ -105,7 +105,7 @@ describe('node-dev', function() {
   it('should not show up in argv', function(done) {
     spawn('argv.js foo', function(out) {
       var argv = JSON.parse(out.replace(/'/g, '"'))
-      expect(argv[0]).to.match(/.*?node$/)
+      expect(argv[0]).to.match(/.*?node(\.exe)?$/)
       expect(argv[1]).to.equal('argv.js')
       expect(argv[2]).to.equal('foo')
       return { exit: done }

@@ -33,7 +33,6 @@
   "devDependencies": {
     "mocha": "~1.4.1",
     "expect.js": "~0.2.0",
-    "touch": "0.0.2",
     "coffee-script": "~1.5.0"
   }
 }
