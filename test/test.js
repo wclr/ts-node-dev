@@ -48,6 +48,24 @@ describe('node-dev', function() {
     run('server.js', done)
   })
 
+  it('should restart the server twice', function(done) {
+    spawn('server.js', function(out) {
+      if (out.match(/touch message.js/)) {
+        setTimeout(touch, 500)
+        return function(out) {
+          if (out.match(/Restarting/)) {
+            setTimeout(touch, 500)
+            return function(out) {
+              if (out.match(/Restarting/)) {
+                return { exit: done }
+              }
+            }
+          }
+        }
+      }
+    })
+  })
+
   it('should restart the cluster', function(done) {
     run('cluster.js', done)
   })
