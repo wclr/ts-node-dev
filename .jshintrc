@@ -66,24 +66,10 @@
 
   /* Environments */
 
-  "browser"       : true,   // Allows the use of undefined globals exposed by modern browsers, i.e. window or document
+  "browser"       : false,   // Allows the use of undefined globals exposed by modern browsers, i.e. window or document
   "couch"         : false,  // Allows the use of globals exposed by CouchDB
   "devel"         : false,  // Allows the use of globals like console.xxx and alert statements
-  "dojo"          : false,  // Allows the use of globals exposed by the DoJo Toolkit
   "jquery"        : false,  // Allows the use of globals exposed by jQuery
-  "mootools"      : false,  // Allows the use of globals exposed by the MooTools framework
   "node"          : true,   // Allows the use of globals for code running in nodejs, i.e. 'global'
-  "nonstandard"   : false,  // Allows the use of non-standard but widely adopted globals such as escape and unescape
-  "prototypejs"   : false,  // Allows the use of globals exposed by the Prototype framework
-  "rhino"         : false,  // Allows the use of globals available for code running in Rhino
-  "wsh"           : false,  // Allows the use of globals available for code running in the Windows Script Host
-
-
-  /* Legacy */
-
-  "nomen"         : false,  // Disallow the use of variable names beginning with an underscore
-  "onevar"        : false,  // If false, warns when having multiple var definition within one function
-  "passfail"      : false,  // If true, JSHint stops on the first error or warning.
-  "white"         : false   // If true, Douglas Crockford's JavaScript coding styles are enforce - behaves eradic
 
 }
