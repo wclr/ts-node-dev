@@ -123,7 +123,7 @@ describe('node-dev', function() {
   it('should not show up in argv', function(done) {
     spawn('argv.js foo', function(out) {
       var argv = JSON.parse(out.replace(/'/g, '"'))
-      expect(argv[0]).to.match(/.*?node(\.exe)?$/)
+      expect(argv[0]).to.match(/.*?node(js|\.exe)?$/)
       expect(argv[1]).to.equal('argv.js')
       expect(argv[2]).to.equal('foo')
       return { exit: done }
