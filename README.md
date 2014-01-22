@@ -54,6 +54,8 @@ directory which – if present – overwrites the global settings.
 * __clear__ – Whether to clear the screen upon restarts. _Default:_ `false`
 * __extensions__ – Modules to load based bad on extension of the main script. _Default:_
   `{ coffee: "coffee-script", ls: "LiveScript" }`
+* __deps__ - Wether to watch dependencies of a project (modules which reside in
+  `node_modules` directories). _Default:_ `true`
 
 ### The MIT License (MIT)
 
