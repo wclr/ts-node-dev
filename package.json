@@ -29,7 +29,7 @@
   "dependencies": {
     "growl": "~1.7.0",
     "dateformat": "~1.0.4-1.2.3",
-    "filewatcher": "~1.0.0"
+    "filewatcher": "~1.1.1"
   },
   "devDependencies": {
     "mocha": "~1.4.1",
