@@ -34,6 +34,6 @@
   "devDependencies": {
     "mocha": "~1.4.1",
     "expect.js": "~0.2.0",
-    "coffee-script": "~1.5.0"
+    "coffee-script": "~1.7.1"
   }
 }
