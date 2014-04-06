@@ -107,6 +107,12 @@ This means that if you run `node-dev foo.coffee` node-dev will do a
 __Note:__ If you want to use coffee-script < 1.7 you have to change the
 setting to `{"coffee": "coffee-script"}`.
 
+### Graceful restarts
+
+Node-dev sends a `SIGTERM` signal to the child-process if a restart is required.
+If your app is not listening for these signals `process.exit(0)` will be called
+immediately. If a listener is registered, node-dev assumes that your app will
+exit on its own once it is ready.
 
 ## License
 
