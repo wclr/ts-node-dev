@@ -14,4 +14,13 @@ server.on('listening', function() {
 })
 .listen(0)
 
+process.on('SIGTERM', function() {
+  server.close()
+  setTimeout(function() { console.log('3') }, 200)
+  setTimeout(function() { console.log('2') }, 400)
+  setTimeout(function() { console.log('1') }, 600)
+})
 
+process.on('exit', function() {
+  console.log('exit')
+})

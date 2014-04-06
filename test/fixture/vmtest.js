@@ -4,3 +4,6 @@ var vm = require('vm')
   , str = fs.readFileSync(file, 'utf8')
 
 vm.runInNewContext(str, {module: {}, require: require, console: console}, file)
+
+// Listen for events to keep running
+process.on('message', function() {})

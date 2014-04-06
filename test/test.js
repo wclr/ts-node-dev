@@ -176,4 +176,17 @@ describe('node-dev', function() {
     })
   })
 
+  it('should allow graceful shutdowns', function(done) {
+    spawn('server.js', function(out) {
+      if (out.match(/touch message.js/)) {
+        setTimeout(touch, 500)
+        return function(out) {
+          if (out.match(/exit/)) {
+            return { exit: done }
+          }
+        }
+      }
+    })
+  })
+
 })
