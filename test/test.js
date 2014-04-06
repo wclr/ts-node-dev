@@ -155,7 +155,7 @@ describe('node-dev', function() {
   it('should kill the forked processes', function(done) {
     spawn('pid.js', function(out) {
       var pid = parseInt(out, 10)
-      this.on('exit', function() {
+      return { exit: function() {
         setTimeout(function() {
           try {
             process.kill(pid)
@@ -165,7 +165,13 @@ describe('node-dev', function() {
             done()
           }
         }, 500)
-      })
+      }}
+    })
+  })
+
+  it('should set NODE_ENV', function(done) {
+    spawn('env.js', function(out) {
+      expect(out).to.match(/development/)
       return { exit: done }
     })
   })
