@@ -78,11 +78,22 @@ options you can set to tweak its behaviour:
 * `timestamp` – The timestamp format to use for logging restarts. _Default:_ `"HH:MM:ss"`
 * `vm` – Whether to watch files loaded via Node's [VM](http://nodejs.org/docs/latest/api/vm.html) module. _Default:_ `true`
 * `fork` – Whether to hook into [child_process.fork](http://nodejs.org/docs/latest/api/child_process.html#child_process_child_process_fork_modulepath_args_options) (required for [clustered](http://nodejs.org/docs/latest/api/cluster.html) programs). _Default:_ `true`
-* `deps` - How many levels of dependencies should be watched. _Default:_ `1`
+* `deps` – How many levels of dependencies should be watched. _Default:_ `1`
+* `dedupe` – Whether modules should by [dynamically deduped](https://www.npmjs.org/package/dynamic-dedupe). _Default:_ `false`
 
 Upon startup node-dev looks for a `.node-dev.json` file in the user's HOME
 directory. It will also look for a `.node-dev.json` file in the current
 directory which (if present) overwrites the per-user settings.
+
+### Dedupe linked modules
+
+Sometimes you need to make sure that multiple modules get
+_exactly the same instance_ of a common (peer-) dependency. This can usually be
+achieved by running `npm dedupe` – however this doesn't work when you try to
+`npm link` a dependency (which is quite common during development). Therefore
+node-dev provides a `--dedupe` switch that will inject the
+[dynamic-dedupe](https://www.npmjs.org/package/dynamic-dedupe) module into your
+app.
 
 ### Transpilers
 
