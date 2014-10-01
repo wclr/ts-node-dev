@@ -33,7 +33,7 @@
     "growl": "~1.7.0"
   },
   "devDependencies": {
-    "coffee-script": "~1.7.1",
+    "coffee-script": "^1.8.0",
     "tap": "^0.4.13"
   }
 }
