@@ -1,35 +1,21 @@
 // See http://www.jshint.com/options/
 {
+  "immed": true,
+  "newcap": true,
+  "noarg": true,
+  "nonew": true,
+  "regexp": true,
+  "undef": true,
+  "trailing": true,
 
-  // Additional globals
-  "predef": [
-    "describe",
-    "it"
-  ],
+  "asi": true,
+  "boss": true,
+  "evil": true,
+  "expr": true,
+  "laxbreak": true,
+  "laxcomma": true,
+  "loopfunc": true,
+  "proto": true,
 
-  // Enforcing Options
-  // When set to true, these options will make JSHint produce more warnings about your code.
-
-  "immed"         : true,   // Switches on warnings for immediately invoked functions which are not wrapped in parenthesis
-  "newcap"        : true,   // Switches on warnings if uncapitalised constructor function names are being used
-  "noarg"         : true,   // Switches on warnings when arguments.caller and arguments.callee are being used
-  "nonew"         : true,   // Switches on warnings when no "new" keyword is being used for constructor functions
-  "regexp"        : true,   // Switches on warnings for unsafe usage of '.' in regular expressions
-  "undef"         : true,   // Switches on warnings when using undeclared variables
-  "trailing"      : true,   // Switches on warnings for using trailing whitespace at the end of lines
-
-  // Relaxing Options
-  // When set to true, these options will make JSHint produce less warnings about your code.
-
-  "asi"           : true,   // Switches off warnings about missing semi-colons
-  "boss"          : true,   // Switches off warnings about assignments in places where conditions are expected
-  "evil"          : true,   // Switches off warnings about the use of eval
-  "expr"          : true,   // Switches off warnings when using expressions in places where assignments are expected
-  "laxbreak"      : true,   // Switches off warnings about improper line breaks
-  "laxcomma"      : true,   // Switches off warnings about leading commas in multi-line var declarations
-  "loopfunc"      : true,   // Switches off warnings about functions inside of loops
-  "proto"         : true,   // Switches off warnings when using the __proto__ property
-
-  // Environments
-  "node"          : true    // Allows the use of globals for code running in nodejs, i.e. 'global'
+  "node": true
 }
