@@ -82,8 +82,8 @@ options you can set to tweak its behaviour:
 * `dedupe` – Whether modules should by [dynamically deduped](https://www.npmjs.org/package/dynamic-dedupe). _Default:_ `false`
 
 Upon startup node-dev looks for a `.node-dev.json` file in the user's HOME
-directory. It will also look for a `.node-dev.json` file in the current
-directory which (if present) overwrites the per-user settings.
+directory. It will also look for a `.node-dev.json` file in the same directory
+as the script to be run, which (if present) overwrites the per-user settings.
 
 ### Dedupe linked modules
 

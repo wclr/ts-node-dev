@@ -30,7 +30,8 @@
     "dateformat": "~1.0.4-1.2.3",
     "dynamic-dedupe": "^0.2.0",
     "filewatcher": "~1.1.1",
-    "growl": "~1.7.0"
+    "growl": "~1.7.0",
+    "resolve": "^1.0.0"
   },
   "devDependencies": {
     "coffee-script": "^1.8.0",
