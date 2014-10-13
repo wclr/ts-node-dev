@@ -51,22 +51,20 @@ it globally.
 
 ### Desktop Notifications
 
-Status and error messages can be displayed as desktop notification using either
-[Growl](http://growl.info/about.php) or
-[libnotify](http://developer.gnome.org/libnotify/).
+Status and error messages can be displayed as desktop notification using
+[node-notifier](https://www.npmjs.org/package/node-notifier):
 
 ![Screenshot](http://fgnass.github.com/images/node-dev.png)
 
 ![Screenshot](http://fgnass.github.com/images/node-dev-linux.png)
 
+__Requirements:__
 
-In order to use Growl notifications
-[growlnotify](http://growl.info/extras.php#growlnotify) must be installed on
-your system.
+* Mac OS X: >= 10.8 or Growl if earlier.
+* Linux: notify-osd installed (Ubuntu should have this by default)
+* Windows: >= 8, task bar balloon if earlier or Growl if that is installed.
+* General Fallback: Growl
 
-To use OSX's built in notifications:
-
-    sudo gem install terminal-notifier
 
 # Settings
 
