@@ -1,10 +1,25 @@
 #!/usr/bin/env node
+
 var dev = require('..')
-  , args = process.argv.slice(2)
+var program = require('commander')
+var resolveMain = require('../lib/resolveMain')
 
-if (!args.length) {
-  console.log('Usage: node-dev [options] script [arguments]\n')
-  process.exit(1)
-}
 
-dev(args)
+program
+  .version(require('../package.json').version)
+  .option('--all-deps', 'watch the whole dependency tree')
+  .option('--no-deps', 'watch only the project’s own files and linked modules' +
+    ' (via `npm link`)')
+  .option('--dedupe', 'dedupe modules dynamically')
+  .arguments('<script> [arguments...]')
+  .action(function (script, scriptArgs) {
+    var wrapper = resolveMain(__dirname + '/../lib/wrap.js')
+
+    dev(wrapper, script, scriptArgs || [], {
+      allDeps: program.allDeps || false,
+      noDeps: program.noDeps || false,
+      dedupe: program.dedupe || false,
+    })
+  })
+
+program.parse(process.argv)
