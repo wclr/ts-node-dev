@@ -27,6 +27,7 @@
     "test": "node test"
   },
   "dependencies": {
+    "commander": "^2.8.1",
     "dateformat": "~1.0.4-1.2.3",
     "dynamic-dedupe": "^0.2.0",
     "filewatcher": "~1.1.1",
