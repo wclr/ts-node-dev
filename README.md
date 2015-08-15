@@ -123,11 +123,32 @@ If your app is not listening for these signals `process.exit(0)` will be called
 immediately. If a listener is registered, node-dev assumes that your app will
 exit on its own once it is ready.
 
+### Ignore paths
+
+If you’d like to ignore certain paths or files from triggering a restart simply
+list them in the `.node-dev.json` configuration under `"ignore"`, e.g.
+
+```json
+{
+  "ignore": [
+    "client/scripts",
+    "shared/module.js"
+  ]
+}
+
+```
+
+This might be useful when you are running a [universal][universal-javascript]
+(isomorphic) web app that shares modules across the server and client, e.g.
+[React.js](react) components for server-side rendering, which you don’t want to trigger a
+server restart when changed, since it introduces an unnecessary delay.
+
 ## License
 
 ### The MIT License (MIT)
 
-Copyright (c) 2014 Felix Gnass
+Copyright (c) 2014–2015 Felix Gnass
+Copyright (c) 2015 Daniel Gasienica
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -146,3 +167,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+
+[react]: http://facebook.github.io/react/
+[universal-javascript]: https://medium.com/@mjackson/universal-javascript-4761051b7ae9

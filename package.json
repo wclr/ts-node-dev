@@ -10,6 +10,9 @@
     "watch"
   ],
   "author": "Felix Gnass",
+  "contributors": [
+    "Daniel Gasienica <daniel@gasienica.ch> (https://github.com/gasi/)"
+  ],
   "repository": {
     "type": "git",
     "url": "http://github.com/fgnass/node-dev.git"
