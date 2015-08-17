@@ -1,3 +1,6 @@
 {
-  "notify": false
+  "notify": false,
+  "ignore": [
+    "./ignoredModule.js"
+  ]
 }
