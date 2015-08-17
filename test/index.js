@@ -139,7 +139,7 @@ test('should pass through the exit code', function(t) {
   })
 })
 
-test('should conceil the wrapper', function(t) {
+test('should conceal the wrapper', function(t) {
   // require.main should be main.js not wrap.js!
   spawn('main.js').on('exit', function(code) {
     t.is(code, 0)
