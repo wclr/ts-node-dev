@@ -1,5 +1,7 @@
 var http = require('http')
   , message = require('./message')
+  // Changes to this module should not cause a server restart:
+  , ignoredModule = require('./ignoredModule')
 
 var server = http.createServer(function (req, res) {
   res.writeHead(200, {'Content-Type': 'text/plain'})
