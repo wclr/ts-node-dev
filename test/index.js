@@ -1,14 +1,15 @@
 var fs = require('fs')
   , child = require('child_process')
   , test = require('tap').test
+  , touch = require('touch')
 
 var dir = __dirname +  '/fixture'
   , bin = __dirname + '/../bin/node-dev'
   , msgFile = dir + '/message.js'
   , msg = 'module.exports = "Please touch message.js now"\n'
 
-function touch() {
-  fs.writeFileSync(msgFile, msg)
+function touchFile() {
+  touch.sync(msgFile);
 }
 
 function spawn(cmd, cb) {
@@ -31,7 +32,7 @@ function spawn(cmd, cb) {
 function run(cmd, done) {
   spawn(cmd, function(out) {
     if (out.match(/touch message.js/)) {
-      setTimeout(touch, 500)
+      setTimeout(touchFile, 500)
       return function(out) {
         if (out.match(/Restarting/)) {
           return { exit: done }
@@ -49,10 +50,10 @@ test('should restart the server', function(t) {
 test('should restart the server twice', function(t) {
   spawn('server.js', function(out) {
     if (out.match(/touch message.js/)) {
-      setTimeout(touch, 500)
+      setTimeout(touchFile, 500)
       return function(out) {
         if (out.match(/Restarting/)) {
-          setTimeout(touch, 500)
+          setTimeout(touchFile, 500)
           return function(out) {
             if (out.match(/Restarting/)) {
               return { exit: t.end.bind(t) }
@@ -94,7 +95,7 @@ test('should restart when a file is renamed', function(t) {
 test('should handle errors', function(t) {
   spawn('error.js', function(out) {
     if (out.match(/ERROR/)) {
-      setTimeout(touch, 500)
+      setTimeout(touchFile, 500)
       return function(out) {
         if (out.match(/Restarting/)) {
           return { exit: t.end.bind(t) }
@@ -177,7 +178,7 @@ test('should set NODE_ENV', function(t) {
 test('should allow graceful shutdowns', function(t) {
   spawn('server.js', function(out) {
     if (out.match(/touch message.js/)) {
-      setTimeout(touch, 500)
+      setTimeout(touchFile, 500)
       return function(out) {
         if (out.match(/exit/)) {
           return { exit: t.end.bind(t) }
