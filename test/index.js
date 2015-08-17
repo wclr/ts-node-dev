@@ -6,8 +6,11 @@ var fs = require('fs')
 var dir = __dirname +  '/fixture'
   , bin = __dirname + '/../bin/node-dev'
   , msgFile = dir + '/message.js'
-  , msg = 'module.exports = "Please touch message.js now"\n'
 
+// Constants
+var MESSAGE = fs.readFileSync(msgFile).toString()
+
+// Helpers
 function touchFile() {
   touch.sync(msgFile);
 }
@@ -42,7 +45,7 @@ function run(cmd, done) {
   })
 }
 
-
+// Tests
 test('should restart the server', function(t) {
   run('server.js', t.end.bind(t))
 })
@@ -79,7 +82,7 @@ test('should support coffee-script', function(t) {
 
 test('should restart when a file is renamed', function(t) {
   var tmp = dir + '/message.tmp'
-  fs.writeFileSync(tmp, msg)
+  fs.writeFileSync(tmp, MESSAGE)
   spawn('log.js', function(out) {
     if (out.match(/touch message.js/)) {
       fs.renameSync(tmp, msgFile)
