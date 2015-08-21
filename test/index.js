@@ -75,7 +75,7 @@ function run(cmd, done) {
 
 test('should pass unknown args to node binary', function(t) {
   spawn('--expose_gc gc.js foo', function(out) {
-    t.is(out, 'foo function')
+    t.is(out.trim(), 'foo function')
     return { exit: t.end.bind(t) }
   })
 })
