@@ -22,17 +22,39 @@ function touchFile(file) {
 function spawn(cmd, cb) {
   var ps = child.spawn('node', [bin].concat(cmd.split(' ')), { cwd: dir })
     , out = ''
+    , err = ''
 
-  if (cb) ps.stdout.on('data', function(data) {
-    out += data.toString()
-    var ret = cb.call(ps, out)
-    if (typeof ret == 'function') cb = ret
-    else if (ret && ret.exit) {
-      ps.stdout.removeAllListeners('data')
-      ps.on('exit', function() { setTimeout(ret.exit, 1000) })
-      ps.kill()
-    }
-  })
+  if (cb) {
+
+    // capture stderr
+    ps.stderr.on('data', function(data) {
+      err += data.toString()
+    })
+
+    // invoke callback
+    ps.on('exit', function(code, signal) {
+      if (err) cb(err, code, signal)
+    })
+
+    ps.stdout.on('data', function(data) {
+      out += data.toString()
+      var ret = cb.call(ps, out)
+      if (typeof ret == 'function') {
+        // use the returned function as new callback
+        cb = ret
+      }
+      else if (ret && ret.exit) {
+        // kill the process and invoke the given function
+        ps.stdout.removeAllListeners('data')
+        ps.stderr.removeAllListeners('data')
+        ps.removeAllListeners('exit')
+        ps.on('exit', function() { setTimeout(ret.exit, 1000) })
+        ps.kill()
+      }
+    })
+
+  }
+
   return ps
 }
 
@@ -50,6 +72,14 @@ function run(cmd, done) {
 }
 
 // Tests
+
+test('should pass unknown args to node binary', function(t) {
+  spawn('--expose_gc gc.js foo', function(out) {
+    t.is(out, 'foo function')
+    return { exit: t.end.bind(t) }
+  })
+})
+
 test('should restart the server', function(t) {
   run('server.js', t.end.bind(t))
 })

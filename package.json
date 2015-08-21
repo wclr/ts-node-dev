@@ -27,7 +27,7 @@
     "node": ">=0.8.0"
   },
   "scripts": {
-    "test": "node test"
+    "test": "tap test/*.js"
   },
   "dependencies": {
     "commander": "^2.8.1",
