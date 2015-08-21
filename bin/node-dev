@@ -23,4 +23,9 @@ var opts = minimist(devArgs, {
   }
 })
 
+if (!script) {
+  console.log('Usage: node-dev [options] script [arguments]\n')
+  process.exit(1)
+}
+
 dev(script, scriptArgs, nodeArgs, opts)
