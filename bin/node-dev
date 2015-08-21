@@ -1,25 +1,31 @@
 #!/usr/bin/env node
 
 var dev = require('..')
-var program = require('commander')
-var resolveMain = require('../lib/resolveMain')
+var minimist = require('minimist')
 
+function getFirstNonOptionArgIndex(args) {
+  for (var i=2; i < args.length; i++) {
+    if (args[i][0] != '-') return i;
+  }
+  return args.length;
+}
 
-program
-  .version(require('../package.json').version)
-  .option('--all-deps', 'watch the whole dependency tree')
-  .option('--no-deps', 'watch only the project’s own files and linked modules' +
-    ' (via `npm link`)')
-  .option('--dedupe', 'dedupe modules dynamically')
-  .arguments('<script> [arguments...]')
-  .action(function (script, scriptArgs) {
-    var wrapper = resolveMain(__dirname + '/../lib/wrap.js')
+var scriptIndex = getFirstNonOptionArgIndex(process.argv)
+var script = process.argv[scriptIndex]
+var scriptArgs = process.argv.slice(scriptIndex + 1)
+var devArgs = process.argv.slice(2, scriptIndex)
 
-    dev(wrapper, script, scriptArgs || [], {
-      allDeps: program.allDeps || false,
-      noDeps: program.noDeps || false,
-      dedupe: program.dedupe || false,
-    })
-  })
+var nodeArgs = []
+var opts = minimist(devArgs, {
+  boolean: ['all-deps', 'no-deps', 'dedupe'],
+  unknown: function(arg) {
+    nodeArgs.push(arg)
+  }
+})
 
-program.parse(process.argv)
+if (!script) {
+  console.log('Usage: node-dev [options] script [arguments]\n')
+  process.exit(1)
+}
+
+dev(script, scriptArgs, nodeArgs, opts)
