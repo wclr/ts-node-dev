@@ -17,7 +17,7 @@ var devArgs = process.argv.slice(2, scriptIndex)
 
 var nodeArgs = []
 var opts = minimist(devArgs, {
-  boolean: ['all-deps', 'no-deps', 'dedupe', 'poll'],
+  boolean: ['all-deps', 'no-deps', 'dedupe', 'poll', 'respawn'],
   unknown: function(arg) {
     nodeArgs.push(arg)
   }
