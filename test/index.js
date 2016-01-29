@@ -171,6 +171,18 @@ test('should watch if no such module', function(t) {
   })
 })
 
+test('should run async code un uncaughtException handlers', function(t) {
+  spawn('uncaughtExceptionHandler.js', function(out) {
+    if (out.match(/ERROR/)) {
+      return function(out) {
+        if (out.match(/async \[ReferenceError/)) {
+          return { exit: t.end.bind(t) }
+        }
+      }
+    }
+  })
+})
+
 test('should ignore caught errors', function(t) {
   spawn('catchNoSuchModule.js', function(out) {
     t.like(out, /Caught/)
