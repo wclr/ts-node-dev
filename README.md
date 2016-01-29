@@ -116,6 +116,23 @@ This means that if you run `node-dev foo.coffee` node-dev will do a
 __Note:__ If you want to use coffee-script < 1.7 you have to change the
 setting to `{"coffee": "coffee-script"}`.
 
+Options can be passed to a transpiler by providing an object containing
+`name` and `options` attributes:
+
+```json
+    {
+        "js": {
+            "name": "babel/register",
+            "options": {
+                "only": [
+                    "lib/**",
+                    "node_modules/es2015-only-module/**"
+                ]
+            }
+        }
+    }
+```
+
 ### Graceful restarts
 
 Node-dev sends a `SIGTERM` signal to the child-process if a restart is required.
