@@ -1,9 +1,9 @@
-var vm = require('vm')
-  , fs = require('fs')
-  , file = __dirname + '/log.js'
-  , str = fs.readFileSync(file, 'utf8')
+var vm = require('vm');
+var fs = require('fs');
+var file = __dirname + '/log.js';
+var str = fs.readFileSync(file, 'utf8');
 
-vm.runInNewContext(str, {module: {}, require: require, console: console}, file)
+vm.runInNewContext(str, { module: {}, require: require, console: console }, file);
 
 // Listen for events to keep running
-process.on('message', function() {})
+process.on('message', function () {});

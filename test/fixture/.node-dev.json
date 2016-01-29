@@ -2,5 +2,14 @@
   "notify": false,
   "ignore": [
     "./ignoredModule.js"
-  ]
+  ],
+  "extensions": {
+    "coffee": "coffee-script/register",
+    "js": {
+      "name": "./extension",
+      "options": {
+        "test": true
+      }
+    }
+  }
 }

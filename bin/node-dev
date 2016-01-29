@@ -1,32 +1,46 @@
 #!/usr/bin/env node
 
-var dev = require('..')
-var minimist = require('minimist')
+var dev = require('..');
+var minimist = require('minimist');
 
 function getFirstNonOptionArgIndex(args) {
-  for (var i=2; i < args.length; i++) {
+  for (var i = 2; i < args.length; i++) {
     if (args[i][0] != '-') return i;
   }
   return args.length;
 }
 
-var scriptIndex = getFirstNonOptionArgIndex(process.argv)
-var script = process.argv[scriptIndex]
-var scriptArgs = process.argv.slice(scriptIndex + 1)
-var devArgs = process.argv.slice(2, scriptIndex)
-
-var nodeArgs = []
-var opts = minimist(devArgs, {
-  boolean: ['all-deps', 'deps', 'dedupe', 'poll'],
-  default: { deps: true },
-  unknown: function(arg) {
-    nodeArgs.push(arg)
+function removeValueArgs(args, names) {
+  var i = 0;
+  var removed = [];
+  while (i < args.length) {
+    if (~names.indexOf(args[i])) {
+      removed = removed.concat(args.splice(i, 2));
+    } else {
+      i++;
+    }
   }
-})
-
-if (!script) {
-  console.log('Usage: node-dev [options] script [arguments]\n')
-  process.exit(1)
+  return removed;
 }
 
-dev(script, scriptArgs, nodeArgs, opts)
+var nodeArgs = removeValueArgs(process.argv, ['-r', '--require']);
+
+var scriptIndex = getFirstNonOptionArgIndex(process.argv);
+var script = process.argv[scriptIndex];
+var scriptArgs = process.argv.slice(scriptIndex + 1);
+var devArgs = process.argv.slice(2, scriptIndex);
+
+var opts = minimist(devArgs, {
+  boolean: ['all-deps', 'no-deps', 'dedupe', 'poll', 'respawn'],
+  default: { deps: true },
+  unknown: function (arg) {
+    nodeArgs.push(arg);
+  }
+});
+
+if (!script) {
+  console.log('Usage: node-dev [options] script [arguments]\n');
+  process.exit(1);
+}
+
+dev(script, scriptArgs, nodeArgs, opts);
