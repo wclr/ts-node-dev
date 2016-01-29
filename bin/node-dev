@@ -1,32 +1,32 @@
 #!/usr/bin/env node
 
-var dev = require('..')
-var minimist = require('minimist')
+var dev = require('..');
+var minimist = require('minimist');
 
 function getFirstNonOptionArgIndex(args) {
-  for (var i=2; i < args.length; i++) {
+  for (var i = 2; i < args.length; i++) {
     if (args[i][0] != '-') return i;
   }
   return args.length;
 }
 
-var scriptIndex = getFirstNonOptionArgIndex(process.argv)
-var script = process.argv[scriptIndex]
-var scriptArgs = process.argv.slice(scriptIndex + 1)
-var devArgs = process.argv.slice(2, scriptIndex)
+var scriptIndex = getFirstNonOptionArgIndex(process.argv);
+var script = process.argv[scriptIndex];
+var scriptArgs = process.argv.slice(scriptIndex + 1);
+var devArgs = process.argv.slice(2, scriptIndex);
 
-var nodeArgs = []
+var nodeArgs = [];
 var opts = minimist(devArgs, {
   boolean: ['all-deps', 'deps', 'dedupe', 'poll'],
   default: { deps: true },
-  unknown: function(arg) {
-    nodeArgs.push(arg)
+  unknown: function (arg) {
+    nodeArgs.push(arg);
   }
-})
+});
 
 if (!script) {
-  console.log('Usage: node-dev [options] script [arguments]\n')
-  process.exit(1)
+  console.log('Usage: node-dev [options] script [arguments]\n');
+  process.exit(1);
 }
 
-dev(script, scriptArgs, nodeArgs, opts)
+dev(script, scriptArgs, nodeArgs, opts);

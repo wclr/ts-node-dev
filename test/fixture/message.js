@@ -1,1 +1,1 @@
-module.exports = "Please touch message.js now"
+module.exports = 'Please touch message.js now';

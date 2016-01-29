@@ -1,1 +1,1 @@
-console.log(require('./message'))
+console.log(require('./message'));
