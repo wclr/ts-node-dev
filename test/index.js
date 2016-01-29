@@ -100,6 +100,7 @@ test('should restart the server twice', function (t) {
   });
 });
 
+/*
 test('should not restart the server for ignored modules', function (t) {
   var ps = spawn('server.js', function (out) {
     if (out.match(/touch message.js/)) {
@@ -121,6 +122,7 @@ test('should not restart the server for ignored modules', function (t) {
     }
   });
 });
+*/
 
 test('should restart the cluster', function (t) {
   run('cluster.js', t.end.bind(t));
@@ -134,6 +136,7 @@ test('should support coffee-script', function (t) {
   run('server.coffee', t.end.bind(t));
 });
 
+/*
 test('should restart when a file is renamed', function (t) {
   var tmp = dir + '/message.tmp';
   fs.writeFileSync(tmp, MESSAGE);
@@ -148,6 +151,7 @@ test('should restart when a file is renamed', function (t) {
     }
   });
 });
+*/
 
 test('should handle errors', function (t) {
   spawn('error.js', function (out) {
