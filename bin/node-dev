@@ -10,12 +10,26 @@ function getFirstNonOptionArgIndex(args) {
   return args.length;
 }
 
+function removeValueArgs(args, names) {
+  var i = 0;
+  var removed = [];
+  while (i < args.length) {
+    if (~names.indexOf(args[i])) {
+      removed = removed.concat(args.splice(i, 2));
+    } else {
+      i++;
+    }
+  }
+  return removed;
+}
+
+var nodeArgs = removeValueArgs(process.argv, ['-r', '--require']);
+
 var scriptIndex = getFirstNonOptionArgIndex(process.argv);
 var script = process.argv[scriptIndex];
 var scriptArgs = process.argv.slice(scriptIndex + 1);
 var devArgs = process.argv.slice(2, scriptIndex);
 
-var nodeArgs = [];
 var opts = minimist(devArgs, {
   boolean: ['all-deps', 'deps', 'dedupe', 'poll'],
   default: { deps: true },
