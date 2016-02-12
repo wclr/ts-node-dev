@@ -32,11 +32,15 @@ Just run `node-dev` as you would normally run `node`:
 node-dev foo.js
 ```
 
-There are two command line options that can be used to control how many files
-are watched:
+There are a couple of command line options that can be used to control which
+files are watched and what happens when they change:
 
 * `--no-deps` Watch only the project's own files and linked modules (via `npm link`)
 * `--all-deps` Watch the whole dependency tree
+* `--respawn` Keep watching for changes after the script has exited
+* `--dedupe` [Dedupe dynamically](https://www.npmjs.org/package/dynamic-dedupe)
+* `--poll` Force polling for file changes (Caution! CPU-heavy!)
+* `--no-notify` Switch off desktop notifications (see below)
 
 By default node-dev will watch all first-level dependencies, i.e. the ones in
 the project's `node_modules`folder.
