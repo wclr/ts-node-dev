@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "coffee-script": "^1.8.0",
-    "eslint": "^1.10.3",
+    "eslint": "^2.0.0",
     "eslint-config-airbnb": "^4.0.0",
     "tap": "^5.2.0",
     "touch": "^1.0.0"
