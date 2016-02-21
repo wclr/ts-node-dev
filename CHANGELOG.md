@@ -1,5 +1,10 @@
 # node-dev
 
+## 3.1.0 / 2016-02-22
+
+- Add `--no-notify` to disable desktop notifications. See #120.
+- Fix `--no-deps` option. See #119.
+
 ## 3.0.0 / 2016-01-29
 
 - Add `--respawn` to keep watching after a process exits. See #104.
