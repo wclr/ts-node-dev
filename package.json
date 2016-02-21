@@ -40,7 +40,7 @@
   "devDependencies": {
     "coffee-script": "^1.8.0",
     "eslint": "^2.0.0",
-    "eslint-config-airbnb": "^4.0.0",
+    "eslint-config-airbnb": "^6.0.1",
     "tap": "^5.2.0",
     "touch": "^1.0.0"
   }
