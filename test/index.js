@@ -177,7 +177,7 @@ test('should run async code un uncaughtException handlers', function (t) {
   spawn('uncaughtExceptionHandler.js', function (out) {
     if (out.match(/ERROR/)) {
       return function (out2) {
-        if (out2.match(/async \[ReferenceError/)) {
+        if (out2.match(/async \[?ReferenceError/)) {
           return { exit: t.end.bind(t) };
         }
       };
