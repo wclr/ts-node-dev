@@ -32,7 +32,7 @@ var devArgs = process.argv.slice(2, scriptIndex);
 
 var opts = minimist(devArgs, {
   boolean: ['all-deps', 'deps', 'dedupe', 'poll', 'respawn', 'notify'],
-  default: { deps: true },
+  default: { deps: true, notify: true },
   unknown: function (arg) {
     nodeArgs.push(arg);
   }
