@@ -1,5 +1,10 @@
 # node-dev
 
+## 3.1.1 / 2016-05-02
+
+- Enable `--notify` by default again. See #125.
+- Support filename option passed to VM methods. Fixes #130.
+
 ## 3.1.0 / 2016-02-22
 
 - Add `--no-notify` to disable desktop notifications. See #120.
