@@ -132,6 +132,10 @@ test('should support vm functions', function (t) {
   run('vmtest.js', t.end.bind(t));
 });
 
+test('should support vm functions with missing file argument', function (t) {
+  run('vmtest.js nofile', t.end.bind(t));
+});
+
 test('should support coffee-script', function (t) {
   run('server.coffee', t.end.bind(t));
 });
