@@ -1,0 +1,1 @@
+require.extensions.bogus = undefined;
