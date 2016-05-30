@@ -1,12 +1,14 @@
 {
   "extends": [
-    "airbnb/legacy"
+    "airbnb-base/legacy"
   ],
   "rules": {
     "comma-dangle": [2, "never"],
+    "consistent-return": 0,
     "eqeqeq": 0,
     "func-names": 0,
     "guard-for-in": 0,
+    "global-require": 0,
     "one-var": [2, "never"],
     "padded-blocks": 0,
     "vars-on-top": 0,
