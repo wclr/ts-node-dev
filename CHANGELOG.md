@@ -1,5 +1,9 @@
 # node-dev
 
+## 3.1.2 / 2016-05-28
+
+- Proof against weird `require.extensions`. See #134.
+
 ## 3.1.1 / 2016-05-02
 
 - Enable `--notify` by default again. See #125.
