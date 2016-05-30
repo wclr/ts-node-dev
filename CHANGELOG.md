@@ -3,6 +3,7 @@
 ## 3.1.2 / 2016-05-28
 
 - Proof against weird `require.extensions`. See #134.
+- Ensure method patching works when filename arguments are missing. See #135.
 
 ## 3.1.1 / 2016-05-02
 
