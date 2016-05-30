@@ -1,4 +1,3 @@
-var fs = require('fs');
 var child = require('child_process');
 var test = require('tap').test;
 var touch = require('touch');
@@ -6,16 +5,11 @@ var touch = require('touch');
 var dir = __dirname + '/fixture';
 var bin = __dirname + '/../bin/node-dev';
 var msgFile = dir + '/message.js';
-var ignoredFile = dir + '/ignoredModule.js';
-
-
-// Constants
-var MESSAGE = fs.readFileSync(msgFile).toString();
 
 // Helpers
 function touchFile(file) {
   return function () {
-    touch.sync(file ? file : msgFile);
+    touch.sync(file || msgFile);
   };
 }
 

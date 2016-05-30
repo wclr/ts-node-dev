@@ -4,5 +4,5 @@ process.on('uncaughtException', function (e) {
   }, 100);
 });
 
-/* eslint-disable no-undef */
+// eslint-disable-next-line no-undef
 foo(); // undefined / throws exception
