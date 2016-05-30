@@ -259,3 +259,10 @@ test('should allow graceful shutdowns', function (t) {
     }
   });
 });
+
+test('should be resistant to breaking `require.extensions`', function (t) {
+  spawn('modify-extensions.js', function (out) {
+    t.notOk(/TypeError/.test(out));
+  });
+  setTimeout(t.end.bind(t), 500);
+});
