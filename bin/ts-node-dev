@@ -31,7 +31,22 @@ var scriptArgs = process.argv.slice(scriptIndex + 1);
 var devArgs = process.argv.slice(2, scriptIndex);
 
 var opts = minimist(devArgs, {
-  boolean: ['all-deps', 'deps', 'dedupe', 'poll', 'respawn', 'notify'],
+  boolean: [
+    'all-deps', 'deps', 'dedupe', 'poll', 'respawn', 'notify',
+    'fast', 'disableWarnings', 'no-cache'
+  ],
+  string: [
+    'compiler', 'project', 'ignore',
+    'ignoreWarnings', 'cache-directory', 'compilerOptions'
+  ],
+  alias: {
+    'fast': 'F',
+    'disableWarnings': 'D',
+    'ignoreWarnings': 'I',
+    'compilerOptions': 'O',
+    'compiler': 'C',
+    'project': 'P'
+  },
   default: { deps: true, notify: true },
   unknown: function (arg) {
     nodeArgs.push(arg);
@@ -39,7 +54,7 @@ var opts = minimist(devArgs, {
 });
 
 if (!script) {
-  console.log('Usage: node-dev [options] script [arguments]\n');
+  console.log('Usage: ts-node-dev [options] script [arguments]\n');
   process.exit(1);
 }
 
