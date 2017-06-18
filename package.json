@@ -15,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "http://github.com/fgnass/node-dev.git"
+    "url": "http://github.com/whitecolor/ts-node-dev.git"
   },
   "license": "MIT",
   "bin": {
