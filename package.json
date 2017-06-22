@@ -32,8 +32,8 @@
     "node": ">=0.8.0"
   },
   "scripts": {
-    "test": "tap test/*.js",
-    "ts-test": "node ./bin/ts-node-dev --respawn test.ts"
+    "test1": "tap test/*.js",
+    "ts-test": "rimraf .ts-node && node ./bin/ts-node-dev --respawn test-script.ts"
   },
   "dependencies": {
     "dateformat": "~1.0.4-1.2.3",
