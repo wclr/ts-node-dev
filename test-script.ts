@@ -1,2 +1,2 @@
-const a: string = 'a'
-console.log('test', a)
+const str: string = 'ts'
+console.log('test', str)

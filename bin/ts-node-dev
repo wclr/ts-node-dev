@@ -33,7 +33,8 @@ var devArgs = process.argv.slice(2, scriptIndex);
 var opts = minimist(devArgs, {
   boolean: [
     'all-deps', 'deps', 'dedupe', 'poll', 'respawn', 'notify',
-    'fast', 'disableWarnings', 'no-cache'
+    'fast', 'disableWarnings', 'no-cache',
+    'prefer-ts'
   ],
   string: [
     'compiler', 'project', 'ignore',

@@ -1,7 +1,7 @@
 {
   "name": "ts-node-dev",
-  "version": "1.0.0-pre.1",
-  "description": "Restarts your app when files are modified",
+  "version": "1.0.0-pre.2",
+  "description": "Compiles your TS app and restarts when files are modified.",
   "keywords": [
     "restart",
     "reload",
@@ -33,7 +33,7 @@
   },
   "scripts": {
     "test1": "tap test/*.js",
-    "ts-test": "rimraf .ts-node && node ./bin/ts-node-dev --respawn test-script.ts"
+    "ts-test": "rimraf .ts-node && node ./bin/ts-node-dev --respawn --prefer-ts test-script"
   },
   "dependencies": {
     "dateformat": "~1.0.4-1.2.3",
