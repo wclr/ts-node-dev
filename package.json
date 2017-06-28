@@ -33,7 +33,7 @@
   },
   "scripts": {
     "test1": "tap test/*.js",
-    "ts-test": "rimraf .ts-node && node ./bin/ts-node-dev --respawn --prefer-ts test-script"
+    "ts-test": "node ./bin/ts-node-dev -r ./test/ts/add-require.js --respawn --prefer-ts --cache-directory .ts-node test/ts/test-script test-arg --fd"
   },
   "dependencies": {
     "dateformat": "~1.0.4-1.2.3",
@@ -46,6 +46,7 @@
     "ts-node": "^3.0.6"
   },
   "devDependencies": {
+    "@types/node": "^8.0.4",
     "coffee-script": "^1.8.0",
     "eslint": "^2.0.0",
     "eslint-config-airbnb-base": "^3.0.1",
