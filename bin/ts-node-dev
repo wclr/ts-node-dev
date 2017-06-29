@@ -3,33 +3,8 @@
 var dev = require('..');
 var minimist = require('minimist');
 
-// function getFirstNonOptionArgIndex(args) {
-//   for (var i = 2; i < args.length; i++) {
-//     if (args[i][0] != '-') return i;
-//   }
-//   return args.length;
-// }
-
-// function removeValueArgs(args, names) {
-//   var i = 0;
-//   var removed = [];
-//   while (i < args.length) {
-//     if (~names.indexOf(args[i])) {
-//       removed = removed.concat(args.splice(i, 2));
-//     } else {
-//       i++;
-//     }
-//   }
-//   return removed;
-// }
-
-//var nodeArgs = removeValueArgs(process.argv, ['-r', '--require']);
 var nodeArgs = []
 
-// //var scriptIndex = getFirstNonOptionArgIndex(process.argv);
-// var script = process.argv[scriptIndex];
-// var scriptArgs = process.argv.slice(scriptIndex + 1);
-// var devArgs = process.argv.slice(2, scriptIndex);
 var devArgs = process.argv.slice(2, 100);
 var unknown = []
 var opts = minimist(devArgs, {
@@ -71,8 +46,6 @@ unknown.forEach(function (arg) {
   }
 })
 
-console.log('nodeArgs', nodeArgs)
-console.log('script', script, 'sriptsArgs', scriptArgs)
 if (!script) {
   console.log('Usage: ts-node-dev [options] script [arguments]\n');
   process.exit(1);
