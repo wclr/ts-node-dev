@@ -29,6 +29,8 @@ Also there is additional options specific to `ts-node-dev`:
 
 - `--compile-timeout` (default: 10000 ms) - for how long to wait before report the error that something went wrong with compilation of a file.
 - `--prefer-ts` (default: false) - for each `.js` file (that is not in `node_modules`) will try to check if corresponding `.ts` version exists and require it.
+- `--ignore-watch` (default: []) - files/folders to be [ignored by `node-dev`](https://github.com/fgnass/node-dev#ignore-paths)
+
 
 By defalut to keep things clean it puts cached files to system temp directory, you may change this with `--cache-directory` option.
 

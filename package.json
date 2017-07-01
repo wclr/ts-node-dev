@@ -33,7 +33,7 @@
   },
   "scripts": {
     "test1": "tap test/*.js",
-    "ts-test": "node ./bin/ts-node-dev -r ./test/ts/add-require.js --respawn --prefer-ts --cache-directory .ts-node test/ts/test-script test-arg --fd"
+    "ts-test": "node ./bin/ts-node-dev -r ./test/ts/add-require.js --respawn --ignore-watch lib --ignore-watch bin --prefer-ts --cache-directory .ts-node test/ts/test-script test-arg --fd"
   },
   "dependencies": {
     "dateformat": "~1.0.4-1.2.3",

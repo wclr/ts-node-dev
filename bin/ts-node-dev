@@ -12,12 +12,13 @@ var opts = minimist(devArgs, {
   boolean: [
     'all-deps', 'deps', 'dedupe', 'poll', 'respawn', 'notify',
     'fast', 'disableWarnings', 'no-cache',
-    'prefer-ts'
+    'prefer-ts'    
   ],
   string: [
     'compiler', 'project', 'ignore',
     'ignoreWarnings', 'cache-directory', 'compilerOptions',
-    'compile-timeout'
+    'compile-timeout',
+    'ignore-watch'
   ],
   alias: {
     'fast': 'F',
