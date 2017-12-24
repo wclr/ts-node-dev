@@ -6,12 +6,14 @@ It restarts target node process when any of required files changes (as standard 
 
 ## Install
 
+`ts-node` is not a package dependency of `ts-node-dev` just to give user freedom of using needed `ts-node` version.
+
 ```
-yarn add ts-node-dev
+yarn add ts-node-dev ts-node
 ```
 
 ```
-npm i ts-node-dev --global
+npm i ts-node-dev ts-node --global
 ```
 
 ## Usage
@@ -22,14 +24,16 @@ ts-node-dev [node-dev|ts-node flags] [ts-node-dev flags] [script] [script argume
 
 So you just combine [node-dev](https://github.com/fgnass/node-dev) and [ts-node](https://github.com/TypeStrong/ts-node) options (lookup docs of those packages):
 ```
-ts-node-dev --fast --respawn server.ts
+ts-node-dev --respawn server.ts
 ```
 
 Also there is additional options specific to `ts-node-dev`:
 
 - `--compile-timeout` (default: 10000 ms) - for how long to wait before report the error that something went wrong with compilation of a file.
 - `--prefer-ts` (default: false) - for each `.js` file (that is not in `node_modules`) will try to check if corresponding `.ts` version exists and require it.
-- `--ignore-watch` (default: []) - files/folders to be [ignored by `node-dev`](https://github.com/fgnass/node-dev#ignore-paths). **Note that it will resolve this directories/files relative to cwd** mapping each value to single directory/file.
+- `--ignore-watch` (default: []) - files/folders to be [ignored by `node-dev`](https://github.com/fgnass/node-dev#ignore-paths). 
+**But also this behaviour enhanced:** it will also make up `new RegExp` of passed ignore string and check absolute paths of required files for match. 
+So, to ignore everthing in `node_modules`, just pass `--ignore-watch node_modules`
 
 
 By defalut to keep things clean it puts cached files to system temp directory, you may change this with `--cache-directory` option.
