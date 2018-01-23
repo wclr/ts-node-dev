@@ -6,14 +6,14 @@ It restarts target node process when any of required files changes (as standard 
 
 ## Install
 
-`ts-node` is not a package dependency of `ts-node-dev` just to give user freedom of using needed `ts-node` version.
+`ts-node` version is not fixed in dependencies, so it will install latest version by default, but you may install need version of `ts-node` if needed.
 
 ```
 yarn add ts-node-dev ts-node
 ```
 
 ```
-npm i ts-node-dev ts-node --global
+npm i ts-node-dev --global
 ```
 
 ## Usage

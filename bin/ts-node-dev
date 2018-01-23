@@ -11,7 +11,8 @@ var opts = minimist(devArgs, {
   stopEarly: true,
   boolean: [
     'all-deps', 'deps', 'dedupe', 'poll', 'respawn', 'notify',
-    'fast', 'disableWarnings', 'no-cache', 'cache', 'type-check',
+    'fast', 'disableWarnings', 'no-cache',
+    'cache', 'type-check',
     'prefer-ts'    
   ],
   string: [
