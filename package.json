@@ -1,6 +1,6 @@
 {
   "name": "ts-node-dev",
-  "version": "1.0.0-pre.9",
+  "version": "1.0.0-pre.10",
   "description": "Compiles your TS app and restarts when files are modified.",
   "keywords": [
     "restart",
@@ -33,7 +33,7 @@
   },
   "scripts": {
     "test-node-dev": "tap test/*.js",
-    "test": "node ./bin/ts-node-dev -r ./test/ts/add-require.js --cache --respawn --ignore-watch lib --ignore-watch bin --prefer-ts --cache-directory .ts-node test/ts/test-script test-arg --fd"
+    "test": "node ./bin/ts-node-dev -r ./test/ts/add-require.js --cache --respawn --ignore-watch 'lib' --ignore-watch bin --ignore '/some/' --ignore '/other/' --prefer-ts --cache-directory .ts-node test/ts/test-script test-arg --fd"
   },
   "dependencies": {
     "ts-node": "*",

@@ -32,6 +32,9 @@ Also there is additional options specific to `ts-node-dev`:
 - `--compile-timeout` (default: 10000 ms) - for how long to wait before report the error that something went wrong with compilation of a file.
 - `--prefer-ts` (default: false) - for each `.js` file (that is not in `node_modules`) will try to check if corresponding `.ts` version exists and require it.
 - `--ignore-watch` (default: []) - files/folders to be [ignored by `node-dev`](https://github.com/fgnass/node-dev#ignore-paths). 
+
+NB! `--ignore-watch` will NOT affect files ignored by TS compilation. Use `--ignore` option (or `TS_NODE_IGNORE`) to pass **regExp strings** (string values for `new RegExp(..)`) for filtering files that should not be compiled, by default `/node_modules/` are ignored by compiler.
+
 **But also this behaviour enhanced:** it will also make up `new RegExp` of passed ignore string and check absolute paths of required files for match. 
 So, to ignore everthing in `node_modules`, just pass `--ignore-watch node_modules`
 
