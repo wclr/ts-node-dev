@@ -1,6 +1,6 @@
 # ts-node-dev 
 
-> Hacked version of [node-dev](https://github.com/fgnass/node-dev) that uses [ts-node](https://github.com/TypeStrong/ts-node) under the hood. 
+> Twicked version of [node-dev](https://github.com/fgnass/node-dev) that uses [ts-node](https://github.com/TypeStrong/ts-node) under the hood. 
 
 It restarts target node process when any of required files changes (as standard `node-dev`) but shares [Typescript](https://github.com/Microsoft/TypeScript/) compilation process between restarts. This significantly increases speed of restarting comparing to `node-dev -r ts-node/register ...`, `nodemon -x ts-node ...` variations because there is no need to instantiate `ts-node` compilation each time.
 
@@ -27,15 +27,13 @@ So you just combine [node-dev](https://github.com/fgnass/node-dev) and [ts-node]
 ts-node-dev --respawn server.ts
 ```
 
-Also there is additional options specific to `ts-node-dev`:
+Also there are additional options specific to `ts-node-dev`:
 
 - `--prefer-ts` (default: false) - for each `.js` file (that is not in `node_modules`) will try to check if corresponding `.ts` version exists and require it.
-- `--ignore-watch` (default: []) - files/folders to be [ignored by `node-dev`](https://github.com/fgnass/node-dev#ignore-paths). 
-
-**But also this behaviour enhanced:** it will also make up `new RegExp` of passed ignore string and check absolute paths of required files for match. 
+- `--ignore-watch` (default: []) - files/folders to be [ignored by `node-dev`](https://github.com/fgnass/node-dev#ignore-paths).  **But also this behaviour enhanced:** it will also make up `new RegExp` of passed ignore string and check absolute paths of required files for match. 
 So, to ignore everthing in `node_modules`, just pass `--ignore-watch node_modules`
 
-NB! `--ignore-watch` will NOT affect files ignored by TS compilation. Use `--ignore` option (or `TS_NODE_IGNORE`) to pass **RegExp strings** for filtering files that should not be compiled, by default `/node_modules/` are ignored.
+NB! `--ignore-watch` will NOT affect files ignored by TS compilation. Use `--ignore` option (or `TS_NODE_IGNORE` env variable) to pass **RegExp strings** for filtering files that should not be compiled, by default `/node_modules/` are ignored.
 
 By defalut to keep things clean it puts cached files to system temp directory, you may change this with `--cache-directory` option.
 

@@ -33,7 +33,7 @@
   },
   "scripts": {
     "test-node-dev": "tap test/*.js",
-    "test": "node ./bin/ts-node-dev -r ./test/ts/add-require.js --cache --respawn --ignore-watch 'lib' --ignore-watch bin --prefer-ts --cache-directory .ts-node test/ts/test-script test-arg --fd",
+    "test": "node ./bin/ts-node-dev -r ./test/ts/add-require.js --respawn --ignore-watch 'lib' --ignore-watch bin --prefer-ts --cache-directory .ts-node test/ts/test-script test-arg --fd",
     "test-docker": "docker run --rm -v ${PWD}:/app mhart/alpine-node:8.7.0 sh -c 'cd app && node ./bin/ts-node-dev --cache-directory .ts-node test/ts/big'"
   },
   "dependencies": {
