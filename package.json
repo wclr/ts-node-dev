@@ -1,6 +1,6 @@
 {
   "name": "ts-node-dev",
-  "version": "1.0.0-pre.10",
+  "version": "1.0.0-pre.15",
   "description": "Compiles your TS app and restarts when files are modified.",
   "keywords": [
     "restart",
@@ -33,7 +33,8 @@
   },
   "scripts": {
     "test-node-dev": "tap test/*.js",
-    "test": "node ./bin/ts-node-dev -r ./test/ts/add-require.js --cache --respawn --ignore-watch 'lib' --ignore-watch bin --ignore '/some/' --ignore '/other/' --prefer-ts --cache-directory .ts-node test/ts/test-script test-arg --fd"
+    "test": "node ./bin/ts-node-dev -r ./test/ts/add-require.js --cache --respawn --ignore-watch 'lib' --ignore-watch bin --prefer-ts --cache-directory .ts-node test/ts/test-script test-arg --fd",
+    "test-docker": "docker run --rm -v ${PWD}:/app mhart/alpine-node:8.7.0 sh -c 'cd app && node ./bin/ts-node-dev --cache-directory .ts-node test/ts/big'"
   },
   "dependencies": {
     "ts-node": "*",
