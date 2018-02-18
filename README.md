@@ -6,15 +6,15 @@ It restarts target node process when any of required files changes (as standard 
 
 ## Install
 
-`ts-node` version is not fixed in dependencies, so it will install latest version by default, but you may install need version of `ts-node` if needed.
-
 ```
-yarn add ts-node-dev ts-node
+yarn add ts-node-dev
 ```
 
 ```
 npm i ts-node-dev --global
 ```
+
+`ts-node` dependency version is not fixed, so it will install the latest version by default.
 
 ## Usage
 
@@ -22,9 +22,9 @@ npm i ts-node-dev --global
 ts-node-dev [node-dev|ts-node flags] [ts-node-dev flags] [script] [script arguments]
 ```
 
-So you just combine [node-dev](https://github.com/fgnass/node-dev) and [ts-node](https://github.com/TypeStrong/ts-node) options (lookup docs of those packages):
+So you just combine [node-dev](https://github.com/fgnass/node-dev) and [ts-node](https://github.com/TypeStrong/ts-node) options (see docs of those packages):
 ```
-ts-node-dev --respawn server.ts
+ts-node-dev --respawn --type-check server.ts
 ```
 
 Also there are additional options specific to `ts-node-dev`:
@@ -34,9 +34,6 @@ Also there are additional options specific to `ts-node-dev`:
 So, to ignore everthing in `node_modules`, just pass `--ignore-watch node_modules`
 
 NB! `--ignore-watch` will NOT affect files ignored by TS compilation. Use `--ignore` option (or `TS_NODE_IGNORE` env variable) to pass **RegExp strings** for filtering files that should not be compiled, by default `/node_modules/` are ignored.
-
-By defalut to keep things clean it puts cached files to system temp directory, you may change this with `--cache-directory` option.
-
 
 ## Caveats
 
