@@ -17,13 +17,17 @@ var opts = minimist(devArgs, {
   ],
   string: [
     'compiler', 'project', 'ignore',
-    'ignoreWarnings', 'cache-directory', 'compilerOptions',
+    'skip-project',
+    'skip-ignore',
+    'ignoreWarnings',
+    'ignoreDiagnostics',
+    'cache-directory', 'compilerOptions',
     'compile-timeout',
     'ignore-watch'
   ],
   alias: {
     'fast': 'F',
-    'disableWarnings': 'D',
+    'ignoreDiagnostics': 'D',
     'ignoreWarnings': 'I',
     'compilerOptions': 'O',
     'compiler': 'C',

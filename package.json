@@ -1,6 +1,6 @@
 {
   "name": "ts-node-dev",
-  "version": "1.0.0-pre.16",
+  "version": "1.0.0-pre.17",
   "description": "Compiles your TS app and restarts when files are modified.",
   "keywords": [
     "restart",
@@ -37,7 +37,6 @@
     "test-docker": "docker run --rm -v ${PWD}:/app mhart/alpine-node:8.7.0 sh -c 'cd app && node ./bin/ts-node-dev --cache-directory .ts-node test/ts/big'"
   },
   "dependencies": {
-    "ts-node": "*",
     "dateformat": "~1.0.4-1.2.3",
     "dynamic-dedupe": "^0.2.0",
     "filewatcher": "~3.0.0",
@@ -45,7 +44,9 @@
     "mkdirp": "^0.5.1",
     "node-notifier": "^4.0.2",
     "resolve": "^1.0.0",
-    "rimraf": "^2.6.1"
+    "rimraf": "^2.6.1",
+    "ts-node": "*",
+    "tsconfig": "^7.0.0"
   },
   "devDependencies": {
     "@types/node": "^8.0.4",
