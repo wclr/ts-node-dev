@@ -43,12 +43,16 @@ var opts = minimist(devArgs, {
 var script = opts._[0]
 var scriptArgs = opts._.slice(1)
 
-unknown.forEach(function (arg) {
+unknown.forEach(function (arg, index) {
   if (arg === script) return
   nodeArgs.push(arg)
   var argName = arg.replace(/^-+/, '')
-  if (typeof opts[argName] === 'string') {
-    nodeArgs.push(opts[argName])
+
+  var argOpts = opts[argName]
+  var argValue = Array.isArray(argOpts) ? argOpts[index] : argValue;
+
+  if (typeof argValue === 'string') {
+    nodeArgs.push(argValue)
   }
 })
 
