@@ -13,7 +13,7 @@ var opts = minimist(devArgs, {
     'all-deps', 'deps', 'dedupe', 'poll', 'respawn', 'notify',
     'fast', 'disableWarnings', 'no-cache',
     'cache', 'type-check',
-    'prefer-ts'    
+    'prefer-ts'
   ],
   string: [
     'compiler', 'project', 'ignore',
@@ -43,17 +43,18 @@ var opts = minimist(devArgs, {
 var script = opts._[0]
 var scriptArgs = opts._.slice(1)
 
-unknown.forEach(function (arg, index) {
-  if (arg === script) return
-  nodeArgs.push(arg)
-  var argName = arg.replace(/^-+/, '')
+unknown.forEach(function (arg) {
+  if (arg === script || nodeArgs.indexOf(arg) >= 0) return
 
+  var argName = arg.replace(/^-+/, '');
   var argOpts = opts[argName]
-  var argValue = Array.isArray(argOpts) ? argOpts[index] : argValue;
-
-  if (typeof argValue === 'string') {
-    nodeArgs.push(argValue)
-  }
+  var argValues = Array.isArray(argOpts) ? argOpts : [argOpts];
+  argValues.forEach(function (argValue) {
+    nodeArgs.push(arg);
+    if (typeof argValue === 'string') {      
+      nodeArgs.push(argValue);
+    }
+  })
 })
 
 if (!script) {

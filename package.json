@@ -1,6 +1,6 @@
 {
   "name": "ts-node-dev",
-  "version": "1.0.0-pre.18",
+  "version": "1.0.0-pre.20",
   "description": "Compiles your TS app and restarts when files are modified.",
   "keywords": [
     "restart",
@@ -33,7 +33,7 @@
   },
   "scripts": {
     "test-node-dev": "tap test/*.js",
-    "test": "node ./bin/ts-node-dev -r ./test/ts/add-require.js -r ./test/ts/add-require-2.js -O \"{\\\"module\\\": \\\"commonjs\\\"}\" --respawn --ignore-watch 'lib' --ignore-watch bin --prefer-ts --cache-directory .ts-node test/ts/test-script test-arg --fd",
+    "test": "node ./bin/ts-node-dev -r tsconfig-paths/register -r ./test/ts/add-require.js -r ./test/ts/add-require-2.js -O \"{\\\"module\\\": \\\"commonjs\\\"}\" --respawn --ignore-watch 'lib' --ignore-watch bin --prefer-ts --cache-directory .ts-node test/ts/test-script test-arg --fd",    
     "test-docker": "docker run --rm -v ${PWD}:/app mhart/alpine-node:8.7.0 sh -c 'cd app && node ./bin/ts-node-dev --cache-directory .ts-node test/ts/big'"
   },
   "dependencies": {
@@ -56,6 +56,7 @@
     "eslint-plugin-import": "^1.8.1",
     "tap": "^5.2.0",
     "touch": "^1.0.0",
+    "tsconfig-paths": "^3.3.1",
     "typescript": "^2.3.4"
   }
 }
