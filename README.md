@@ -11,7 +11,7 @@ yarn add ts-node-dev
 ```
 
 ```
-npm i ts-node-dev --global
+npm i ts-node-dev
 ```
 
 `ts-node` dependency version is not fixed, so it will install the latest version by default.
@@ -24,7 +24,7 @@ ts-node-dev [node-dev|ts-node flags] [ts-node-dev flags] [script] [script argume
 
 So you just combine [node-dev](https://github.com/fgnass/node-dev) and [ts-node](https://github.com/TypeStrong/ts-node) options (see docs of those packages):
 ```
-ts-node-dev --respawn --type-check server.ts
+ts-node-dev --respawn --transpileOnly server.ts
 ```
 
 Also there are additional options specific to `ts-node-dev`:
