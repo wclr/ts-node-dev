@@ -14,7 +14,8 @@ var opts = minimist(devArgs, {
     'fast', 'disableWarnings', 'no-cache',
     'cache', 'type-check',
     'prefer-ts',
-    'transpileOnly'
+    'transpileOnly',
+    'files'
   ],
   string: [
     'compiler', 'project', 'ignore',
