@@ -7,7 +7,7 @@ It restarts target node process when any of required files changes (as standard 
 ## Install
 
 ```
-yarn add ts-node-dev
+yarn add -D ts-node-dev
 ```
 
 ```
