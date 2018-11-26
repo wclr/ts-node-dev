@@ -15,7 +15,9 @@ var opts = minimist(devArgs, {
     'cache', 'type-check',
     'prefer-ts',
     'transpileOnly',
-    'files'
+    'files',
+    'exec-check',
+    'debug'
   ],
   string: [
     'compiler', 'project', 'ignore',
