@@ -1,68 +1,80 @@
 #!/usr/bin/env node
 
-var dev = require('..');
-var minimist = require('minimist');
+var dev = require("..");
+var minimist = require("minimist");
 
-var nodeArgs = []
+var nodeArgs = [];
 
 var devArgs = process.argv.slice(2, 100);
-var unknown = []
+var unknown = [];
 var opts = minimist(devArgs, {
   stopEarly: true,
   boolean: [
-    'all-deps', 'deps', 'dedupe', 'poll', 'respawn', 'notify',
-    'fast', 'disableWarnings', 'no-cache',
-    'cache', 'type-check',
-    'prefer-ts',
-    'transpileOnly',
-    'files',
-    'exec-check',
-    'debug'
+    "all-deps",
+    "deps",
+    "dedupe",
+    "poll",
+    "respawn",
+    "notify",
+    "fast",
+    "disableWarnings",
+    "no-cache",
+    "cache",
+    "type-check",
+    "transpileOnly",
+    "files",
+    "pretty",
+    "prefer-ts",
+    "exec-check",
+    "debug"
   ],
   string: [
-    'compiler', 'project', 'ignore',
-    'skip-project',
-    'skip-ignore',
-    'ignoreWarnings',
-    'ignoreDiagnostics',
-    'cache-directory', 'compilerOptions',
-    'compile-timeout',
-    'ignore-watch'
+    "compiler",
+    "project",
+    "ignore",
+    "skip-project",
+    "skip-ignore",
+    "ignoreWarnings",
+    "ignoreDiagnostics",
+    "cache-directory",
+    "compilerOptions",
+    "compile-timeout",
+    "ignore-watch"
   ],
   alias: {
-    'fast': 'F',
-    'ignoreDiagnostics': 'D',
-    'ignoreWarnings': 'I',
-    'compilerOptions': 'O',
-    'compiler': 'C',
-    'project': 'P'
+    fast: "F",
+    ignoreDiagnostics: "D",
+    ignoreWarnings: "I",
+    compilerOptions: "O",
+    compiler: "C",
+    project: "P"
   },
   default: { deps: true, notify: true },
-  unknown: function (arg) {
-    unknown.push(arg)
-    return true
+  unknown: function(arg) {
+    unknown.push(arg);
+    return true;
   }
 });
 
-var script = opts._[0]
-var scriptArgs = opts._.slice(1)
+var script = opts._[0];
+var scriptArgs = opts._.slice(1);
 
-unknown.forEach(function (arg) {
-  if (arg === script || nodeArgs.indexOf(arg) >= 0) return
+unknown.forEach(function(arg) {
+  if (arg === script || nodeArgs.indexOf(arg) >= 0) return;
 
-  var argName = arg.replace(/^-+/, '');
-  var argOpts = opts[argName]
+  var argName = arg.replace(/^-+/, "");
+  var argOpts = opts[argName];
   var argValues = Array.isArray(argOpts) ? argOpts : [argOpts];
-  argValues.forEach(function (argValue) {
+  argValues.forEach(function(argValue) {
     nodeArgs.push(arg);
-    if (typeof argValue === 'string') {      
+    if (typeof argValue === "string") {
       nodeArgs.push(argValue);
     }
-  })
-})
+  });
+});
 
 if (!script) {
-  console.log('Usage: ts-node-dev [options] script [arguments]\n');
+  console.log("Usage: ts-node-dev [options] script [arguments]\n");
   process.exit(1);
 }
 
