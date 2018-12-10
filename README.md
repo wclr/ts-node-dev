@@ -1,6 +1,6 @@
-# ts-node-dev 
+# ts-node-dev
 
-> Tweaked version of [node-dev](https://github.com/fgnass/node-dev) that uses [ts-node](https://github.com/TypeStrong/ts-node) under the hood. 
+> Tweaked version of [node-dev](https://github.com/fgnass/node-dev) that uses [ts-node](https://github.com/TypeStrong/ts-node) under the hood.
 
 It restarts target node process when any of required files changes (as standard `node-dev`) but shares [Typescript](https://github.com/Microsoft/TypeScript/) compilation process between restarts. This significantly increases speed of restarting comparing to `node-dev -r ts-node/register ...`, `nodemon -x ts-node ...` variations because there is no need to instantiate `ts-node` compilation each time.
 
@@ -23,6 +23,7 @@ ts-node-dev [node-dev|ts-node flags] [ts-node-dev flags] [node cli flags] [--] [
 ```
 
 So you just combine [node-dev](https://github.com/fgnass/node-dev) and [ts-node](https://github.com/TypeStrong/ts-node) options (see docs of those packages):
+
 ```
 ts-node-dev --respawn --transpileOnly server.ts
 ```
@@ -36,12 +37,14 @@ tsnd --respawn server.ts
 **Also there are additional options specific to `ts-node-dev`:**
 
 - `--prefer-ts` (default: false) - for each `.js` file (that is not in `node_modules`) will try to check if corresponding `.ts` version exists and require it.
-- `--ignore-watch` (default: []) - files/folders to be [ignored by `node-dev`](https://github.com/fgnass/node-dev#ignore-paths).  **But also this behaviour enhanced:** it will also make up `new RegExp` of passed ignore string and check absolute paths of required files for match. 
-So, to ignore everthing in `node_modules`, just pass `--ignore-watch node_modules`.
+- `--ignore-watch` (default: []) - files/folders to be [ignored by `node-dev`](https://github.com/fgnass/node-dev#ignore-paths). **But also this behaviour enhanced:** it will also make up `new RegExp` of passed ignore string and check absolute paths of required files for match.
+  So, to ignore everthing in `node_modules`, just pass `--ignore-watch node_modules`.
 
 - `--debug` - some additional debug output.
 
-**And some points to notice:**
+**Caveats and points of notice:**
+
+- Especially for large code bases always consider running with `--transpileOnly` flag which is normal for dev workflow and will speed up things greatly. Note, that `ts-node-dev` will not put watch handlers on TS files that contain only types/interfaces (used only for type checking) - this is current limitation by design.
 
 - `--ignore-watch` will NOT affect files ignored by TS compilation. Use `--ignore` option (or `TS_NODE_IGNORE` env variable) to pass **RegExp strings** for filtering files that should not be compiled, by default `/node_modules/` are ignored.
 

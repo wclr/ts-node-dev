@@ -28,6 +28,10 @@
     "icons",
     "lib"
   ],
+  "prettier": {
+    "singleQuote": true,
+    "semi": false
+  },
   "preferGlobal": true,
   "engines": {
     "node": ">=0.8.0"
@@ -35,7 +39,7 @@
   "scripts": {
     "ts-node-dev": "node ./bin/ts-node-dev",
     "test-node-dev": "tap test/*.js",
-    "test": "node ./bin/ts-node-dev -r tsconfig-paths/register -r ./test/ts/add-require.js -r ./test/ts/add-require-2.js -O \"{\\\"module\\\": \\\"commonjs\\\"}\" --respawn --ignore-watch 'lib' --ignore-watch bin --prefer-ts --debug --cache-directory .ts-node --inspect -- test/ts/test-script test-arg --fd",
+    "test": "node ./bin/ts-node-dev -r tsconfig-paths/register -r ./test/ts/add-require.js -r ./test/ts/add-require-2.js -O \"{\\\"module\\\": \\\"commonjs\\\"}\" --preserve-symlinks --respawn --ignore-watch 'lib' --ignore-watch bin --prefer-ts --debug --cache-directory .ts-node --inspect -- test/ts/test-script test-arg --fd",
     "test-docker": "docker run --rm -v ${PWD}:/app mhart/alpine-node:8.7.0 sh -c 'cd app && node ./bin/ts-node-dev --cache-directory .ts-node test/ts/big'"
   },
   "dependencies": {
