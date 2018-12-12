@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "dateformat": "~1.0.4-1.2.3",
-    "dynamic-dedupe": "^0.2.0",
+    "dynamic-dedupe": "^0.3.0",
     "filewatcher": "~3.0.0",
     "minimist": "^1.1.3",
     "mkdirp": "^0.5.1",
