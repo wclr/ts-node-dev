@@ -42,6 +42,8 @@ tsnd --respawn server.ts
 
 - `--debug` - some additional debug output.
 
+- `--notify boolean` - Switch on/off desktop notifications, valid input: true|false.
+
 **Caveats and points of notice:**
 
 - Especially for large code bases always consider running with `--transpileOnly` flag which is normal for dev workflow and will speed up things greatly. Note, that `ts-node-dev` will not put watch handlers on TS files that contain only types/interfaces (used only for type checking) - this is current limitation by design.
