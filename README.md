@@ -41,6 +41,8 @@ tsnd --respawn server.ts
   So, to ignore everthing in `node_modules`, just pass `--ignore-watch node_modules`.
 
 - `--debug` - some additional debug output.
+- `--interval` Polling interval (ms)
+- `--debounce` Debounce file change events (ms, non-polling mode)
 
 **Caveats and points of notice:**
 
