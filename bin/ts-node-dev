@@ -39,7 +39,9 @@ var opts = minimist(devArgs, {
     "cache-directory",
     "compilerOptions",
     "compile-timeout",
-    "ignore-watch"
+    "ignore-watch",
+    "interval",
+    "debounce"
   ],
   alias: {
     fast: "F",
