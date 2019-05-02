@@ -1,6 +1,6 @@
 {
   "name": "ts-node-dev",
-  "version": "1.0.0-pre.32",
+  "version": "1.0.0-pre.33",
   "description": "Compiles your TS app and restarts when files are modified.",
   "keywords": [
     "restart",
@@ -39,7 +39,7 @@
   "scripts": {
     "ts-node-dev": "node ./bin/ts-node-dev",
     "test-node-dev": "tap test/*.js",
-    "test": "node ./bin/ts-node-dev -r tsconfig-paths/register -r ./test/ts/add-require.js -r ./test/ts/add-require-2.js -O \"{\\\"module\\\": \\\"commonjs\\\"}\" --preserve-symlinks --respawn --ignore-watch 'lib' --ignore-watch bin --prefer-ts --debug --cache-directory .ts-node --inspect -- test/ts/test-script test-arg --fd",
+    "test": "node ./bin/ts-node-dev -r tsconfig-paths/register -r ./test/ts/add-require.js -r ./test/ts/add-require-2.js -O \"{\\\"module\\\": \\\"commonjs\\\"}\" --preserve-symlinks --respawn --ignore-watch 'lib' --ignore-watch bin --prefer-ts --debug --poll --interval 1000 --cache-directory .ts-node --inspect -- test/ts/test-script test-arg --fd",
     "test-docker": "docker run --rm -v ${PWD}:/app mhart/alpine-node:8.7.0 sh -c 'cd app && node ./bin/ts-node-dev --cache-directory .ts-node test/ts/big'"
   },
   "dependencies": {
