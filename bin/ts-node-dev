@@ -28,7 +28,8 @@ var opts = minimist(devArgs, {
     'pretty',
     'prefer-ts',
     'exec-check',
-    'debug'
+    'debug',
+    'tree-kill'
   ],
   string: [
     'compiler',
@@ -65,6 +66,7 @@ var opts = minimist(devArgs, {
 
 var script = opts._[0]
 var scriptArgs = opts._.slice(1)
+var loadEsm = false
 
 unknown.forEach(function(arg) {
   if (arg === script || nodeArgs.indexOf(arg) >= 0) return
@@ -73,12 +75,21 @@ unknown.forEach(function(arg) {
   var argOpts = opts[argName]
   var argValues = Array.isArray(argOpts) ? argOpts : [argOpts]
   argValues.forEach(function(argValue) {
+    console.log('argValue', argValue, 'arg', arg)
+    if ((arg === '-r' || arg === '--require') && argValue === 'esm') {
+      loadEsm = true
+      return false
+    }
     nodeArgs.push(arg)
     if (typeof argValue === 'string') {
       nodeArgs.push(argValue)
     }
   })
 })
+
+if (loadEsm) {
+  require('esm')
+}
 
 if (!script) {
   console.log('Usage: ts-node-dev [options] script [arguments]\n')

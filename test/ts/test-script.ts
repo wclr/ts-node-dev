@@ -7,10 +7,12 @@ const obj: A = {
 }
 console.log('test', str)
 
-//fn()
 
+setInterval(() => {
+  console.log('Working')
+}, 5000)
 
 
 console.log('test', str)
 
-throw new Error('fds')
+//throw new Error('fds')
