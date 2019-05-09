@@ -5,6 +5,8 @@ const obj: A = {
   a: '1',
   b: 2
 }
+
+fn(1)
 console.log('test', str)
 
 
