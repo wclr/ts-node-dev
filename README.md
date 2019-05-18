@@ -58,7 +58,7 @@ tsnd --respawn server.ts
 
 - The good thing is that `ts-node-dev` watches used `tsconfig.json` file, and will reinitialize compilation on its change, but you have to restart the process manually when you update used version of `typescript` or make any other changes that may effect compilation results.
 
-- In some rare cases `ts-node-dev` may fail to terminate an application by sending `SIGTERM` signal, this maybe caused by the app having running heavy child process or something. But the app should get the signal anyway and it can be explicitly processed there: `process.on('SIGTERM', () => process.exit())`.
+- In some rare cases `ts-node-dev` may fail to terminate an application by sending `SIGTERM` signal, this maybe be caused by the app having running heavy child process or something. But the app should get the signal anyway and it can be explicitly processed there: `process.on('SIGTERM', () => process.exit())`.
 
 ## License
 
