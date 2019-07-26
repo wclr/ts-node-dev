@@ -46,6 +46,7 @@ var opts = minimist(devArgs, {
     'compiler-options',
     'compile-timeout',
     'ignore-watch',
+    'watch',
     'interval',
     'debounce'
   ],
