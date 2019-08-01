@@ -29,7 +29,8 @@ var opts = minimist(devArgs, {
     'prefer-ts',
     'exec-check',
     'debug',
-    'tree-kill'
+    'tree-kill',
+    'clear', 'cls'
   ],
   string: [
     'compiler',
@@ -47,7 +48,8 @@ var opts = minimist(devArgs, {
     'compile-timeout',
     'ignore-watch',
     'interval',
-    'debounce'
+    'debounce',
+    'watch'
   ],
   alias: {
     fast: 'F',
