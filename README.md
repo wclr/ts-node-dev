@@ -40,9 +40,11 @@ tsnd --respawn server.ts
 - `--ignore-watch` (default: []) - files/folders to be [ignored by `node-dev`](https://github.com/fgnass/node-dev#ignore-paths). **But also this behaviour enhanced:** it will also make up `new RegExp` of passed ignore string and check absolute paths of required files for match.
   So, to ignore everything in `node_modules`, just pass `--ignore-watch node_modules`.
 
-- `--debug` - some additional debug output.
-- `--interval` Polling interval (ms)
-- `--debounce` Debounce file change events (ms, non-polling mode)
+- `--debug` - Some additional debug output.
+- `--interval` - Polling interval (ms)
+- `--debounce` - Debounce file change events (ms, non-polling mode)
+-- `--clear` (`--cls`) Will clear screen on restart
+-- `--watch` - Explicitly add files or folders to watch (list separated by commas)
 
 **Caveats and points of notice:**
 
@@ -57,8 +59,6 @@ tsnd --respawn server.ts
   ```
 
 - The good thing is that `ts-node-dev` watches used `tsconfig.json` file, and will reinitialize compilation on its change, but you have to restart the process manually when you update used version of `typescript` or make any other changes that may effect compilation results.
-
-- In some rare cases `ts-node-dev` may fail to terminate an application by sending `SIGTERM` signal, this maybe be caused by the app having running heavy child process or something. But the app should get the signal anyway and it can be explicitly processed there: `process.on('SIGTERM', () => process.exit())`.
 
 ## License
 
