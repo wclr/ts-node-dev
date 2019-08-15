@@ -43,8 +43,8 @@ tsnd --respawn server.ts
 - `--debug` - Some additional debug output.
 - `--interval` - Polling interval (ms)
 - `--debounce` - Debounce file change events (ms, non-polling mode)
--- `--clear` (`--cls`) Will clear screen on restart
--- `--watch` - Explicitly add files or folders to watch (list separated by commas)
+- `--clear` (`--cls`) Will clear screen on restart
+- `--watch` - Explicitly add files or folders to watch (list separated by commas)
 
 **Caveats and points of notice:**
 
