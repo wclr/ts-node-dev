@@ -29,6 +29,8 @@ var opts = minimist(devArgs, {
     'prefer-ts',
     'exec-check',
     'debug',
+    'log-error',
+    'prefer-ts-exts',
     'tree-kill',
     'clear', 'cls'
   ],
@@ -52,6 +54,7 @@ var opts = minimist(devArgs, {
     'watch'
   ],
   alias: {
+    transpileOnly: 'T',
     fast: 'F',
     ignoreDiagnostics: 'D',
     ignoreWarnings: 'I',
