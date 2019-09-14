@@ -45,6 +45,7 @@ tsnd --respawn server.ts
 - `--debounce` - Debounce file change events (ms, non-polling mode)
 - `--clear` (`--cls`) Will clear screen on restart
 - `--watch` - Explicitly add files or folders to watch and restart on change (list separated by commas)
+- `--notifyLevel` - `error` or `info` (default). The level for which OS level notifications should be sent
 
 **Caveats and points of notice:**
 
