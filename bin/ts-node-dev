@@ -51,6 +51,7 @@ var opts = minimist(devArgs, {
     'ignore-watch',
     'interval',
     'debounce',
+    'notifyLevel',
     'watch'
   ],
   alias: {
