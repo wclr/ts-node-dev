@@ -34,7 +34,7 @@
   },
   "preferGlobal": true,
   "engines": {
-    "node": ">=0.8.0"
+    "node": ">=6.4.0"
   },
   "scripts": {
     "ts-node-dev": "node ./bin/ts-node-dev",
