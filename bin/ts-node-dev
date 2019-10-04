@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
-var dev = require('..')
-var minimist = require('minimist')
+const dev = require('..')
+const minimist = require('minimist')
 
-var nodeArgs = []
+const nodeArgs = []
 
-var devArgs = process.argv.slice(2, 100)
-var unknown = []
-var opts = minimist(devArgs, {
+const devArgs = process.argv.slice(2, 100)
+const unknown = []
+const opts = minimist(devArgs, {
   stopEarly: true,
   boolean: [
     'all-deps',
@@ -71,17 +71,17 @@ var opts = minimist(devArgs, {
   }
 })
 
-var script = opts._[0]
-var scriptArgs = opts._.slice(1)
+const script = opts._[0]
+const scriptArgs = opts._.slice(1)
 
 opts.priorNodeArgs = []
 
 unknown.forEach(function(arg) {
   if (arg === script || nodeArgs.indexOf(arg) >= 0) return
 
-  var argName = arg.replace(/^-+/, '')
-  var argOpts = opts[argName]
-  var argValues = Array.isArray(argOpts) ? argOpts : [argOpts]
+  const argName = arg.replace(/^-+/, '')
+  const argOpts = opts[argName]
+  const argValues = Array.isArray(argOpts) ? argOpts : [argOpts]
   argValues.forEach(function(argValue) {
     if ((arg === '-r' || arg === '--require') && argValue === 'esm') {
       opts.priorNodeArgs.push(arg, argValue)

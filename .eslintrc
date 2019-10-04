@@ -4,6 +4,8 @@
     "plugin:node/recommended"
   ],
   "rules": {
+    "node/no-missing-require": "off", // because of ts-node-dev
+    "node/shebang": "off", // because of ts-node-dev
     "node/no-deprecated-api": "off",
     "no-process-exit": "off",
     "semi": "off",

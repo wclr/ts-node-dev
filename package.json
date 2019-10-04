@@ -41,7 +41,7 @@
     "test-node-dev": "tap test/*.js",
     "test": "node ./bin/ts-node-dev --exit-child --tree-kill --clear -r tsconfig-paths/register -r ./test/ts/add-require -r ./test/ts/add-require-2 -r esm -O \"{\\\"module\\\": \\\"es6\\\"}\" --preserve-symlinks --respawn --ignore-watch 'lib' --ignore-watch bin --prefer-ts --debug --poll --interval 1000 --cache-directory .ts-node --inspect -- test/ts/test-script test-arg --fd",
     "test-docker": "docker run --rm -v ${PWD}:/app mhart/alpine-node:8.7.0 sh -c 'cd app && node ./bin/ts-node-dev --cache-directory .ts-node test/ts/big'",
-    "lint": "eslint lib"
+    "lint": "eslint lib; cat bin/ts-node-dev | npx eslint --stdin --stdin-filename=ts-node-dev.js"
   },
   "dependencies": {
     "dateformat": "~1.0.4-1.2.3",
