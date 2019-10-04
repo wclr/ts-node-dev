@@ -1,8 +1,13 @@
 {
   "extends": [
-    "airbnb-base/legacy"
+    "eslint:recommended",
+    "plugin:node/recommended"
   ],
   "rules": {
+    "node/no-deprecated-api": "off",
+    "no-process-exit": "off",
+    "semi": "off",
+    "no-constant-condition": "off",
     "comma-dangle": [2, "never"],
     "consistent-return": 0,
     "eqeqeq": 0,
