@@ -39,12 +39,12 @@ tsnd --respawn server.ts
 - `--prefer-ts` (default: false) - for each `.js` file (that is not in `node_modules`) will try to check if corresponding `.ts` version exists and require it.
 - `--ignore-watch` (default: []) - files/folders to be [ignored by `node-dev`](https://github.com/fgnass/node-dev#ignore-paths). **But also this behaviour enhanced:** it will also make up `new RegExp` of passed ignore string and check absolute paths of required files for match.
   So, to ignore everything in `node_modules`, just pass `--ignore-watch node_modules`.
-
 - `--debug` - Some additional debug output.
 - `--interval` - Polling interval (ms)
 - `--debounce` - Debounce file change events (ms, non-polling mode)
 - `--clear` (`--cls`) Will clear screen on restart
 - `--watch` - Explicitly add files or folders to watch and restart on change (list separated by commas)
+- `--dont-exit-child` - Don't exit the child process on changes/SIGTERM
 
 **Caveats and points of notice:**
 
