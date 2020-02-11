@@ -46,6 +46,7 @@ tsnd --respawn server.ts
 - `--clear` (`--cls`) Will clear screen on restart
 - `--watch` - Explicitly add files or folders to watch and restart on change (list separated by commas)
 - `--exit-child` - Adds 'SIGTERM' exit handler in a child process.
+- `--notify=false` - Disables desktop notifications.
 
 **Caveats and points of notice:**
 
