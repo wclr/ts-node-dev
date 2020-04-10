@@ -63,4 +63,4 @@ tsnd --respawn server.ts
 
 ## License
 
-WTF.
+MIT
