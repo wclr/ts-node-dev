@@ -56,6 +56,9 @@
     "ts-node": "*",
     "tsconfig": "^7.0.0"
   },
+  "peerDependencies": {
+    "typescript": "*"
+  },
   "devDependencies": {
     "@types/node": "^8.0.4",
     "coffee-script": "^1.8.0",
