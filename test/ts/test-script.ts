@@ -6,7 +6,8 @@ const obj: A = {
   b: 2
 }
 
-fn(1))
+fn(1)
+
 console.log('test', str)
 
 
