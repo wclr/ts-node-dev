@@ -33,7 +33,7 @@ var opts = minimist(devArgs, {
     'prefer-ts-exts',
     'tree-kill',
     'clear', 'cls',
-    'exit-child',
+    'dont-exit-child',
     'rs'
   ],
   string: [
