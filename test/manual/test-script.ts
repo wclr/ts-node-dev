@@ -17,5 +17,7 @@ setInterval(() => {
 
 
 console.log('test', str)
+setTimeout(() => {
+  throw new Error('fds')
+}, 1000)
 
-//throw new Error('fds')

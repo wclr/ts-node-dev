@@ -37,9 +37,11 @@
     "node": ">=0.8.0"
   },
   "scripts": {
+    "tsnd": "node ./bin/ts-node-dev",
     "ts-node-dev": "node ./bin/ts-node-dev",
+    "test": "ts-node test/index.ts",
     "test-node-dev": "tap test/*.js",
-    "test": "node ./bin/ts-node-dev --exit-child --tree-kill --clear -r tsconfig-paths/register -r ./test/ts/add-require -r ./test/ts/add-require-2 -r esm -O \"{\\\"module\\\": \\\"es6\\\"}\" --preserve-symlinks --respawn --ignore-watch 'lib' --ignore-watch bin --prefer-ts --debug --poll --interval 1000 --cache-directory .ts-node --inspect -- test/ts/test-script test-arg --fd",
+    "test-manual": "node ./bin/ts-node-dev --rt 5 --exit-child --tree-kill --clear -r tsconfig-paths/register -r ./test/ts/add-require -r ./test/ts/add-require-2 -r esm -O \"{\\\"module\\\": \\\"es6\\\"}\" --preserve-symlinks --respawn --ignore-watch 'lib' --ignore-watch bin --prefer-ts --debug --poll --interval 1000 --cache-directory .ts-node --inspect -- test/manual/test-script test-arg --fd",
     "test-docker": "docker run --rm -v ${PWD}:/app mhart/alpine-node:8.7.0 sh -c 'cd app && node ./bin/ts-node-dev --cache-directory .ts-node test/ts/big'"
   },
   "dependencies": {
@@ -57,13 +59,17 @@
     "tsconfig": "^7.0.0"
   },
   "devDependencies": {
+    "@types/fs-extra": "^9.0.1",
     "@types/node": "^8.0.4",
+    "@types/tape": "^4.13.0",
     "coffee-script": "^1.8.0",
     "eslint": "^2.0.0",
     "eslint-config-airbnb-base": "^3.0.1",
     "eslint-plugin-import": "^1.8.1",
     "esm": "^3.2.22",
+    "fs-extra": "^9.0.1",
     "tap": "^5.2.0",
+    "tape": "^5.0.1",
     "touch": "^1.0.0",
     "tsconfig-paths": "^3.3.1",
     "typescript": "^3.7.4"

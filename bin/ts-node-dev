@@ -33,7 +33,7 @@ var opts = minimist(devArgs, {
     'prefer-ts-exts',
     'tree-kill',
     'clear', 'cls',
-    'exit-child',
+    'exit-child',    
     'rs'
   ],
   string: [
@@ -53,7 +53,8 @@ var opts = minimist(devArgs, {
     'ignore-watch',
     'interval',
     'debounce',
-    'watch'
+    'watch',
+    'restart-terminated'
   ],
   alias: {
     transpileOnly: 'T',
@@ -62,7 +63,8 @@ var opts = minimist(devArgs, {
     ignoreWarnings: 'I',
     compilerOptions: 'O',
     compiler: 'C',
-    project: 'P'
+    project: 'P',
+    'restart-terminated': 'rt'
   },
   default: { deps: true, notify: true, rs: true },
   unknown: function(arg) {
