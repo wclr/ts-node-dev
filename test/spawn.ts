@@ -7,10 +7,10 @@ const scriptsDir = path.join(__dirname, '/../.temp/fixture')
 
 export const spawnTsNodeDev = (
   cmd: string,
-  opts: { stdout?: boolean; stderr?: boolean } = {}
+  opts: { stdout?: boolean; stderr?: boolean; env?: any } = {}
 ) => {
   const nodeArg = [bin].concat(cmd.split(' '))
-  const ps = child.spawn('node', nodeArg, { cwd: scriptsDir })
+  const ps = child.spawn('node', nodeArg, { cwd: scriptsDir, env: opts.env })
   var out = ''
   var err = ''
 
@@ -41,7 +41,6 @@ export const spawnTsNodeDev = (
       return new Promise((resolve) => {
         const listener = (data: string) => {
           const line = data.toString()
-          console.log('line', line)
           if (testPattern(pattern, line)) {
             ps.stdout.removeListener('data', listener)
             resolve(line)

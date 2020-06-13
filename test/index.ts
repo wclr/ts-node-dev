@@ -17,6 +17,16 @@ const replaceText = async (
   return fs.writeFile(textFile, text.replace(pattern, replace))
 }
 
+const writeFile = async (script: string, text: string) => {
+  const textFile = join(scriptsDir, script)
+  return fs.writeFile(textFile, text)
+}
+
+const removeFile = async (script: string) => {
+  const textFile = join(scriptsDir, script)
+  return fs.remove(textFile)
+}
+
 const waitFor = (timeout: number) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
 }
@@ -47,12 +57,14 @@ fs.copySync(join(__dirname, 'fixture'), scriptsDir)
  */
 
 test('It should restart on file change', async (t) => {
-  const ps = spawnTsNodeDev('--respawn --poll simple.ts', {stdout: true})
+  const ps = spawnTsNodeDev('--respawn --poll simple.ts')
   await ps.waitForLine(/v1/)
   setTimeout(() => replaceText('dep.ts', 'v1', 'v2'), 250)
   await ps.waitForLine(/v2/)
   t.pass('Changed code version applied.')
   await ps.exit()
+  // revert
+  replaceText('dep.ts', 'v2', 'v1')
 })
 
 test('It allow watch arbitrary folder/file', async (t) => {
@@ -80,4 +92,44 @@ test('It should report an error on start', async (t) => {
   await ps.waitForLine(/v1/)
   t.pass('Restarted successfully after error fixed.')
   await ps.exit()
+  replaceText('with-error.ts', '1', `'1'`)
+})
+
+test('It restart on non imported file', async (t) => {
+  const ps = spawnTsNodeDev('--respawn with-error.ts', {
+    //stdout: true,
+    env: {
+      TS_NODE_DEV_ERROR_RECOMPILE_TIMEOUT: 500,
+    },
+  })
+  await ps.waitForLine(/[ERROR]/)
+
+  setTimeout(() => replaceText('dep-ts-error.ts', 'number', 'string'), 250)
+
+  await ps.waitForLine(/v1/)
+  t.pass('Restarted successfully after error fixed.')
+  await ps.exit()
+  replaceText('dep-ts-error.ts', 'string', 'number')
+})
+
+const notFoundSource = `export const fn = (x: number) => {  
+  return 'v1'
+}
+`
+
+test('It restarts when not found module added', async (t) => {
+  const ps = spawnTsNodeDev('--respawn with-not-found.ts', {
+    //stdout: true,
+    env: {
+      TS_NODE_DEV_ERROR_RECOMPILE_TIMEOUT: 250,
+    },
+  })
+  await ps.waitForLine(/[ERROR]/)
+
+  setTimeout(() => writeFile('not-found.ts', notFoundSource), 1000)
+
+  await ps.waitForLine(/v1/)
+  t.pass('Restarted successfully after error fixed.')
+  await ps.exit()
+  await removeFile('not-found.ts')
 })
