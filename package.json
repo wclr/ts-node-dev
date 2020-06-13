@@ -73,5 +73,8 @@
     "touch": "^1.0.0",
     "tsconfig-paths": "^3.3.1",
     "typescript": "^3.9.5"
+  },
+  "peerDependencies": {
+    "typescript": "*"
   }
 }
