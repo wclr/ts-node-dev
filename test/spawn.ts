@@ -1,7 +1,5 @@
 import child = require('child_process')
 import path = require('path')
-import { resolve } from 'url'
-import { resolveSoa } from 'dns'
 const bin = path.join(__dirname, '/../bin/ts-node-dev')
 const scriptsDir = path.join(__dirname, '/../.temp/fixture')
 

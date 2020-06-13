@@ -31,7 +31,7 @@ const waitFor = (timeout: number) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
 }
 
-fs.ensureDir(tempDir)
+fs.ensureDirSync(tempDir)
 fs.removeSync(join(tempDir, 'fixture'))
 fs.copySync(join(__dirname, 'fixture'), scriptsDir)
 
@@ -95,7 +95,7 @@ test('It should report an error on start', async (t) => {
   await replaceText('with-error.ts', '1', `'1'`)
 })
 
-test('It should restart on adding not imported module', async (t) => {
+test.only('It should restart on adding not imported module', async (t) => {
   const ps = spawnTsNodeDev('--respawn with-error.ts', {
     // stdout: true,
     env: {
