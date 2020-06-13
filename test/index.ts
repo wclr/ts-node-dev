@@ -92,12 +92,12 @@ test('It should report an error on start', async (t) => {
   await ps.waitForLine(/v1/)
   t.pass('Restarted successfully after error fixed.')
   await ps.exit()
-  replaceText('with-error.ts', '1', `'1'`)
+  await replaceText('with-error.ts', '1', `'1'`)
 })
 
-test('It restart on non imported file', async (t) => {
+test('It should restart on adding not imported module', async (t) => {
   const ps = spawnTsNodeDev('--respawn with-error.ts', {
-    //stdout: true,
+    // stdout: true,
     env: {
       TS_NODE_DEV_ERROR_RECOMPILE_TIMEOUT: 500,
     },
@@ -109,7 +109,7 @@ test('It restart on non imported file', async (t) => {
   await ps.waitForLine(/v1/)
   t.pass('Restarted successfully after error fixed.')
   await ps.exit()
-  replaceText('dep-ts-error.ts', 'string', 'number')
+  await replaceText('dep-ts-error.ts', 'string', 'number')
 })
 
 const notFoundSource = `export const fn = (x: number) => {  
@@ -119,7 +119,7 @@ const notFoundSource = `export const fn = (x: number) => {
 
 test('It restarts when not found module added', async (t) => {
   const ps = spawnTsNodeDev('--respawn with-not-found.ts', {
-    //stdout: true,
+    // stdout: true,
     env: {
       TS_NODE_DEV_ERROR_RECOMPILE_TIMEOUT: 250,
     },
