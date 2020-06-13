@@ -47,8 +47,9 @@ tsnd --respawn server.ts
 - `--interval` - Polling interval (ms)
 - `--debounce` - Debounce file change events (ms, non-polling mode)
 - `--clear` (`--cls`) Will clear screen on restart
-- `--watch` - Explicitly add files or folders to watch and restart on change (list separated by commas)
+- `--watch` - Explicitly add arbitrary files or folders to watch and restart on change (list separated by commas, [chokidar](https://github.com/paulmillr/chokidar) patterns)
 - `--exit-child` - Adds 'SIGTERM' exit handler in a child process.
+- `--rs` - Allow to restart with "rs" line entered in stdio, enabled by default, may turn it off `--rs false`
 
 **Caveats and points of notice:**
 

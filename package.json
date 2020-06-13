@@ -1,6 +1,6 @@
 {
   "name": "ts-node-dev",
-  "version": "1.0.0-pre.45",
+  "version": "1.0.0-pre.47",
   "description": "Compiles your TS app and restarts when files are modified.",
   "keywords": [
     "restart",
@@ -39,9 +39,9 @@
   "scripts": {
     "tsnd": "node ./bin/ts-node-dev",
     "ts-node-dev": "node ./bin/ts-node-dev",
-    "test": "ts-node test/index.ts",
-    "ci": "yarn test",    
-    "manual": "node ./bin/ts-node-dev --rt 5 --exit-child --tree-kill --clear -r tsconfig-paths/register -r ./test/ts/add-require -r ./test/ts/add-require-2 -r esm -O \"{\\\"module\\\": \\\"es6\\\"}\" --preserve-symlinks --respawn --ignore-watch 'lib' --ignore-watch bin --prefer-ts --debug --poll --interval 1000 --cache-directory .ts-node --inspect -- test/manual/test-script test-arg --fd"    
+    "test": "ts-node --transpile-only test/index.ts",
+    "ci": "yarn test",
+    "manual": "node ./bin/ts-node-dev --rt 5 --exit-child --tree-kill --clear -r tsconfig-paths/register -r ./test/manual/add-require -r ./test/manual/add-require-2 -r esm -O \"{\\\"module\\\": \\\"es6\\\"}\" --preserve-symlinks --respawn --ignore-watch 'lib' --ignore-watch bin --prefer-ts --debug --poll --interval 1000 --cache-directory .ts-node --inspect -- test/manual/test-script test-arg --fd"
   },
   "dependencies": {
     "chokidar": "^3.4.0",
@@ -54,13 +54,14 @@
     "rimraf": "^2.6.1",
     "source-map-support": "^0.5.12",
     "tree-kill": "^1.2.2",
-    "ts-node": "*",
+    "ts-node": "^8.10.2",
     "tsconfig": "^7.0.0"
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.1",
     "@types/node": "^8.0.4",
     "@types/tape": "^4.13.0",
+    "@types/touch": "^3.1.1",
     "coffee-script": "^1.8.0",
     "eslint": "^2.0.0",
     "eslint-config-airbnb-base": "^3.0.1",
@@ -71,6 +72,6 @@
     "tape": "^5.0.1",
     "touch": "^1.0.0",
     "tsconfig-paths": "^3.3.1",
-    "typescript": "^3.7.4"
+    "typescript": "^3.9.5"
   }
 }
