@@ -58,3 +58,11 @@ test('It should restart on file change', (t) => {
     }
   })
 })
+
+test('it should throw a helpful error message when using poll without interval', (t) => {
+  spawnTsNodeDev('--poll simple.ts', (error) => {
+    t.match(error, /TypeError: `interval` arg must be defined when polling/, 'Did not throw helpful error message');
+    t.ok(true);
+    t.end();
+  });
+});
