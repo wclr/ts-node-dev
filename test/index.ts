@@ -20,6 +20,27 @@ fs.ensureDir(tempDir)
 fs.removeSync(path.join(tempDir, 'fixture'))
 fs.copySync(path.join(__dirname, 'fixture'), scriptsDir)
 
+/* 
+ node ./bin/ts-node-dev --rt 5 
+ --exit-child 
+ --tree-kill 
+ --clear 
+ -r tsconfig-paths/register 
+ -r ./test/ts/add-require 
+ -r ./test/ts/add-require-2 
+ -r esm 
+ -O \"{\\\"module\\\": \\\"es6\\\"}\" 
+ --preserve-symlinks 
+ --respawn --ignore-watch 'lib' 
+ --ignore-watch bin --prefer-ts 
+ --debug 
+ --poll 
+ --interval 1000 
+ --cache-directory .ts-node 
+ --inspect 
+ -- test/manual/test-script test-arg --fd
+ */
+
 test('It should restart on file change', (t) => {
   const ps = spawnTsNodeDev('--respawn simple.ts', (res) => {
     if (/v1/.test(res)) {
