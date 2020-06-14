@@ -65,6 +65,10 @@ tsnd --respawn server.ts
 
 - The good thing is that `ts-node-dev` watches used `tsconfig.json` file, and will reinitialize compilation on its change, but you have to restart the process manually when you update used version of `typescript` or make any other changes that may effect compilation results.
 
+## Support
+
+Support the project with a donation and help us to give it back. [[Become a backer](https://opencollective.com/ts-node-dev#backer)]
+
 ## License
 
 WTF.
