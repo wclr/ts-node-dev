@@ -95,7 +95,7 @@ test('It should report an error on start', async (t) => {
   await replaceText('with-error.ts', '1', `'1'`)
 })
 
-test.only('It should restart on adding not imported module', async (t) => {
+test('It should restart on adding not imported module', async (t) => {
   const ps = spawnTsNodeDev('--respawn with-error.ts', {
     // stdout: true,
     env: {

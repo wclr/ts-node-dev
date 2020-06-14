@@ -1,0 +1,20 @@
+version: '3.0'
+volumes:
+  node10modules: null
+  node14modules: null
+services:
+  node10:
+    image: node:10.21.0-jessie-slim
+    working_dir: /package
+    command: sh -c  "yarn --frozen-lockfile && yarn test"
+    volumes:
+      - ./:/package
+      - node10modules:/package/node_modules
+      
+  node14:
+    image: node:14-stretch-slim
+    working_dir: /package
+    command: sh -c  "yarn --frozen-lockfile && yarn test"
+    volumes:
+      - ./:/package
+      - node14modules:/package/node_modules

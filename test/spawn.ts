@@ -8,7 +8,10 @@ export const spawnTsNodeDev = (
   opts: { stdout?: boolean; stderr?: boolean; env?: any } = {}
 ) => {
   const nodeArg = [bin].concat(cmd.split(' '))
-  const ps = child.spawn('node', nodeArg, { cwd: scriptsDir, env: opts.env })
+  const ps = child.spawn('node', nodeArg, { cwd: scriptsDir, env: {
+    ...process.env,
+    ...opts.env
+  } })
   var out = ''
   var err = ''
 

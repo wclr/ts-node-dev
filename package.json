@@ -41,6 +41,7 @@
     "tsnd": "yarn ts-node-dev",
     "test": "ts-node --transpile-only test/index.ts",
     "ci": "yarn test",
+    "ci-local": "docker run --name travis-debug -dit quay.io/travisci/ci-nodejs",
     "manual": "node ./bin/ts-node-dev --rt 5 --exit-child --tree-kill --clear -r tsconfig-paths/register -r ./test/manual/add-require -r ./test/manual/add-require-2 -r esm -O \"{\\\"module\\\": \\\"es6\\\"}\" --preserve-symlinks --respawn --ignore-watch 'lib' --ignore-watch bin --prefer-ts --debug --poll --interval 1000 --cache-directory .ts-node --inspect -- test/manual/test-script test-arg --fd"
   },
   "dependencies": {
