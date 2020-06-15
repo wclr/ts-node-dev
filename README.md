@@ -49,7 +49,7 @@ tsnd --respawn server.ts
 - `--clear` (`--cls`) Will clear screen on restart
 - `--watch` - Explicitly add arbitrary files or folders to watch and restart on change (list separated by commas, [chokidar](https://github.com/paulmillr/chokidar) patterns)
 - `--exit-child` - Adds 'SIGTERM' exit handler in a child process.
-- `--rs` - Allow to restart with "rs" line entered in stdio, enabled by default, may turn it off `--rs false`
+- `--rs` - Allow to restart with "rs" line entered in stdio, disabled by default.
 
 **Caveats and points of notice:**
 

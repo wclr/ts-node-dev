@@ -66,7 +66,7 @@ var opts = minimist(devArgs, {
     project: 'P',
     'restart-terminated': 'rt'
   },
-  default: { deps: true, notify: true, rs: true, 'type-check': true },
+  default: { deps: true, notify: true, rs: false, 'type-check': true },
   unknown: function(arg) {
     unknown.push(arg)
     return true
