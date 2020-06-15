@@ -1,11 +1,8 @@
 import * as test from 'tape'
-import { spawnTsNodeDev } from './spawn'
+import { spawnTsNodeDev, scriptsDir, tmpDir } from './spawn'
 import * as fs from 'fs-extra'
 import { join } from 'path'
 import touch = require('touch')
-
-const tempDir = join(__dirname, '../.temp')
-export const scriptsDir = join(tempDir, 'fixture')
 
 const replaceText = async (
   script: string,
@@ -31,8 +28,8 @@ const waitFor = (timeout: number) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
 }
 
-fs.ensureDirSync(tempDir)
-fs.removeSync(join(tempDir, 'fixture'))
+fs.ensureDirSync(tmpDir)
+fs.removeSync(join(tmpDir, 'fixture'))
 fs.copySync(join(__dirname, 'fixture'), scriptsDir)
 
 /* 
@@ -116,10 +113,9 @@ const notFoundSource = `export const fn = (x: number) => {
   return 'v1'
 }
 `
-
 test('It restarts when not found module added', async (t) => {
   const ps = spawnTsNodeDev('--respawn with-not-found.ts', {
-    // stdout: true,
+    //stdout: true,
     env: {
       TS_NODE_DEV_ERROR_RECOMPILE_TIMEOUT: 250,
     },
@@ -129,7 +125,50 @@ test('It restarts when not found module added', async (t) => {
   setTimeout(() => writeFile('not-found.ts', notFoundSource), 1000)
 
   await ps.waitForLine(/v1/)
-  t.pass('Restarted successfully after error fixed.')
+  t.pass('Restarted successfully after module was created.')
   await ps.exit()
   await removeFile('not-found.ts')
+})
+
+test('It handles allowJs option and loads JS modules', async (t) => {
+  const cOptions = { allowJs: true }
+  const ps = spawnTsNodeDev(
+    [
+      `--respawn`,
+      `--compiler ttypescript`,
+      `--compilerOptions=${JSON.stringify(cOptions)}`,
+      `js-module.js`,
+    ].join(' ')
+  ).turnOnOutput()
+  await ps.waitForLine(/JS MODULE/)
+  await ps.exit()
+})
+
+test('It allows use TS Transformers', async (t) => {
+  const cOptions = { plugins: [{ transform: 'ts-nameof', type: 'raw' }] }
+  const ps = spawnTsNodeDev(
+    [
+      `--respawn`,
+      `--compiler ttypescript`,
+      `--compilerOptions=${JSON.stringify(cOptions)}`,
+      `nameof.ts`,
+    ].join(' ')
+  ) //.turnOnOutput()
+  await ps.waitForLine(/console/)
+
+  await ps.exit()
+})
+
+test('It allows use custom TS Transformers', async (t) => {
+  const cOptions = { plugins: [{ transform: __dirname + '/transformer.ts' }] }
+  const ps = spawnTsNodeDev(
+    [
+      `--respawn`,
+      `--compiler ttypescript`,
+      `--compilerOptions=${JSON.stringify(cOptions)}`,
+      `to-transform.ts`,
+    ].join(' ')
+  ) //.turnOnOutput()
+  await ps.waitForLine(/transformed/)
+  await ps.exit()
 })

@@ -1,7 +1,9 @@
 version: '3.0'
 volumes:
   node10modules: null
+  node10tmp: null
   node14modules: null
+  node14tmp: null
 services:
   node10:
     image: node:10.21.0-jessie-slim
@@ -10,6 +12,7 @@ services:
     volumes:
       - ./:/package
       - node10modules:/package/node_modules
+      - node10tmp:/package/.tmp
       
   node14:
     image: node:14-stretch-slim
@@ -18,3 +21,4 @@ services:
     volumes:
       - ./:/package
       - node14modules:/package/node_modules
+      - node14tmp:/package/.tmp

@@ -1,17 +1,23 @@
 import child = require('child_process')
 import path = require('path')
 const bin = path.join(__dirname, '/../bin/ts-node-dev')
-const scriptsDir = path.join(__dirname, '/../.temp/fixture')
+
+export const tmpDir = path.join(__dirname, '../.tmp')
+export const scriptsDir = path.join(tmpDir, 'fixture')
 
 export const spawnTsNodeDev = (
   cmd: string,
-  opts: { stdout?: boolean; stderr?: boolean; env?: any } = {}
+  options: { stdout?: boolean; stderr?: boolean; env?: any } = {}
 ) => {
+  const opts = { ...options }
   const nodeArg = [bin].concat(cmd.split(' '))
-  const ps = child.spawn('node', nodeArg, { cwd: scriptsDir, env: {
-    ...process.env,
-    ...opts.env
-  } })
+  const ps = child.spawn('node', nodeArg, {
+    cwd: scriptsDir,
+    env: {
+      ...process.env,
+      ...opts.env,
+    },
+  })
   var out = ''
   var err = ''
 
@@ -33,9 +39,13 @@ export const spawnTsNodeDev = (
       ? str.indexOf(pattern) >= 0
       : pattern.test(str)
   }
-
-  return {
+  const self = {
     ps,
+    turnOnOutput: () => {
+      opts.stderr = true
+      opts.stdout = true
+      return self
+    },
     getStdout: () => out,
     getStderr: () => err,
     waitForLine: (pattern: string | RegExp) => {
@@ -62,4 +72,5 @@ export const spawnTsNodeDev = (
       })
     },
   }
+  return self
 }

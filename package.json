@@ -1,6 +1,6 @@
 {
   "name": "ts-node-dev",
-  "version": "1.0.0-pre.47",
+  "version": "1.0.0-pre.48",
   "description": "Compiles your TS app and restarts when files are modified.",
   "keywords": [
     "restart",
@@ -40,6 +40,7 @@
     "ts-node-dev": "node ./bin/ts-node-dev",
     "tsnd": "yarn ts-node-dev",
     "test": "ts-node --transpile-only test/index.ts",
+    "test-docker": "docker-compose up",
     "ci": "yarn test",
     "ci-local": "docker run --name travis-debug -dit quay.io/travisci/ci-nodejs",
     "manual": "node ./bin/ts-node-dev --rt 5 --exit-child --tree-kill --clear -r tsconfig-paths/register -r ./test/manual/add-require -r ./test/manual/add-require-2 -r esm -O \"{\\\"module\\\": \\\"es6\\\"}\" --preserve-symlinks --respawn --ignore-watch 'lib' --ignore-watch bin --prefer-ts --debug --poll --interval 1000 --cache-directory .ts-node --inspect -- test/manual/test-script test-arg --fd"
@@ -63,6 +64,7 @@
     "@types/node": "^8.0.4",
     "@types/tape": "^4.13.0",
     "@types/touch": "^3.1.1",
+    "@types/ts-nameof": "^4.2.1",
     "coffee-script": "^1.8.0",
     "eslint": "^2.0.0",
     "eslint-config-airbnb-base": "^3.0.1",
@@ -72,7 +74,9 @@
     "tap": "^5.2.0",
     "tape": "^5.0.1",
     "touch": "^1.0.0",
+    "ts-nameof": "^5.0.0",
     "tsconfig-paths": "^3.3.1",
+    "ttypescript": "^1.5.10",
     "typescript": "^3.9.5"
   },
   "peerDependencies": {
