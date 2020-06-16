@@ -113,8 +113,8 @@ const notFoundSource = `export const fn = (x: number) => {
   return 'v1'
 }
 `
-test('It restarts when not found module added', async (t) => {
-  const ps = spawnTsNodeDev('--respawn with-not-found.ts', {
+test.only('It recompiles file on error and restarts', async (t) => {
+  const ps = spawnTsNodeDev('--respawn --error-recompile with-not-found.ts', {
     //stdout: true,
     env: {
       TS_NODE_DEV_ERROR_RECOMPILE_TIMEOUT: 250,
@@ -144,7 +144,7 @@ test('It handles allowJs option and loads JS modules', async (t) => {
   await ps.exit()
 })
 
-test('It allows use TS Transformers', async (t) => {
+test('It allows to use TS Transformers', async (t) => {
   const cOptions = { plugins: [{ transform: 'ts-nameof', type: 'raw' }] }
   const ps = spawnTsNodeDev(
     [
@@ -159,7 +159,7 @@ test('It allows use TS Transformers', async (t) => {
   await ps.exit()
 })
 
-test('It allows use custom TS Transformers', async (t) => {
+test('It allows to use custom TS Transformers', async (t) => {
   const cOptions = { plugins: [{ transform: __dirname + '/transformer.ts' }] }
   const ps = spawnTsNodeDev(
     [
