@@ -93,7 +93,7 @@ test('It should report an error on start', async (t) => {
 })
 
 test('It should restart on adding not imported module', async (t) => {
-  const ps = spawnTsNodeDev('--respawn with-error.ts', {
+  const ps = spawnTsNodeDev('--respawn --error-recompile with-error.ts', {
     // stdout: true,
     env: {
       TS_NODE_DEV_ERROR_RECOMPILE_TIMEOUT: 500,
@@ -113,7 +113,7 @@ const notFoundSource = `export const fn = (x: number) => {
   return 'v1'
 }
 `
-test.only('It recompiles file on error and restarts', async (t) => {
+test('It recompiles file on error and restarts', async (t) => {
   const ps = spawnTsNodeDev('--respawn --error-recompile with-not-found.ts', {
     //stdout: true,
     env: {
@@ -139,7 +139,7 @@ test('It handles allowJs option and loads JS modules', async (t) => {
       `--compilerOptions=${JSON.stringify(cOptions)}`,
       `js-module.js`,
     ].join(' ')
-  ).turnOnOutput()
+  ) //.turnOnOutput()
   await ps.waitForLine(/JS MODULE/)
   await ps.exit()
 })
