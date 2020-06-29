@@ -172,3 +172,19 @@ test('It allows use custom TS Transformers', async (t) => {
   await ps.waitForLine(/transformed/)
   await ps.exit()
 })
+
+// TODO: fix --graceful_ipc option won't work with spawnTsNodeDev()
+// p.s the option works when manually running node on the terminal like this:
+// node .\bin\ts-node-dev --graceful_ipc=AWESOME .\test\fixture\graceful-ipc.ts
+test.skip('It send IPC message during restart events', async (t) => {
+  const ps = spawnTsNodeDev('--graceful_ipc="GRACETERM" graceful-ipc.ts')
+
+  // changing the file to trigger restart
+  setTimeout(() => replaceText('graceful-ipc.ts', 'v1', 'v2'), 250)
+  
+  await ps.waitForLine(/GRACETERM/)
+
+  await ps.exit()
+
+  replaceText('graceful-ipc.ts', 'v2', 'v1')
+})
