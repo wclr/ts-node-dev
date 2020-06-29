@@ -54,7 +54,8 @@ var opts = minimist(devArgs, {
     'interval',
     'debounce',
     'watch',
-    'restart-terminated'
+    'restart-terminated',
+    'graceful_ipc'
   ],
   alias: {
     transpileOnly: 'T',
