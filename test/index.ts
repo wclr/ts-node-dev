@@ -156,7 +156,7 @@ test('It handles allowJs option and loads JS modules', async (t) => {
       //'--ignore .rcfile',
       `js-module.js`,
     ].join(' ')
-  ).turnOnOutput()
+  ) //.turnOnOutput()
   await ps.waitForLine(/JS MODULE/)
   await ps.exit()
 })
