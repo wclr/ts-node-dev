@@ -32,10 +32,11 @@ var opts = minimist(devArgs, {
     'log-error',
     'prefer-ts-exts',
     'tree-kill',
-    'clear', 'cls',
-    'exit-child',    
+    'clear',
+    'cls',
+    'exit-child',
     'rs',
-    'error-recompile'
+    'error-recompile',
   ],
   string: [
     'compiler',
@@ -55,7 +56,7 @@ var opts = minimist(devArgs, {
     'interval',
     'debounce',
     'watch',
-    'restart-terminated',    
+    'restart-terminated',
   ],
   alias: {
     transpileOnly: 'T',
@@ -65,13 +66,13 @@ var opts = minimist(devArgs, {
     compilerOptions: 'O',
     compiler: 'C',
     project: 'P',
-    'restart-terminated': 'rt'
+    'restart-terminated': 'rt',
   },
   default: { deps: true, notify: true, rs: false, 'type-check': true },
-  unknown: function(arg) {
+  unknown: function (arg) {
     unknown.push(arg)
     return true
-  }
+  },
 })
 
 var script = opts._[0]
@@ -79,13 +80,13 @@ var scriptArgs = opts._.slice(1)
 
 opts.priorNodeArgs = []
 
-unknown.forEach(function(arg) {
+unknown.forEach(function (arg) {
   if (arg === script || nodeArgs.indexOf(arg) >= 0) return
 
   var argName = arg.replace(/^-+/, '')
   var argOpts = opts[argName]
   var argValues = Array.isArray(argOpts) ? argOpts : [argOpts]
-  argValues.forEach(function(argValue) {
+  argValues.forEach(function (argValue) {
     if ((arg === '-r' || arg === '--require') && argValue === 'esm') {
       opts.priorNodeArgs.push(arg, argValue)
       return false
