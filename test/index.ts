@@ -92,7 +92,7 @@ test('It should report an error on start', async (t) => {
   await replaceText('with-error.ts', '1', `'1'`)
 })
 
-test.only('It should report an error with --log-error and continue to work', async (t) => {
+test('It should report an error with --log-error and continue to work', async (t) => {
   const ps = spawnTsNodeDev('--respawn --log-error with-error.ts') //.turnOnOutput()
   await ps.waitForErrorLine(/error/)
 
