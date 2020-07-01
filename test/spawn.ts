@@ -60,6 +60,18 @@ export const spawnTsNodeDev = (
         ps.stdout.on('data', listener)
       })
     },
+    waitForErrorLine: (pattern: string | RegExp) => {
+      return new Promise((resolve) => {
+        const listener = (data: string) => {
+          const line = data.toString()
+          if (testPattern(pattern, line)) {
+            ps.stderr.removeListener('data', listener)
+            resolve(line)
+          }
+        }
+        ps.stderr.on('data', listener)
+      })
+    },
     exit: () => {
       return new Promise((resolve) => {
         ps.stdout.removeAllListeners('data')

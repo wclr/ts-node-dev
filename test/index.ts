@@ -77,7 +77,7 @@ test('It should report an error on start', async (t) => {
   const ps = spawnTsNodeDev('--respawn with-error.ts')
   await ps.waitForLine(/[ERROR]/)
   const out = ps.getStdout()
-  t.ok(/Compilation error in/.test(out), 'Report error file')
+  t.ok(/Compilation error in/.test(out), 'Reports error file')
   t.ok(/[ERROR].*Unable to compile TypeScript/.test(out), 'Report TS error')
   t.ok(/Argument of type/.test(out), 'Report TS error diagnostics')
 
@@ -86,6 +86,22 @@ test('It should report an error on start', async (t) => {
   // PROBLEM: if we try to fix not required/compiled dep it does not work.
   // setTimeout(() => replaceText('dep-ts-error.ts', 'number', 'string'), 250)
 
+  await ps.waitForLine(/v1/)
+  t.pass('Restarted successfully after error fixed.')
+  await ps.exit()
+  await replaceText('with-error.ts', '1', `'1'`)
+})
+
+test.only('It should report an error with --log-error and continue to work', async (t) => {
+  const ps = spawnTsNodeDev('--respawn --log-error with-error.ts') //.turnOnOutput()
+  await ps.waitForErrorLine(/error/)
+
+  const out = ps.getStderr()
+  t.ok(/error.*Argument of type/.test(out), 'Reports error in stderr')
+
+  setTimeout(() => replaceText('with-error.ts', `'1'`, '1'), 250)
+
+  await ps.waitForLine(/Restarting:/)
   await ps.waitForLine(/v1/)
   t.pass('Restarted successfully after error fixed.')
   await ps.exit()
@@ -136,10 +152,11 @@ test('It handles allowJs option and loads JS modules', async (t) => {
     [
       `--respawn`,
       `--compiler ttypescript`,
-      `--compilerOptions=${JSON.stringify(cOptions)}`,
+      `--compiler-options=${JSON.stringify(cOptions)}`,
+      //'--ignore .rcfile',
       `js-module.js`,
     ].join(' ')
-  ) //.turnOnOutput()
+  ).turnOnOutput()
   await ps.waitForLine(/JS MODULE/)
   await ps.exit()
 })
