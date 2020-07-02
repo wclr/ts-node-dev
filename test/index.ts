@@ -189,3 +189,45 @@ test('It allows to use custom TS Transformers', async (t) => {
   await ps.waitForLine(/transformed/)
   await ps.exit()
 })
+//
+test.only('It should --prefer-ts', async (t) => {
+  t.test('Should require JS by default', async (t) => {
+    const ps = spawnTsNodeDev(
+      [
+        `--respawn`,
+        //`--prefer-ts-exts`,
+        `prefer/prefer.js`,
+      ].join(' ')
+    ).turnOnOutput()
+    await ps.waitForLine(/PREFER DEP JS/)
+    await ps.waitForLine(/PREFER JS/)
+    await ps.exit()
+    t.pass()
+  })
+  t.test('SHould require JS deps by default', async (t) => {
+    const ps = spawnTsNodeDev(
+      [
+        `--respawn`,
+        //`--prefer-ts`,
+        `prefer/prefer`,
+      ].join(' ')
+    ).turnOnOutput()
+    await ps.waitForLine(/PREFER DEP JS/)
+    await ps.waitForLine(/PREFER TS/)
+    await ps.exit()
+    t.pass()
+  })
+  t.test('Use require all TS with --ts-prefer', async (t) => {
+    const ps = spawnTsNodeDev(
+      [
+        `--respawn`,
+        `--prefer-ts-exts`,
+        `prefer/prefer.js`,
+      ].join(' ')
+    ).turnOnOutput()
+    await ps.waitForLine(/PREFER DEP TS/)
+    await ps.waitForLine(/PREFER TS/)
+    await ps.exit()
+    t.pass()
+  })
+})
