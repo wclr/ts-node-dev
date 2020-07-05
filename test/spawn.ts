@@ -20,7 +20,7 @@ export const spawnTsNodeDev = (
   })
   var out = ''
   var err = ''
-
+  
   ps.stderr.on('data', function (data) {
     if (opts.stderr) {
       console.log('STDERR:', data.toString())
@@ -33,7 +33,9 @@ export const spawnTsNodeDev = (
     }
     out += data.toString()
   })
-
+  ps.on('disconnect', () => {
+    console.log('im out')
+  })
   const testPattern = (pattern: string | RegExp, str: string) => {
     return typeof pattern === 'string'
       ? str.indexOf(pattern) >= 0

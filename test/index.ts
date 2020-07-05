@@ -198,7 +198,7 @@ test('It should --prefer-ts', async (t) => {
         //`--prefer-ts-exts`,
         `prefer/prefer.js`,
       ].join(' ')
-    )//.turnOnOutput()
+    ) //.turnOnOutput()
     await ps.waitForLine(/PREFER DEP JS/)
     await ps.waitForLine(/PREFER JS/)
     await ps.exit()
@@ -211,13 +211,13 @@ test('It should --prefer-ts', async (t) => {
         //`--prefer-ts`,
         `prefer/prefer`,
       ].join(' ')
-    )//.turnOnOutput()
+    ) //.turnOnOutput()
     await ps.waitForLine(/PREFER DEP JS/)
     await ps.waitForLine(/PREFER TS/)
     await ps.exit()
     t.pass()
   })
-  
+
   t.test('Use require all TS with --ts-prefer', async (t) => {
     const ps = spawnTsNodeDev(
       [
@@ -226,16 +226,55 @@ test('It should --prefer-ts', async (t) => {
         //'--debug',
         `prefer/prefer`,
       ].join(' ')
-    )//.turnOnOutput()
+    ) //.turnOnOutput()
     await ps.waitForLine(/PREFER DEP TS/)
     await ps.waitForLine(/PREFER TS/)
 
     setTimeout(() => replaceText('prefer/prefer-dep.ts', 'DEP', 'DEP MOD'), 250)
 
-    await ps.waitForLine(/PREFER DEP MOD TS/)    
+    await ps.waitForLine(/PREFER DEP MOD TS/)
 
     await ps.exit()
     t.pass()
     replaceText('prefer/prefer-dep.ts', 'DEP MOD', 'DEP')
+  })
+})
+
+// maybe later
+test.skip('Can not find module', async (t) => {
+  const foundText = 'FOUND NOW!'
+
+  const createNotFound = () =>
+    setTimeout(
+      () => writeFile('not-found/not-found.js', `console.log('${foundText}')`),
+      100
+    )
+  const removeNotFound = () => removeFile('not-found/not-found.js')
+
+  // t.test('Not found in TS', async () => {
+  //   const ps = spawnTsNodeDev(
+  //     [`--respawn`, 'not-found/with-not-found-js'].join(' ')
+  //   ).turnOnOutput()
+
+  //   await ps.waitForLine('Cannot find module')
+
+  //   createNotFound()
+
+  //     require.resolve('')
+
+  //   await ps.waitForLine('Restarting')
+
+  //   //await removeNotFound()
+  // })
+
+  t.test('Not found in JS', async () => {
+    const ps = spawnTsNodeDev(
+      ['not-found/js-with-not-found.js'].join(' ')
+    ).turnOnOutput()
+
+    await ps.waitForLine('Cannot find module')
+    
+
+    //await removeNotFound()
   })
 })
