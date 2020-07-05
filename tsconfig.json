@@ -9,6 +9,7 @@
     "noFallthroughCasesInSwitch": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "outDir": "lib",
     "allowJs": false,
     "newLine": "LF",
     "plugins": [
@@ -22,5 +23,5 @@
     "indentSize": 2,
     "tabSize": 2
   },
-  "exclude": ["**/node_modules/*"]
+  "exclude": ["**/node_modules/*"]  
 }
