@@ -28,7 +28,7 @@ ts-node-dev [node-dev|ts-node flags] [ts-node-dev flags] [node cli flags] [--] [
 So you just combine [node-dev](https://github.com/fgnass/node-dev) and [ts-node](https://github.com/TypeStrong/ts-node) options (see docs of those packages):
 
 ```
-ts-node-dev --respawn --transpileOnly server.ts
+ts-node-dev --respawn --transpile-only server.ts
 ```
 
 There is also short alias `tsnd` for running `ts-node-dev`:
