@@ -4,7 +4,7 @@ import * as fs from 'fs-extra'
 import { join } from 'path'
 import touch = require('touch')
 
-const replaceText = async (
+export const replaceText = async (
   script: string,
   pattern: string | RegExp,
   replace: string
@@ -14,12 +14,12 @@ const replaceText = async (
   return fs.writeFile(textFile, text.replace(pattern, replace))
 }
 
-const writeFile = async (script: string, text: string) => {
+export const writeFile = async (script: string, text: string) => {
   const textFile = join(scriptsDir, script)
   return fs.writeFile(textFile, text)
 }
 
-const removeFile = async (script: string) => {
+export const removeFile = async (script: string) => {
   const textFile = join(scriptsDir, script)
   return fs.remove(textFile)
 }
@@ -31,27 +31,6 @@ const waitFor = (timeout: number) => {
 fs.ensureDirSync(tmpDir)
 fs.removeSync(join(tmpDir, 'fixture'))
 fs.copySync(join(__dirname, 'fixture'), scriptsDir)
-
-/* 
- node ./bin/ts-node-dev --rt 5 
- --exit-child 
- --tree-kill 
- --clear 
- -r tsconfig-paths/register 
- -r ./test/ts/add-require 
- -r ./test/ts/add-require-2 
- -r esm 
- -O \"{\\\"module\\\": \\\"es6\\\"}\" 
- --preserve-symlinks 
- --respawn --ignore-watch 'lib' 
- --ignore-watch bin --prefer-ts 
- --debug 
- --poll 
- --interval 1000 
- --cache-directory .ts-node 
- --inspect 
- -- test/manual/test-script test-arg --fd
- */
 
 test('It should restart on file change', async (t) => {
   const ps = spawnTsNodeDev('--respawn --poll simple.ts')
@@ -65,7 +44,7 @@ test('It should restart on file change', async (t) => {
 })
 
 test('It allow watch arbitrary folder/file', async (t) => {
-  const ps = spawnTsNodeDev('--respawn --watch folder,folder2 simple.ts')
+  const ps = spawnTsNodeDev('--respawn --watch folder,folder2 simple.ts')//.turnOnOutput()
   await ps.waitForLine(/Using/)
   setTimeout(() => touch(join(scriptsDir, 'folder/some-file')), 250)
   await ps.waitForLine(/Restarting.*some-file/)
@@ -153,11 +132,11 @@ test('It handles allowJs option and loads JS modules', async (t) => {
       `--respawn`,
       `--compiler ttypescript`,
       `--compiler-options=${JSON.stringify(cOptions)}`,
-      //'--ignore .rcfile',
       `js-module.js`,
     ].join(' ')
   ) //.turnOnOutput()
   await ps.waitForLine(/JS MODULE/)
+  t.pass('ok')
   await ps.exit()
 })
 
@@ -167,7 +146,7 @@ test('It allows to use TS Transformers', async (t) => {
     [
       `--respawn`,
       `--compiler ttypescript`,
-      `--compilerOptions=${JSON.stringify(cOptions)}`,
+      `--compiler-options=${JSON.stringify(cOptions)}`,
       `nameof.ts`,
     ].join(' ')
   ) //.turnOnOutput()
@@ -182,14 +161,15 @@ test('It allows to use custom TS Transformers', async (t) => {
     [
       `--respawn`,
       `--compiler ttypescript`,
-      `--compilerOptions=${JSON.stringify(cOptions)}`,
+      `--compiler-options=${JSON.stringify(cOptions)}`,
       `to-transform.ts`,
     ].join(' ')
   ) //.turnOnOutput()
   await ps.waitForLine(/transformed/)
+  t.pass('ok')
   await ps.exit()
 })
-//
+
 test('It should --prefer-ts', async (t) => {
   t.test('Should require JS by default', async (t) => {
     const ps = spawnTsNodeDev(
@@ -220,12 +200,7 @@ test('It should --prefer-ts', async (t) => {
 
   t.test('Use require all TS with --ts-prefer', async (t) => {
     const ps = spawnTsNodeDev(
-      [
-        `--respawn`,
-        `--prefer-ts-exts`,
-        //'--debug',
-        `prefer/prefer`,
-      ].join(' ')
+      [`--respawn`, `--prefer-ts-exts`, `prefer/prefer`].join(' ')
     ) //.turnOnOutput()
     await ps.waitForLine(/PREFER DEP TS/)
     await ps.waitForLine(/PREFER TS/)
@@ -239,42 +214,22 @@ test('It should --prefer-ts', async (t) => {
     replaceText('prefer/prefer-dep.ts', 'DEP MOD', 'DEP')
   })
 })
+// watching required with -r not implemented
+test.skip('It should add require with -r flag', async (t) => {
+  const ps = spawnTsNodeDev(
+    [
+      `-r ./add-req`,
+      //`--debug`,
+      `simple`,
+    ].join(' ')
+  ).turnOnOutput()
+  await ps.waitForLine(/added --require/)
+  await ps.waitForLine(/v1/)
 
-// maybe later
-test.skip('Can not find module', async (t) => {
-  const foundText = 'FOUND NOW!'
-
-  const createNotFound = () =>
-    setTimeout(
-      () => writeFile('not-found/not-found.js', `console.log('${foundText}')`),
-      100
-    )
-  const removeNotFound = () => removeFile('not-found/not-found.js')
-
-  // t.test('Not found in TS', async () => {
-  //   const ps = spawnTsNodeDev(
-  //     [`--respawn`, 'not-found/with-not-found-js'].join(' ')
-  //   ).turnOnOutput()
-
-  //   await ps.waitForLine('Cannot find module')
-
-  //   createNotFound()
-
-  //     require.resolve('')
-
-  //   await ps.waitForLine('Restarting')
-
-  //   //await removeNotFound()
-  // })
-
-  t.test('Not found in JS', async () => {
-    const ps = spawnTsNodeDev(
-      ['not-found/js-with-not-found.js'].join(' ')
-    ).turnOnOutput()
-
-    await ps.waitForLine('Cannot find module')
-    
-
-    //await removeNotFound()
-  })
+  //setTimeout(() => replaceText('add-req', 'added', 'changed'), 250)
+  //await ps.exit()
+  //
+  await ps.waitForLine(/changed --require/)
+  t.pass()
+  t.end()
 })

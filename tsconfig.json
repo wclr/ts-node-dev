@@ -11,7 +11,7 @@
     "emitDecoratorMetadata": true,
     "outDir": "lib",
     "allowJs": false,
-    "newLine": "LF",
+    "newLine": "LF",    
     "plugins": [
       {
         "name": "typescript-tslint-plugin",
