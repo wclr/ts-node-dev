@@ -24,7 +24,7 @@ var opts = minimist(devArgs, {
     // ts-node
     'dir',
     'scope',
-    'emit',    
+    'emit',
     'files',
     'pretty',
     'transpile-only',
@@ -36,7 +36,7 @@ var opts = minimist(devArgs, {
     'skip-project',
     'skip-ignore',
     'compiler-host',
-    'script-mode'
+    'script-mode',
   ],
   string: [
     'compile-timeout',
@@ -60,7 +60,7 @@ var opts = minimist(devArgs, {
     compiler: 'C',
     project: 'P',
   },
-  default: { deps: true, notify: true, rs: false, 'type-check': true },
+  default: { deps: false, notify: true, rs: false, 'type-check': true },
   unknown: function (arg) {
     unknown.push(arg)
     return true
