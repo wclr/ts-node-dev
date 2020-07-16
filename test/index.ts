@@ -140,6 +140,21 @@ test('It handles allowJs option and loads JS modules', async (t) => {
   await ps.exit()
 })
 
+test('It handles resolveJsonModule option and loads JSON modules', async (t) => {
+  const cOptions = { resolveJsonModule: true }
+  const ps = spawnTsNodeDev(
+    [
+      `--respawn`,
+      `--compiler ttypescript`,
+      `--compiler-options=${JSON.stringify(cOptions)}`,
+      `import-json`,
+    ].join(' ')
+  )//.turnOnOutput()
+  await ps.waitForLine(/JSON DATA: { file: 'json' }/)
+  t.pass('ok')
+  await ps.exit()
+})
+
 test('It allows to use TS Transformers', async (t) => {
   const cOptions = { plugins: [{ transform: 'ts-nameof', type: 'raw' }] }
   const ps = spawnTsNodeDev(
