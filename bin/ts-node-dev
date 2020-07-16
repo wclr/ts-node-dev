@@ -37,6 +37,7 @@ var opts = minimist(devArgs, {
     'skip-ignore',
     'compiler-host',
     'script-mode',
+    'rs'
   ],
   string: [
     'compile-timeout',
