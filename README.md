@@ -37,9 +37,11 @@ There is also short alias `tsnd` for running `ts-node-dev`:
 tsnd --respawn server.ts
 ```
 
-**Also there are additional options specific to `ts-node-dev`:**
 
-- `--prefer-ts` (`--prefer-ts-exts`) - (default: false) - For each `.js` file (that is not in `node_modules`) will try to check if corresponding `.ts` version exists and require it.
+Look up flags and options can be used [in ts-node's docs](https://github.com/TypeStrong/ts-node#cli-and-programmatic-options).
+
+
+**Also there are additional options specific to `ts-node-dev`:**
 
 - `--ignore-watch` - (default: []) - files/folders to be [ignored by `node-dev`](https://github.com/fgnass/node-dev#ignore-paths). **But also this behaviour enhanced:** it will also make up `new RegExp` of passed ignore string and check absolute paths of required files for match.
 
@@ -56,7 +58,7 @@ tsnd --respawn server.ts
 
 **Caveats and points of notice:**
 
-- Especially for large code bases always consider running with `--transpileOnly` flag which is normal for dev workflow and will speed up things greatly. Note, that `ts-node-dev` will not put watch handlers on TS files that contain only types/interfaces (used only for type checking) - this is current limitation by design.
+- Especially for large code bases always consider running with `--transpile-only` flag which is normal for dev workflow and will speed up things greatly. Note, that `ts-node-dev` will not put watch handlers on TS files that contain only types/interfaces (used only for type checking) - this is current limitation by design.
 
 - `--ignore-watch` will NOT affect files ignored by TS compilation. Use `--ignore` option (or `TS_NODE_IGNORE` env variable) to pass **RegExp strings** for filtering files that should not be compiled, by default `/node_modules/` are ignored.
 
@@ -67,10 +69,6 @@ tsnd --respawn server.ts
   ```
 
 - The good thing is that `ts-node-dev` watches used `tsconfig.json` file, and will reinitialize compilation on its change, but you have to restart the process manually when you update used version of `typescript` or make any other changes that may effect compilation results.
-
-## Support
-
-Support the project with a donation and help us to give it back. [[Become a backer](https://opencollective.com/ts-node-dev#backer)]
 
 ## License
 
