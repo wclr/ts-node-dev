@@ -55,6 +55,7 @@ Look up flags and options can be used [in ts-node's docs](https://github.com/Typ
 - `--watch` - Explicitly add arbitrary files or folders to watch and restart on change (list separated by commas, [chokidar](https://github.com/paulmillr/chokidar) patterns)
 - `--exit-child` - Adds 'SIGTERM' exit handler in a child process.
 - `--rs` - Allow to restart with "rs" line entered in stdio, disabled by default.
+- `--no-notify` - Do not display desktop-notifications (Notifications are only displayed if `node-notifier` is installed).
 
 **Caveats and points of notice:**
 

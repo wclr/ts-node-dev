@@ -44,7 +44,8 @@
     "test-docker": "docker-compose up",
     "ci": "yarn test",
     "ci-local": "docker run --name travis-debug -dit quay.io/travisci/ci-nodejs",
-    "manual": "node ./bin/ts-node-dev --rt 5 --exit-child --tree-kill --clear -r tsconfig-paths/register -r ./test/manual/add-require -r ./test/manual/add-require-2 -r esm -O \"{\\\"module\\\": \\\"es6\\\"}\" --preserve-symlinks --respawn --ignore-watch 'lib' --ignore-watch bin --prefer-ts --debug --poll --interval 1000 --cache-directory .ts-node --inspect -- test/manual/test-script test-arg --fd"
+    "manual": "node ./bin/ts-node-dev --rt 5 --exit-child --tree-kill --clear -r tsconfig-paths/register -r ./test/manual/add-require -r ./test/manual/add-require-2 -r esm -O \"{\\\"module\\\": \\\"es6\\\"}\" --preserve-symlinks --respawn --ignore-watch 'lib' --ignore-watch bin --prefer-ts --debug --poll --interval 1000 --cache-directory .ts-node --inspect -- test/manual/test-script test-arg --fd",
+    "postinstall": "echo If you want desktop-notifications you can run \"npm i node-notifier@^5.4.0\"!"
   },
   "dependencies": {
     "chokidar": "^3.4.0",
@@ -52,7 +53,6 @@
     "dynamic-dedupe": "^0.3.0",
     "minimist": "^1.2.5",
     "mkdirp": "^1.0.4",
-    "node-notifier": "^5.4.0",
     "resolve": "^1.0.0",
     "rimraf": "^2.6.1",
     "source-map-support": "^0.5.12",
@@ -81,6 +81,7 @@
     "typescript": "^3.9.5"
   },
   "peerDependencies": {
+    "node-notifier": "^5.4.0",
     "typescript": "*"
   }
 }
