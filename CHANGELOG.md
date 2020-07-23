@@ -1,6 +1,6 @@
 ### Yalc changelog
 
-## 1.0.0-pre.54 
+## 1.0.0-pre.54 (2020-07-23)
 
 - handle JSX extension
 
