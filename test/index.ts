@@ -53,7 +53,7 @@ test('It allow watch arbitrary folder/file', async (t) => {
 })
 
 test('It should report an error on start', async (t) => {
-  const ps = spawnTsNodeDev('--respawn with-error.ts')
+  const ps = spawnTsNodeDev('--respawn with-error.ts') //.turnOnOutput()
   await ps.waitForLine(/[ERROR]/)
   const out = ps.getStdout()
   t.ok(/Compilation error in/.test(out), 'Reports error file')
@@ -185,7 +185,7 @@ test('It should fail if not using --dir or --script-mode on dir-test/index.ts', 
       `--compiler-options=${JSON.stringify(cOptions)}`,
       `dir-test/index.ts`,
     ].join(' ')
-  )//.turnOnOutput()
+  ) //.turnOnOutput()
   await ps.waitForLine(/has no default export./)
   t.pass('ok')
   await ps.exit()

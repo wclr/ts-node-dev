@@ -36,11 +36,11 @@
     "ts-node-dev": "node ./bin/ts-node-dev",
     "tsnd": "yarn ts-node-dev",
     "test": "ts-node -T test/index.ts",
-    "test-dev": "ts-node-dev --respawn -T test/index.ts",
+    "test-dev": "ts-node-dev -T --respawn test/index.ts",
     "test-docker": "docker-compose up",
     "ci": "yarn test",
     "ci-local": "docker run --name travis-debug -dit quay.io/travisci/ci-nodejs",
-    "manual": "node ./bin/ts-node-dev --rt 5 --exit-child --tree-kill --clear -r tsconfig-paths/register -r ./test/manual/add-require -r ./test/manual/add-require-2 -r esm -O \"{\\\"module\\\": \\\"es6\\\"}\" --preserve-symlinks --respawn --ignore-watch 'lib' --ignore-watch bin --prefer-ts --debug --poll --interval 1000 --cache-directory .ts-node --inspect -- test/manual/test-script test-arg --fd",
+    "manual": "ts-node test/manual/run.ts",
     "postinstall": "echo If you want desktop-notifications you can run \"npm i node-notifier@^5.4.0\"!"
   },
   "dependencies": {
