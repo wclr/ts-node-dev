@@ -22,7 +22,6 @@ var opts = minimist(devArgs, {
     'exit-child',
     'error-recompile',
     // ts-node
-    'dir',
     'scope',
     'emit',
     'files',
@@ -40,6 +39,7 @@ var opts = minimist(devArgs, {
     'rs'
   ],
   string: [
+    'dir',
     'compile-timeout',
     'ignore-watch',
     'interval',
@@ -60,6 +60,7 @@ var opts = minimist(devArgs, {
     'compiler-options': 'O',
     compiler: 'C',
     project: 'P',
+    'script-mode': 's'
   },
   default: { deps: false, notify: true, rs: false, 'type-check': true },
   unknown: function (arg) {
