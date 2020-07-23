@@ -39,8 +39,8 @@
   "scripts": {
     "ts-node-dev": "node ./bin/ts-node-dev",
     "tsnd": "yarn ts-node-dev",
-    "test": "ts-node --transpile-only test/index.ts",
-    "test-dev": "ts-node-dev --respawn --transpile-only test/index.ts",
+    "test": "ts-node -T test/index.ts",
+    "test-dev": "ts-node-dev --respawn -T test/index.ts",
     "test-docker": "docker-compose up",
     "ci": "yarn test",
     "ci-local": "docker run --name travis-debug -dit quay.io/travisci/ci-nodejs",

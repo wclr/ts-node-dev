@@ -157,36 +157,22 @@ test('It handles resolveJsonModule option and loads JSON modules', async (t) => 
 
 test('It should not allow --script-mode and --dir together', async (t) => {
   const ps = spawnTsNodeDev(
-    [
-      `--script-mode`,
-      `--dir folder`,
-      `simple.ts`,
-    ].join(' ')
-  )//.turnOnOutput()
+    [`--script-mode`, `--dir folder`, `simple.ts`].join(' ')
+  ) //.turnOnOutput()
   await ps.waitForLine(/TypeError: Script mode cannot be combined with `--dir`/)
   t.pass('ok')
   await ps.exit()
 })
 
 test('It should use the tsconfig at --dir when defined', async (t) => {
-  const ps = spawnTsNodeDev(
-    [
-      `--dir dir-test`,
-      `dir-test/index.ts`,
-    ].join(' ')
-  )//.turnOnOutput()
+  const ps = spawnTsNodeDev([`--dir dir-test`, `dir-test/index.ts`].join(' ')) //.turnOnOutput()
   await ps.waitForLine(/\{ hello: 'world' \}/)
   t.pass('ok')
   await ps.exit()
 })
 
 test('It should use the tsconfig at --script-mode when defined', async (t) => {
-  const ps = spawnTsNodeDev(
-    [
-      `-s`,
-      `dir-test/index.ts`,
-    ].join(' ')
-  )//.turnOnOutput()
+  const ps = spawnTsNodeDev([`-s`, `dir-test/index.ts`].join(' ')) //.turnOnOutput()
   await ps.waitForLine(/\{ hello: 'world' \}/)
   t.pass('ok')
   await ps.exit()
@@ -199,13 +185,11 @@ test('It should fail if not using --dir or --script-mode on dir-test/index.ts', 
       `--compiler-options=${JSON.stringify(cOptions)}`,
       `dir-test/index.ts`,
     ].join(' ')
-  ).turnOnOutput()
+  )//.turnOnOutput()
   await ps.waitForLine(/has no default export./)
   t.pass('ok')
   await ps.exit()
 })
-
-
 
 test('It allows to use TS Transformers', async (t) => {
   const cOptions = { plugins: [{ transform: 'ts-nameof', type: 'raw' }] }
@@ -301,8 +285,8 @@ test.skip('It should add require with -r flag', async (t) => {
   t.end()
 })
 
-test.only('It should handle --deps flag', async (t) => {
-  const ps = spawnTsNodeDev([`--deps`, `--respawn`, `req-package`].join(' ')).turnOnOutput()
+test('It should handle --deps flag', async (t) => {
+  const ps = spawnTsNodeDev([`--deps`, `--respawn`, `req-package`].join(' ')) //.turnOnOutput()
 
   await ps.waitForLine(/PACKAGE/)
 
@@ -313,10 +297,11 @@ test.only('It should handle --deps flag', async (t) => {
         'PACKAGE',
         'CHANGED PACKAGE'
       ),
-    250
+    100
   )
 
   await ps.waitForLine(/CHANGED PACKAGE/)
+  await ps.exit()
   t.pass()
   t.end()
 })
