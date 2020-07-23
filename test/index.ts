@@ -44,7 +44,7 @@ test('It should restart on file change', async (t) => {
 })
 
 test('It allow watch arbitrary folder/file', async (t) => {
-  const ps = spawnTsNodeDev('--respawn --watch folder,folder2 simple.ts')//.turnOnOutput()
+  const ps = spawnTsNodeDev('--respawn --watch folder,folder2 simple.ts') //.turnOnOutput()
   await ps.waitForLine(/Using/)
   setTimeout(() => touch(join(scriptsDir, 'folder/some-file')), 250)
   await ps.waitForLine(/Restarting.*some-file/)
@@ -149,7 +149,7 @@ test('It handles resolveJsonModule option and loads JSON modules', async (t) => 
       `--compiler-options=${JSON.stringify(cOptions)}`,
       `import-json`,
     ].join(' ')
-  )//.turnOnOutput()
+  ) //.turnOnOutput()
   await ps.waitForLine(/JSON DATA: { file: 'json' }/)
   t.pass('ok')
   await ps.exit()
@@ -237,7 +237,7 @@ test.skip('It should add require with -r flag', async (t) => {
       //`--debug`,
       `simple`,
     ].join(' ')
-  ).turnOnOutput()
+  ) //.turnOnOutput()
   await ps.waitForLine(/added --require/)
   await ps.waitForLine(/v1/)
 
@@ -245,6 +245,26 @@ test.skip('It should add require with -r flag', async (t) => {
   //await ps.exit()
   //
   await ps.waitForLine(/changed --require/)
+  t.pass()
+  t.end()
+})
+
+test.only('It should handle --deps flag', async (t) => {
+  const ps = spawnTsNodeDev([`--deps`, `--respawn`, `req-package`].join(' ')).turnOnOutput()
+
+  await ps.waitForLine(/PACKAGE/)
+
+  setTimeout(
+    () =>
+      replaceText(
+        'node_modules/package/index.js',
+        'PACKAGE',
+        'CHANGED PACKAGE'
+      ),
+    250
+  )
+
+  await ps.waitForLine(/CHANGED PACKAGE/)
   t.pass()
   t.end()
 })
