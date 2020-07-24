@@ -1,6 +1,6 @@
 {
   "name": "ts-node-dev",
-  "version": "1.0.0-pre.54",
+  "version": "1.0.0-pre.55",
   "description": "Compiles your TS app and restarts when files are modified.",
   "keywords": [
     "restart",
@@ -40,8 +40,7 @@
     "test-docker": "docker-compose up",
     "ci": "yarn test",
     "ci-local": "docker run --name travis-debug -dit quay.io/travisci/ci-nodejs",
-    "manual": "ts-node test/manual/run.ts",
-    "postinstall": "echo If you want desktop-notifications you can run \"npm i node-notifier@^5.4.0\"!"
+    "manual": "ts-node test/manual/run.ts"    
   },
   "dependencies": {
     "chokidar": "^3.4.0",
@@ -77,7 +76,6 @@
     "typescript": "^3.9.5"
   },
   "peerDependencies": {
-    "node-notifier": "^5.4.0",
     "typescript": "*"
   }
 }

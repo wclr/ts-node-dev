@@ -1,12 +1,16 @@
 ### Yalc changelog
 
+## 1.0.0-pre.54 (2020-07-24)
+
+- remove `node-notifier` from `peerDependencies`
+
 ## 1.0.0-pre.54 (2020-07-23)
 
-- handle JSX extension
+- handle JSX extension, when `allowJs` enabled
 
 ## 1.0.0-pre.53 (2020-07-23)
 
-- node-notifier to peerDeps
+- move `node-notifier` to `peerDependencies`
 - add --script-mode flag handling
 
 ## 1.0.0-pre.52 

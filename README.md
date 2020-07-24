@@ -57,6 +57,10 @@ Look up flags and options can be used [in ts-node's docs](https://github.com/Typ
 - `--rs` - Allow to restart with "rs" line entered in stdio, disabled by default.
 - `--no-notify` - Do not display desktop-notifications (Notifications are only displayed if `node-notifier` is installed).
 
+**Desktop Notifications**
+
+If you want desktop-notifications you should install `node-notifier` package.
+
 **Caveats and points of notice:**
 
 - Especially for large code bases always consider running with `--transpile-only` flag which is normal for dev workflow and will speed up things greatly. Note, that `ts-node-dev` will not put watch handlers on TS files that contain only types/interfaces (used only for type checking) - this is current limitation by design.
