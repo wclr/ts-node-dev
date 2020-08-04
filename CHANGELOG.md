@@ -1,5 +1,10 @@
 ### Yalc changelog
 
+## 1.0.0-pre.57
+
+- fix `--deps` flag
+- add `--deps-level` flag
+
 ## 1.0.0-pre.56 (2020-07-24)
 
 - add `node-notifier` from `peerDependencies` make optional

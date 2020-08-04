@@ -7,11 +7,11 @@ var nodeArgs = []
 
 var devArgs = process.argv.slice(2, 100)
 var unknown = []
-var opts = minimist(devArgs, {
-  stopEarly: true,
+var opts = minimist(devArgs, {  
+  stopEarly: true,  
   boolean: [
+    'deps',    
     'all-deps',
-    'deps',
     'dedupe',
     'poll',
     'respawn',
@@ -37,9 +37,10 @@ var opts = minimist(devArgs, {
     'compiler-host',
     'script-mode',
     'rs'
-  ],
-  string: [
+  ],  
+  string: [    
     'dir',
+    'deps-level',
     'compile-timeout',
     'ignore-watch',
     'interval',

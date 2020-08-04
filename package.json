@@ -36,7 +36,7 @@
     "ts-node-dev": "node ./bin/ts-node-dev",
     "tsnd": "yarn ts-node-dev",
     "test": "ts-node -T test/index.ts",
-    "test-dev": "ts-node-dev -T --respawn test/index.ts",
+    "test-dev": "ts-node-dev -T --respawn test/index.ts --output",
     "test-docker": "docker-compose up",
     "ci": "yarn test",
     "ci-local": "docker run --name travis-debug -dit quay.io/travisci/ci-nodejs",
@@ -57,6 +57,7 @@
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.1",
+    "@types/minimist": "^1.2.0",
     "@types/node": "^8.0.4",
     "@types/tape": "^4.13.0",
     "@types/touch": "^3.1.1",
@@ -76,8 +77,8 @@
     "typescript": "^3.9.5"
   },
   "peerDependencies": {
-    "typescript": "*",
-    "node-notifier": "*"
+    "node-notifier": "*",
+    "typescript": "*"
   },
   "peerDependenciesMeta": {
     "node-notifier": {

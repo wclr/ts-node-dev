@@ -5,6 +5,12 @@ const bin = path.join(__dirname, '/../bin/ts-node-dev')
 export const tmpDir = path.join(__dirname, '../.tmp')
 export const scriptsDir = path.join(tmpDir, 'fixture')
 
+let outputTurnedOn = false
+
+export const turnOnOutput = () => {
+  outputTurnedOn = true
+}
+
 export const spawnTsNodeDev = (
   cmd: string,
   options: { stdout?: boolean; stderr?: boolean; env?: any } = {}
@@ -20,15 +26,15 @@ export const spawnTsNodeDev = (
   })
   var out = ''
   var err = ''
-  
+
   ps.stderr.on('data', function (data) {
-    if (opts.stderr) {
+    if (opts.stderr || outputTurnedOn) {
       console.log('STDERR:', data.toString())
     }
     err += data.toString()
   })
   ps.stdout.on('data', function (data) {
-    if (opts.stdout) {
+    if (opts.stdout || outputTurnedOn) {
       console.log('STDOUT:', data.toString())
     }
     out += data.toString()
