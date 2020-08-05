@@ -29,13 +29,13 @@ export const spawnTsNodeDev = (
 
   ps.stderr.on('data', function (data) {
     if (opts.stderr || outputTurnedOn) {
-      console.log('STDERR:', data.toString())
+      console.log('STDERR:', data.toString().replace(/\n$/, ''))
     }
     err += data.toString()
   })
   ps.stdout.on('data', function (data) {
     if (opts.stdout || outputTurnedOn) {
-      console.log('STDOUT:', data.toString())
+      console.log('STDOUT:', data.toString().replace(/\n$/, ''))
     }
     out += data.toString()
   })
