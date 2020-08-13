@@ -1,7 +1,7 @@
 ### Yalc changelog
 
 
-## 1.0.0-pre.57
+## 1.0.0-pre.57 (2020-08-13)
 
 - fix `--deps` flag
 - add `--deps-level` flag
