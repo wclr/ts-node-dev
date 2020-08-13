@@ -8,7 +8,6 @@ It restarts target node process when any of required files changes (as standard 
 
 ![npm (scoped)](https://img.shields.io/npm/v/ts-node-dev.svg?maxAge=86400) [![Build Status](https://travis-ci.org/whitecolor/ts-node-dev.svg?branch=master)](https://travis-ci.org/whitecolor/ts-node-dev)
 
-
 ```
 yarn add ts-node-dev --dev
 ```
@@ -37,25 +36,24 @@ There is also short alias `tsnd` for running `ts-node-dev`:
 tsnd --respawn server.ts
 ```
 
-
 Look up flags and options can be used [in ts-node's docs](https://github.com/TypeStrong/ts-node#cli-and-programmatic-options).
-
 
 **Also there are additional options specific to `ts-node-dev`:**
 
 - `--ignore-watch` - (default: []) - files/folders to be [ignored by `node-dev`](https://github.com/fgnass/node-dev#ignore-paths). **But also this behaviour enhanced:** it will also make up `new RegExp` of passed ignore string and check absolute paths of required files for match.
 
 - use `--deps` to watch `node_modules`, by default watching it turned off.
-  
 
-- `--debug` - Some additional debug output.
-- `--interval` - Polling interval (ms)
-- `--debounce` - Debounce file change events (ms, non-polling mode)
-- `--clear` (`--cls`) Will clear screen on restart
-- `--watch` - Explicitly add arbitrary files or folders to watch and restart on change (list separated by commas, [chokidar](https://github.com/paulmillr/chokidar) patterns)
-- `--exit-child` - Adds 'SIGTERM' exit handler in a child process.
-- `--rs` - Allow to restart with "rs" line entered in stdio, disabled by default.
-- `--no-notify` - Do not display desktop-notifications (Notifications are only displayed if `node-notifier` is installed).
+* `--debug` - Some additional debug output.
+* `--interval` - Polling interval (ms)
+* `--debounce` - Debounce file change events (ms, non-polling mode)
+* `--clear` (`--cls`) Will clear screen on restart
+* `--watch` - Explicitly add arbitrary files or folders to watch and restart on change (list separated by commas, [chokidar](https://github.com/paulmillr/chokidar) patterns)
+* `--exit-child` - Adds 'SIGTERM' exit handler in a child process.
+* `--rs` - Allow to restart with "rs" line entered in stdio, disabled by default.
+* `--no-notify` - Do not display desktop-notifications (Notifications are only displayed if `node-notifier` is installed).
+
+If you need to detect that you are running with `ts-node-dev`, check if `process.env.TS_NODE_DEV` is set.
 
 **Desktop Notifications**
 

@@ -1,9 +1,12 @@
 ### Yalc changelog
 
+
 ## 1.0.0-pre.57
 
 - fix `--deps` flag
 - add `--deps-level` flag
+- remove setting default NODE_ENV
+- add process.env.TS_NODE_DEV = 'true'
 
 ## 1.0.0-pre.56 (2020-07-24)
 
