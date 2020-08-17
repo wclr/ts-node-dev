@@ -75,4 +75,4 @@ If you want desktop-notifications you should install `node-notifier` package.
 
 ## License
 
-WTF.
+[MIT](./LICENSE)
