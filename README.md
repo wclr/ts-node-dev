@@ -40,14 +40,14 @@ Look up flags and options can be used [in ts-node's docs](https://github.com/Typ
 
 **Also there are additional options specific to `ts-node-dev`:**
 
-- `--ignore-watch` - (default: []) - files/folders to be [ignored by `node-dev`](https://github.com/fgnass/node-dev#ignore-paths). **But also this behaviour enhanced:** it will also make up `new RegExp` of passed ignore string and check absolute paths of required files for match.
+* `--ignore-watch` - (default: []) - files/folders to be [ignored by `node-dev`](https://github.com/fgnass/node-dev#ignore-paths). **But this behaviour is enhanced:** it also supports regular expression in the ignore strings and will check absolute paths of required files for match.
 
-- use `--deps` to watch `node_modules`, by default watching it turned off.
+* `--deps` - Also watch `node_modules`; by default watching is turned off
 
-* `--debug` - Some additional debug output.
+* `--debug` - Some additional debug output
 * `--interval` - Polling interval (ms)
 * `--debounce` - Debounce file change events (ms, non-polling mode)
-* `--clear` (`--cls`) Will clear screen on restart
+* `--clear` (`--cls`) - Will clear screen on restart
 * `--watch` - Explicitly add arbitrary files or folders to watch and restart on change (list separated by commas, [chokidar](https://github.com/paulmillr/chokidar) patterns)
 * `--exit-child` - Adds 'SIGTERM' exit handler in a child process.
 * `--rs` - Allow to restart with "rs" line entered in stdio, disabled by default.
