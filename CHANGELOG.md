@@ -1,5 +1,8 @@
 ### Yalc changelog
 
+## 1.0.0-pre.58 (2020-08-18)
+
+- show versions only on first start
 
 ## 1.0.0-pre.57 (2020-08-13)
 
