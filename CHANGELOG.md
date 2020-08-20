@@ -1,5 +1,9 @@
 ### Yalc changelog
 
+## 1.0.0-pre.59 (2020-08-20)
+
+- fix handing require extensions (#185, #196)
+
 ## 1.0.0-pre.58 (2020-08-18)
 
 - show versions only on first start

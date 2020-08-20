@@ -49,7 +49,7 @@ test('It should restart on file change', async (t) => {
 
 test('It allow watch arbitrary folder/file', async (t) => {
   const ps = spawnTsNodeDev('--respawn --watch folder,folder2 simple.ts')
-  await ps.waitForLine(/Using/)
+  await ps.waitForLine(/v1/)  
   setTimeout(() => touch(join(scriptsDir, 'folder/some-file')), 250)
   await ps.waitForLine(/Restarting.*some-file/)
   t.pass('works')
