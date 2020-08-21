@@ -1,6 +1,6 @@
-import child = require('child_process')
-import path = require('path')
-const bin = path.join(__dirname, '/../bin/ts-node-dev')
+import child from 'child_process'
+import path from 'path'
+const bin = path.join(__dirname, '/../lib/bin')
 
 export const tmpDir = path.join(__dirname, '../.tmp')
 export const scriptsDir = path.join(tmpDir, 'fixture')
@@ -24,22 +24,25 @@ export const spawnTsNodeDev = (
       ...opts.env,
     },
   })
-  var out = ''
-  var err = ''
+  let out = ''
+  let err = ''
 
   ps.stderr.on('data', function (data) {
     if (opts.stderr || outputTurnedOn) {
+      // eslint-disable-next-line no-console
       console.log('STDERR:', data.toString().replace(/\n$/, ''))
     }
     err += data.toString()
   })
   ps.stdout.on('data', function (data) {
     if (opts.stdout || outputTurnedOn) {
+      // eslint-disable-next-line no-console
       console.log('STDOUT:', data.toString().replace(/\n$/, ''))
     }
     out += data.toString()
   })
   ps.on('disconnect', () => {
+    // eslint-disable-next-line no-console
     console.log('im out')
   })
   const testPattern = (pattern: string | RegExp, str: string) => {
