@@ -15,12 +15,11 @@
   },
   "license": "MIT",
   "bin": {
-    "ts-node-dev": "./bin/ts-node-dev",
-    "tsnd": "./bin/ts-node-dev"
+    "ts-node-dev": "./lib/bin.js",
+    "tsnd": "./lib/bin.js"
   },
   "main": "./lib",
   "files": [
-    "bin",
     "icons",
     "lib"
   ],
@@ -33,10 +32,10 @@
     "node": ">=0.8.0"
   },
   "scripts": {
-    "ts-node-dev": "node ./bin/ts-node-dev",
+    "ts-node-dev": "node ./lib/bin",
     "tsnd": "yarn ts-node-dev",
-    "test": "ts-node -T test/index.ts",
-    "test-dev": "ts-node-dev -T --respawn --deps --watch lib test/index.ts --output",
+    "test": "ts-node -T node_modules/mocha/bin/mocha test/*.test.ts",
+    "test-dev": "yarn ts-node-dev -T --respawn --deps --watch lib node_modules/mocha/bin/mocha test/*.test.ts --output",
     "test-docker": "docker-compose up",
     "ci": "yarn test",
     "ci-local": "docker run --name travis-debug -dit quay.io/travisci/ci-nodejs",
@@ -56,18 +55,24 @@
     "tsconfig": "^7.0.0"
   },
   "devDependencies": {
+    "@types/chai": "^4.2.12",
+    "@types/chokidar": "^2.1.3",
     "@types/fs-extra": "^9.0.1",
     "@types/minimist": "^1.2.0",
-    "@types/node": "^8.0.4",
+    "@types/mkdirp": "^1.0.1",
+    "@types/mocha": "github:whitecolor/mocha-types",
+    "@types/node": "^14.6.0",
+    "@types/rimraf": "^3.0.0",
     "@types/tape": "^4.13.0",
     "@types/touch": "^3.1.1",
     "@types/ts-nameof": "^4.2.1",
+    "@whitecolor/eslint-config": "file:.yalc/@whitecolor/eslint-config",
+    "chai": "^4.2.0",
     "coffee-script": "^1.8.0",
-    "eslint": "^2.0.0",
-    "eslint-config-airbnb-base": "^3.0.1",
-    "eslint-plugin-import": "^1.8.1",
+    "eslint": "^7.7.0",
     "esm": "^3.2.22",
     "fs-extra": "^9.0.1",
+    "mocha": "^8.1.1",
     "tap": "^5.2.0",
     "tape": "^5.0.1",
     "touch": "^1.0.0",

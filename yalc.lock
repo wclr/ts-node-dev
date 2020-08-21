@@ -1,0 +1,9 @@
+{
+  "version": "v1",
+  "packages": {
+    "@whitecolor/eslint-config": {
+      "signature": "e899210a850f3694531a7113cbe29d33",
+      "file": true
+    }
+  }
+}
