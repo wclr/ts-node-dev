@@ -1,5 +1,10 @@
 ### Yalc changelog
 
+## 1.0.0-pre.60 
+
+- full migration to typescript src
+- fixes of require.extensions behavior in compiler
+
 ## 1.0.0-pre.59 (2020-08-20)
 
 - fix handing require extensions (#185, #196)

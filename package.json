@@ -1,6 +1,6 @@
 {
   "name": "ts-node-dev",
-  "version": "1.0.0-pre.59",
+  "version": "1.0.0-pre.60",
   "description": "Compiles your TS app and restarts when files are modified.",
   "keywords": [
     "restart",

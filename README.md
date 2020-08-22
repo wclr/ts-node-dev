@@ -45,7 +45,7 @@ Look up flags and options can be used [in ts-node's docs](https://github.com/Typ
 * `--deps` - Also watch `node_modules`; by default watching is turned off
 
 * `--debug` - Some additional debug output
-* `--interval` - Polling interval (ms)
+* `--interval` - Polling interval (ms) - DOESN'T WORK CURRENTLY
 * `--debounce` - Debounce file change events (ms, non-polling mode)
 * `--clear` (`--cls`) - Will clear screen on restart
 * `--watch` - Explicitly add arbitrary files or folders to watch and restart on change (list separated by commas, [chokidar](https://github.com/paulmillr/chokidar) patterns)
@@ -55,11 +55,10 @@ Look up flags and options can be used [in ts-node's docs](https://github.com/Typ
 
 If you need to detect that you are running with `ts-node-dev`, check if `process.env.TS_NODE_DEV` is set.
 
-**Desktop Notifications**
 
-If you want desktop-notifications you should install `node-notifier` package.
+**Points of notice:**
 
-**Caveats and points of notice:**
+- If you want desktop-notifications you should install `node-notifier` package and use `--notify` flag.
 
 - Especially for large code bases always consider running with `--transpile-only` flag which is normal for dev workflow and will speed up things greatly. Note, that `ts-node-dev` will not put watch handlers on TS files that contain only types/interfaces (used only for type checking) - this is current limitation by design.
 
@@ -73,6 +72,11 @@ If you want desktop-notifications you should install `node-notifier` package.
 
 - The good thing is that `ts-node-dev` watches used `tsconfig.json` file, and will reinitialize compilation on its change, but you have to restart the process manually when you update used version of `typescript` or make any other changes that may effect compilation results.
 
+
+## Versioning
+
+Currently versioning is not stable and the package is still treated as pre-release. You might expect some options API changes, if you want to avoid unexpected problems it is recommended to fixate the installed version.
+
 ## License
 
-WTF.
+MIT.

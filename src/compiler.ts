@@ -9,8 +9,6 @@ import { resolveSync } from 'tsconfig'
 import { Options } from './bin'
 import { getCompiledPath } from './get-compiled-path'
 
-const tmpDir = '.ts-node'
-
 const fixPath = (p: string) => p.replace(/\\/g, '/').replace(/\$/g, '$$$$')
 
 const sourceMapSupportPath = require.resolve('source-map-support')
