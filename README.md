@@ -51,7 +51,7 @@ Look up flags and options can be used [in ts-node's docs](https://github.com/Typ
 * `--watch` - Explicitly add arbitrary files or folders to watch and restart on change (list separated by commas, [chokidar](https://github.com/paulmillr/chokidar) patterns)
 * `--exit-child` - Adds 'SIGTERM' exit handler in a child process.
 * `--rs` - Allow to restart with "rs" line entered in stdio, disabled by default.
-* `--no-notify` - Do not display desktop-notifications (Notifications are only displayed if `node-notifier` is installed).
+* `--notify` - to display desktop-notifications (Notifications are only displayed if `node-notifier` is installed).
 
 If you need to detect that you are running with `ts-node-dev`, check if `process.env.TS_NODE_DEV` is set.
 
@@ -75,7 +75,7 @@ If you need to detect that you are running with `ts-node-dev`, check if `process
 
 ## Versioning
 
-Currently versioning is not stable and the package is still treated as pre-release. You might expect some options API changes, if you want to avoid unexpected problems it is recommended to fixate the installed version.
+Currently versioning is not stable and it is still treated as pre-release. You might expect some options API changes. If you want to avoid unexpected problems it is recommended to fixate the installed version and update only in case of issues, you may consult [CHANGELOG](CHANGELOG.md) for updates.
 
 ## License
 
