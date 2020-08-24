@@ -261,8 +261,6 @@ module.exports = function (
   })
 
   const compiler = makeCompiler(opts, {
-    notify,
-    stop,
     restart,
     log: log,
   })
