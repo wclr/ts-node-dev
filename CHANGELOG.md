@@ -1,9 +1,10 @@
 ### Yalc changelog
 
-## 1.0.0-pre.60 
+## 1.0.0-pre.60 (2020-08-22)
 
 - full migration to typescript src
 - fixes of require.extensions behavior in compiler
+- child error stack output is back
 
 ## 1.0.0-pre.59 (2020-08-20)
 
