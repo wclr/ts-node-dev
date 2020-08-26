@@ -1,6 +1,6 @@
 {
   "name": "ts-node-dev",
-  "version": "1.0.0-pre.60",
+  "version": "1.0.0-pre.61",
   "description": "Compiles your TS app and restarts when files are modified.",
   "keywords": [
     "restart",
@@ -39,7 +39,7 @@
     "test-docker": "docker-compose up",
     "ci": "yarn test",
     "ci-local": "docker run --name travis-debug -dit quay.io/travisci/ci-nodejs",
-    "manual": "ts-node test/manual/run.ts"
+    "manual": "yarn ts-node test/manual/run.ts"
   },
   "dependencies": {
     "chokidar": "^3.4.0",

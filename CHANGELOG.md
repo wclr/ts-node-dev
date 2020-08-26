@@ -1,5 +1,9 @@
 ### Yalc changelog
 
+## 1.0.0-pre.60 (2020-08-26)
+
+- fix terminal clear
+
 ## 1.0.0-pre.60 (2020-08-22)
 
 - full migration to typescript src

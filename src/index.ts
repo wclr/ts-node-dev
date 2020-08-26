@@ -216,8 +216,9 @@ module.exports = function (
       compiler.init()
     }
     compiler.clearErrorCompile()
-    /* eslint-disable no-octal-escape */
-    if (cfg.clear) process.stdout.write('\\033[2J\\033[H')
+    
+    //if (cfg.clear) process.stdout.write("\u001b[2J\u001b[0;0H")
+    if (cfg.clear) process.stdout.write("\u001bc")
     if (isManualRestart === true) {
       notify('Restarting', 'manual restart from user')
     } else {

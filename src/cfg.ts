@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { Options } from './bin'
+import { type } from 'os'
 
 function read(dir: string) {
   const f = path.resolve(dir, '.node-dev.json')
@@ -41,11 +42,14 @@ export const makeCfg = (main: string, opts: Partial<Options>): Config => {
     if (opts.notify === false) c.notify = false
     if (opts.clear || opts.cls) c.clear = true
   }
+
   const ignoreWatchItems: string[] = opts['ignore-watch']
-    ? opts['ignore-watch'].split(/,/).map((_) => _.trim())
+    ? ([] as string[])
+        .concat(opts['ignore-watch'] as string)
+        .map((_) => _.trim())
     : []
 
-  const ignoreWatch: string[] = ignoreWatchItems.concat(c.ignore || [])  
+  const ignoreWatch: string[] = ignoreWatchItems.concat(c.ignore || [])
   opts.debug && console.log('Ignore watch:', ignoreWatch)
   const ignore = ignoreWatch.concat(ignoreWatch.map(resolvePath))
   return {

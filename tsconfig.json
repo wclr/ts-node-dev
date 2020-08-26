@@ -10,6 +10,6 @@
     "noEmit": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "newLine": "LF",  
-  }  
+    "newLine": "LF"
+  }
 }
