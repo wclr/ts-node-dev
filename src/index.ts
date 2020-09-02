@@ -17,12 +17,12 @@ const version = require('../package.json').version
 const tsNodeVersion = require('ts-node').VERSION
 const tsVersion = require('typescript').version
 
-module.exports = function (
+export const runDev = (
   script: string,
   scriptArgs: string[],
   nodeArgs: string[],
   opts: Options
-) {
+) => {
   if (typeof script !== 'string' || script.length === 0) {
     throw new TypeError('`script` must be a string')
   }
@@ -216,9 +216,9 @@ module.exports = function (
       compiler.init()
     }
     compiler.clearErrorCompile()
-    
+
     //if (cfg.clear) process.stdout.write("\u001b[2J\u001b[0;0H")
-    if (cfg.clear) process.stdout.write("\u001bc")
+    if (cfg.clear) process.stdout.write('\u001bc')
     if (isManualRestart === true) {
       notify('Restarting', 'manual restart from user')
     } else {

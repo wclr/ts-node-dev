@@ -30,14 +30,15 @@ process.on('SIGTERM', function () {
 })
 
 if (cfg.fork) {
+  const oldFork = fork
   // Overwrite child_process.fork() so that we can hook into forked processes
   // too. We also need to relay messages about required files to the parent.
   const newFork = function (
     modulePath: string,
     args: string[],
     options: ForkOptions
-  ) {
-    const child = fork(__filename, [modulePath].concat(args), options)
+  ) {    
+    const child = oldFork(__filename, [modulePath].concat(args), options)
     ipc.relay(child)
     return child
   }

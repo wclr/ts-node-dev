@@ -41,6 +41,7 @@ export const makeCfg = (main: string, opts: Partial<Options>): Config => {
     if (opts.respawn) c.respawn = true
     if (opts.notify === false) c.notify = false
     if (opts.clear || opts.cls) c.clear = true
+    c.fork = opts.fork
   }
 
   const ignoreWatchItems: string[] = opts['ignore-watch']

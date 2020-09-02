@@ -1,6 +1,10 @@
 ### Yalc changelog
 
-## 1.0.0-pre.60 (2020-08-26)
+## 1.0.0-pre.62 (2020-09-22)
+
+- fix child fork override
+
+## 1.0.0-pre.61 (2020-08-26)
 
 - fix terminal clear
 

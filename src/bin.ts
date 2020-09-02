@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const dev = require('.')
+import { runDev } from '.'
 import minimist from 'minimist'
 
 const nodeArgs: string[] = []
@@ -71,6 +71,7 @@ const devFlags = {
     'deps',
     'all-deps',
     'dedupe',
+    'fork',
     'exec-check',
     'debug',
     'poll',
@@ -96,24 +97,25 @@ const devFlags = {
 
 type DevOptions = {
   poll: boolean
-  debug: boolean,
+  debug: boolean
+  fork: boolean
   watch: string
   interval: string
   rs: boolean
-  deps: boolean,
-  dedupe: boolean,
-  respawn: boolean,
-  notify: boolean,
-  clear: boolean,
-  cls: boolean,
-  'ignore-watch': string,
-  'all-deps': boolean,
+  deps: boolean
+  dedupe: boolean
+  respawn: boolean
+  notify: boolean
+  clear: boolean
+  cls: boolean
+  'ignore-watch': string
+  'all-deps': boolean
   ['deps-level']: string
   'compile-timeout': string
   'exec-check': boolean
   'exit-child': boolean
   'cache-directory': string
-  'error-recompile': boolean,
+  'error-recompile': boolean
   'tree-kill': boolean
 }
 
@@ -130,8 +132,10 @@ const opts = minimist(devArgs, {
   alias: {
     ...tsNodeAlias,
     'prefer-ts-exts': 'prefer-ts',
+  },    
+  default: {
+    fork: true
   },
-  default: {},
   unknown: function (arg) {
     unknown.push(arg)
     return true
@@ -163,8 +167,11 @@ unknown.forEach(function (arg) {
 })
 
 if (!script) {
+  // eslint-disable-next-line no-console
+  console.log('ts-node-dev: no script to run provided')
+  // eslint-disable-next-line no-console
   console.log('Usage: ts-node-dev [options] script [arguments]\n')
   process.exit(1)
 }
 
-dev(script, scriptArgs, nodeArgs, opts)
+runDev(script, scriptArgs, nodeArgs, opts)

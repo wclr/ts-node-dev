@@ -39,7 +39,8 @@ const waitFor = (timeout: number) => {
 fs.ensureDirSync(tmpDir)
 fs.removeSync(join(tmpDir, 'fixture'))
 fs.copySync(join(__dirname, 'fixture'), scriptsDir)
-describe('ts-node-dev', () => {
+describe('ts-node-dev', function () {
+  this.timeout(5000)
   it('It should restart on file change', async () => {
     const ps = spawnTsNodeDev('--respawn --poll simple.ts')
     await ps.waitForLine(/v1/)
@@ -113,9 +114,9 @@ describe('ts-node-dev', () => {
   })
 
   const notFoundSource = `export const fn = (x: number) => {  
-  return 'v1'
-}
-`
+    return 'v1'
+  }
+  `
   it('It recompiles file on error and restarts', async () => {
     const ps = spawnTsNodeDev('--respawn --error-recompile with-not-found.ts', {
       //stdout: true,
@@ -331,6 +332,16 @@ describe('ts-node-dev', () => {
         ),
       100
     )
+
+    await ps.waitForLine(/CHANGED PACKAGE/)
+    await ps.exit()
+    t.ok(true)
+  })
+
+  it.skip('It error on wrong cli flag', async () => {
+    const ps = spawnTsNodeDev([`--transpileOnly`, `req-package`].join(' '))
+
+    await ps.waitForLine(/bad option/)
 
     await ps.waitForLine(/CHANGED PACKAGE/)
     await ps.exit()
