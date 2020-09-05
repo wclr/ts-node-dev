@@ -16,8 +16,6 @@ yarn add ts-node-dev --dev
 npm i ts-node-dev --save-dev
 ```
 
-`ts-node` dependency version is not fixed, so it will install the latest version by default.
-
 ## Usage
 
 ```
