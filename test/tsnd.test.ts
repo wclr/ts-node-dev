@@ -41,7 +41,7 @@ fs.removeSync(join(tmpDir, 'fixture'))
 fs.copySync(join(__dirname, 'fixture'), scriptsDir)
 describe('ts-node-dev', function () {
   this.timeout(5000)
-  it('It should restart on file change', async () => {
+  it('should restart on file change', async () => {
     const ps = spawnTsNodeDev('--respawn --poll simple.ts')
     await ps.waitForLine(/v1/)
     setTimeout(() => replaceText('dep.ts', 'v1', 'v2'), 250)
@@ -52,7 +52,7 @@ describe('ts-node-dev', function () {
     await replaceText('dep.ts', 'v2', 'v1')
   })
 
-  it('It allow watch arbitrary folder/file', async () => {
+  it('allow watch arbitrary folder/file', async () => {
     const ps = spawnTsNodeDev('--respawn --watch folder,folder2 simple.ts')
     await ps.waitForLine(/v1/)
     setTimeout(() => touch(join(scriptsDir, 'folder/some-file')), 250)
@@ -61,7 +61,7 @@ describe('ts-node-dev', function () {
     await ps.exit()
   })
 
-  it('It should report an error on start', async () => {
+  it('should report an error on start', async () => {
     const ps = spawnTsNodeDev('--respawn with-error.ts')
     await ps.waitForLine(/[ERROR]/)
     const out = ps.getStdout()
@@ -80,7 +80,7 @@ describe('ts-node-dev', function () {
     await replaceText('with-error.ts', '1', `'1'`)
   })
 
-  it('It should report an error with --log-error and continue to work', async () => {
+  it('should report an error with --log-error and continue to work', async () => {
     const ps = spawnTsNodeDev('--respawn --log-error with-error.ts')
     await ps.waitForErrorLine(/error/)
 
@@ -96,9 +96,8 @@ describe('ts-node-dev', function () {
     await replaceText('with-error.ts', '1', `'1'`)
   })
 
-  it('It should restart on adding not imported module', async () => {
+  it('should restart on adding not imported module', async () => {
     const ps = spawnTsNodeDev('--respawn --error-recompile with-error.ts', {
-      // stdout: true,
       env: {
         TS_NODE_DEV_ERROR_RECOMPILE_TIMEOUT: 50,
       },
@@ -113,13 +112,12 @@ describe('ts-node-dev', function () {
     await replaceText('dep-ts-error.ts', 'string', 'number')
   })
 
-  const notFoundSource = `export const fn = (x: number) => {  
-    return 'v1'
-  }
-  `
-  it('It recompiles file on error and restarts', async () => {
+  it('should recompile module on error and restarts', async () => {
+    const notFoundSource = `export const fn = (x: number) => {  
+      return 'v1'
+    }
+    `
     const ps = spawnTsNodeDev('--respawn --error-recompile with-not-found.ts', {
-      //stdout: true,
       env: {
         TS_NODE_DEV_ERROR_RECOMPILE_TIMEOUT: 20,
       },
@@ -134,12 +132,11 @@ describe('ts-node-dev', function () {
     await removeFile('not-found.ts')
   })
 
-  it('It handles allowJs option and loads JS modules', async () => {
+  it('should handle allowJs option and compile JS modules', async () => {
     const cOptions = { allowJs: true, esModuleInterop: false }
     const ps = spawnTsNodeDev(
       [
         `--respawn`,
-        `--compiler ttypescript`,
         `--compiler-options=${JSON.stringify(cOptions)}`,
         `js-module.js`,
       ].join(' ')
@@ -149,7 +146,14 @@ describe('ts-node-dev', function () {
     await ps.exit()
   })
 
-  it('It handles resolveJsonModule option and loads JSON modules', async () => {
+  it('should handle -r esm option and load JS modules', async () => {
+    const ps = spawnTsNodeDev([`--respawn`, `-r esm`, `js-module.js`].join(' '))
+    await ps.waitForLine(/JS MODULE/)
+    t.ok(true, 'ok')
+    await ps.exit()
+  })
+
+  it('should handle resolveJsonModule option and load JSON modules', async () => {
     const cOptions = { resolveJsonModule: true }
     const ps = spawnTsNodeDev(
       [
@@ -164,43 +168,47 @@ describe('ts-node-dev', function () {
     await ps.exit()
   })
 
-  it('It should not allow --script-mode and --dir together', async () => {
-    const ps = spawnTsNodeDev(
-      [`--script-mode`, `--dir folder`, `simple.ts`].join(' ')
-    )
-    await ps.waitForErrorLine(/Script mode cannot be combined with `--dir`/)
-    t.ok(true, 'ok')
-    await ps.exit()
+  describe('--dir and --script-mode flags', () => {
+    it('should not allow --script-mode and --dir together', async () => {
+      const ps = spawnTsNodeDev(
+        [`--script-mode`, `--dir folder`, `simple.ts`].join(' ')
+      )
+      await ps.waitForErrorLine(/Script mode cannot be combined with `--dir`/)
+      t.ok(true, 'ok')
+      await ps.exit()
+    })
+
+    it('should use the tsconfig at --dir when defined', async () => {
+      const ps = spawnTsNodeDev(
+        [`--dir dir-test`, `dir-test/index.ts`].join(' ')
+      )
+      await ps.waitForLine(/\{ hello: 'world' \}/)
+      t.ok(true, 'ok')
+      await ps.exit()
+    })
+
+    it('should use the tsconfig at --script-mode when defined', async () => {
+      const ps = spawnTsNodeDev([`-s`, `dir-test/index.ts`].join(' '))
+      await ps.waitForLine(/\{ hello: 'world' \}/)
+      t.ok(true, 'ok')
+      await ps.exit()
+    })
+
+    it('should fail if not using --dir or --script-mode on dir-test/index.ts', async () => {
+      const cOptions = { allowJs: true, esModuleInterop: false }
+      const ps = spawnTsNodeDev(
+        [
+          `--compiler-options=${JSON.stringify(cOptions)}`,
+          `dir-test/index.ts`,
+        ].join(' ')
+      )
+      await ps.waitForLine(/has no default export./)
+      t.ok(true, 'ok')
+      await ps.exit()
+    })
   })
 
-  it('It should use the tsconfig at --dir when defined', async () => {
-    const ps = spawnTsNodeDev([`--dir dir-test`, `dir-test/index.ts`].join(' '))
-    await ps.waitForLine(/\{ hello: 'world' \}/)
-    t.ok(true, 'ok')
-    await ps.exit()
-  })
-
-  it('It should use the tsconfig at --script-mode when defined', async () => {
-    const ps = spawnTsNodeDev([`-s`, `dir-test/index.ts`].join(' '))
-    await ps.waitForLine(/\{ hello: 'world' \}/)
-    t.ok(true, 'ok')
-    await ps.exit()
-  })
-
-  it('It should fail if not using --dir or --script-mode on dir-test/index.ts', async () => {
-    const cOptions = { allowJs: true, esModuleInterop: false }
-    const ps = spawnTsNodeDev(
-      [
-        `--compiler-options=${JSON.stringify(cOptions)}`,
-        `dir-test/index.ts`,
-      ].join(' ')
-    )
-    await ps.waitForLine(/has no default export./)
-    t.ok(true, 'ok')
-    await ps.exit()
-  })
-
-  it('It allows to use TS Transformers', async () => {
+  it('should allow to use custom TS transformers', async () => {
     const cOptions = { plugins: [{ transform: 'ts-nameof', type: 'raw' }] }
     const ps = spawnTsNodeDev(
       [
@@ -230,38 +238,19 @@ describe('ts-node-dev', function () {
     await ps.exit()
   })
 
-  describe('It should --prefer-ts', async () => {
-    it('Should require JS by default', async () => {
-      const ps = spawnTsNodeDev(
-        [
-          `--respawn`,
-          //`--prefer-ts-exts`,
-          `prefer/prefer.js`,
-        ].join(' ')
-      )
-      await ps.waitForLine(/PREFER DEP JS/)
-      await ps.waitForLine(/PREFER JS/)
-      await ps.exit()
-      t.ok(true)
-    })
-    it('Should require JS deps by default', async () => {
-      const ps = spawnTsNodeDev(
-        [
-          `--respawn`,
-          //`--prefer-ts`,
-          `prefer/prefer`,
-        ].join(' ')
-      ) //.turnOnOutput()
+  describe('--prefer-ts-exts flag', async () => {
+    it('should require existing JS modules by default', async () => {
+      const ps = spawnTsNodeDev([`--respawn`, `prefer/prefer`].join(' '))
       await ps.waitForLine(/PREFER DEP JS/)
       await ps.waitForLine(/PREFER TS/)
       await ps.exit()
       t.ok(true)
     })
 
-    it('Use require all TS with --ts-prefer', async () => {
+    it('should require TS modules with --ts-prefer-exts', async () => {
       const ps = spawnTsNodeDev(
         [`--respawn`, `--prefer-ts-exts`, `prefer/prefer`].join(' ')
-      ) //.turnOnOutput()
+      )
       await ps.waitForLine(/PREFER DEP TS/)
       await ps.waitForLine(/PREFER TS/)
 
@@ -278,7 +267,7 @@ describe('ts-node-dev', function () {
     })
   })
   // watching required with -r not implemented
-  it.skip('It should add require with -r flag', async () => {
+  it.skip('should add require with -r flag', async () => {
     const ps = spawnTsNodeDev(
       [
         `-r ./add-req`,
@@ -296,7 +285,7 @@ describe('ts-node-dev', function () {
     t.ok(true)
   })
 
-  it('It should handle --deps flag', async () => {
+  it('should handle --deps flag', async () => {
     const ps = spawnTsNodeDev([`--deps`, `--respawn`, `req-package`].join(' '))
 
     await ps.waitForLine(/PACKAGE/)
@@ -316,7 +305,7 @@ describe('ts-node-dev', function () {
     t.ok(true)
   })
 
-  it('It should handle deep deps with --deps flag', async () => {
+  it('should handle deep deps with --deps flag', async () => {
     const ps = spawnTsNodeDev(
       [`--all-deps`, `--respawn`, `req-package`].join(' ')
     )
@@ -338,7 +327,7 @@ describe('ts-node-dev', function () {
     t.ok(true)
   })
 
-  it.skip('It error on wrong cli flag', async () => {
+  it.skip('should error on wrong cli flag', async () => {
     const ps = spawnTsNodeDev([`--transpileOnly`, `req-package`].join(' '))
 
     await ps.waitForLine(/bad option/)
