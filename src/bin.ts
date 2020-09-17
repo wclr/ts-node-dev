@@ -92,6 +92,7 @@ const devFlags = {
     'interval',
     'debounce',
     'watch',
+    'cache-directory',
   ],
 }
 
@@ -132,7 +133,7 @@ const opts = minimist(devArgs, {
   alias: {
     ...tsNodeAlias,
     'prefer-ts-exts': 'prefer-ts',
-  },    
+  },
   default: {
     fork: true
   },
