@@ -336,4 +336,14 @@ describe('ts-node-dev', function () {
     await ps.exit()
     t.ok(true)
   })
+
+  it('should put compiled sources in custom --cache-directory', async () => {
+    const cacheDir = join(tmpDir, 'test-cached-dir')
+    fs.removeSync(cacheDir)
+    const ps = spawnTsNodeDev(`--cache-directory ${cacheDir} simple.ts`)
+    await ps.waitForLine(/v1/)
+    await ps.exit()
+    const list = fs.readdirSync(cacheDir)
+    t.ok(list[0] === 'compiled', '"compiled" dir is there')
+  })
 })

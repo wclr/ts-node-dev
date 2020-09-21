@@ -1,6 +1,10 @@
 ### Yalc changelog
 
-## 1.0.0-pre.62 (2020-09-22)
+## 1.0.0-pre.63 (2020-09-22)
+
+- fix --cache-directory flag
+
+## 1.0.0-pre.62 (2020-08-22)
 
 - fix child fork override
 
