@@ -1,5 +1,9 @@
 # ts-node-dev changelog
 
+## 1.0.0-pre.64 (2020-10-14)
+
+- add --quite option to silent [INFO] messages
+
 ## 1.0.0-pre.63 (2020-09-22)
 
 - fix --cache-directory flag
