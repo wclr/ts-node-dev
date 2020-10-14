@@ -26,7 +26,7 @@ type LogLevel = keyof typeof colors
  */
 export const makeLog = function (cfg: Config) {
   function log(msg: string, level: LogLevel) {
-    if (cfg.quite && level === 'info') return
+    if (cfg.quiet && level === 'info') return
     if (cfg.timestamp) msg = color(fmt(cfg.timestamp), '30;1') + ' ' + msg
     const c = colors[level.toLowerCase() as LogLevel] || '32'
     console.log('[' + color(level.toUpperCase(), c) + '] ' + msg)

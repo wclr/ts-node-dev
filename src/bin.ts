@@ -82,7 +82,7 @@ const devFlags = {
     'cls',
     'exit-child',
     'error-recompile',
-    'quite',
+    'quiet',
     'rs',
   ],
   string: [
@@ -118,7 +118,7 @@ type DevOptions = {
   'exit-child': boolean
   'cache-directory': string
   'error-recompile': boolean
-  quite: boolean
+  quiet: boolean
   'tree-kill': boolean
 }
 

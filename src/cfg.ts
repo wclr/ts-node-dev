@@ -23,7 +23,7 @@ export type Config = {
   ignore: string[]
   respawn: boolean
   debug: boolean
-  quite: boolean
+  quiet: boolean
   extensions: Record<string, string>
 }
 
@@ -64,7 +64,7 @@ export const makeCfg = (main: string, opts: Partial<Options>): Config => {
     ignore: ignore,
     respawn: c.respawn || false,
     debug: !!opts.debug,
-    quite: !!opts.quite,
+    quiet: !!opts.quiet,
     extensions: c.extensions,
   }
 }

@@ -43,7 +43,7 @@ Look up flags and options can be used [in ts-node's docs](https://github.com/Typ
 * `--deps` - Also watch `node_modules`; by default watching is turned off
 
 * `--debug` - Some additional [DEBUG] output
-* `--quite` - Silent [INFO] messages
+* `--quiet` - Silent [INFO] messages
 * `--interval` - Polling interval (ms) - DOESN'T WORK CURRENTLY
 * `--debounce` - Debounce file change events (ms, non-polling mode)
 * `--clear` (`--cls`) - Will clear screen on restart

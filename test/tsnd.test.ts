@@ -63,9 +63,11 @@ describe('ts-node-dev', function () {
 
   it('should report an error on start', async () => {
     const ps = spawnTsNodeDev('--respawn with-error.ts')
-    await ps.waitForLine(/[ERROR]/)
+    await ps.waitForLine(/\[ERROR\]/)
     const out = ps.getStdout()
-    t.ok(/Compilation error in/.test(out), 'Reports error file')
+    const err = ps.getStderr()
+    
+    t.ok(/Compilation error in/.test(err), 'Reports error file')
     t.ok(/[ERROR].*Unable to compile TypeScript/.test(out), 'Report TS error')
     t.ok(/Argument of type/.test(out), 'Report TS error diagnostics')
 
@@ -80,8 +82,8 @@ describe('ts-node-dev', function () {
     await replaceText('with-error.ts', '1', `'1'`)
   })
 
-  it.only('should not output INFO messages with --quite', async () => {
-    const ps = spawnTsNodeDev('--respawn --poll --quite simple.ts')
+  it('should not output INFO messages with --quiet', async () => {
+    const ps = spawnTsNodeDev('--respawn --poll --quiet simple.ts')
     await ps.waitForLine(/v1/)
     setTimeout(() => replaceText('dep.ts', 'v1', 'v2'), 250)
     await ps.waitForLine(/v2/)
