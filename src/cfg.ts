@@ -23,6 +23,7 @@ export type Config = {
   ignore: string[]
   respawn: boolean
   debug: boolean
+  quite: boolean
   extensions: Record<string, string>
 }
 
@@ -49,7 +50,6 @@ export const makeCfg = (main: string, opts: Partial<Options>): Config => {
         .concat(opts['ignore-watch'] as string)
         .map((_) => _.trim())
     : []
-
   const ignoreWatch: string[] = ignoreWatchItems.concat(c.ignore || [])
   opts.debug && console.log('Ignore watch:', ignoreWatch)
   const ignore = ignoreWatch.concat(ignoreWatch.map(resolvePath))
@@ -64,6 +64,7 @@ export const makeCfg = (main: string, opts: Partial<Options>): Config => {
     ignore: ignore,
     respawn: c.respawn || false,
     debug: !!opts.debug,
+    quite: !!opts.quite,
     extensions: c.extensions,
   }
 }

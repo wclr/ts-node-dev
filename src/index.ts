@@ -88,10 +88,14 @@ export const runDev = (
     })
   }
 
-  console.log(
-    'ts-node-dev ver. ' + version + ' (using ts-node ver.',
-    tsNodeVersion + ', typescript ver.',
-    tsVersion + ')'
+  log.info(
+    'ts-node-dev ver. ' +
+      version +
+      ' (using ts-node ver. ' +
+      tsNodeVersion +
+      ', typescript ver. ' +
+      tsVersion +
+      ')'
   )
 
   /**

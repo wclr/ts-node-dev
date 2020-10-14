@@ -82,6 +82,7 @@ const devFlags = {
     'cls',
     'exit-child',
     'error-recompile',
+    'quite',
     'rs',
   ],
   string: [
@@ -111,12 +112,13 @@ type DevOptions = {
   cls: boolean
   'ignore-watch': string
   'all-deps': boolean
-  ['deps-level']: string
+  'deps-level': string
   'compile-timeout': string
   'exec-check': boolean
   'exit-child': boolean
   'cache-directory': string
   'error-recompile': boolean
+  quite: boolean
   'tree-kill': boolean
 }
 
@@ -135,7 +137,7 @@ const opts = minimist(devArgs, {
     'prefer-ts-exts': 'prefer-ts',
   },
   default: {
-    fork: true
+    fork: true,
   },
   unknown: function (arg) {
     unknown.push(arg)

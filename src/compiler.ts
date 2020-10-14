@@ -259,7 +259,7 @@ export const makeCompiler = (
       try {
         _compile()
       } catch (e) {
-        console.log('Compilation error in', fileName)
+        console.error('Compilation error in', fileName)
         const errorCode =
           'throw ' + 'new Error(' + JSON.stringify(e.message) + ')' + ';'
         writeCompiled(errorCode)

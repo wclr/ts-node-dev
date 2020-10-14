@@ -80,6 +80,19 @@ describe('ts-node-dev', function () {
     await replaceText('with-error.ts', '1', `'1'`)
   })
 
+  it.only('should not output INFO messages with --quite', async () => {
+    const ps = spawnTsNodeDev('--respawn --poll --quite simple.ts')
+    await ps.waitForLine(/v1/)
+    setTimeout(() => replaceText('dep.ts', 'v1', 'v2'), 250)
+    await ps.waitForLine(/v2/)
+
+    await ps.exit()
+
+    t.equal(ps.getStdout(), ['v1', 'v2', ''].join('\n'))
+
+    await replaceText('dep.ts', 'v2', 'v1')
+  })
+
   it('should report an error with --log-error and continue to work', async () => {
     const ps = spawnTsNodeDev('--respawn --log-error with-error.ts')
     await ps.waitForErrorLine(/error/)
