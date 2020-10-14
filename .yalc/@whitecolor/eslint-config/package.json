@@ -1,6 +1,6 @@
 {
   "name": "@whitecolor/eslint-config",
-  "version": "1.0.0+e899210a",
+  "version": "1.0.0+b87bbab0",
   "main": "index.js",
   "files": [
     "index.js"
@@ -11,7 +11,7 @@
   },
   "scripts": {
     "test": "eslint test",
-    "prepublish": "pnpm test"
+    "prepublishOnly": "pnpm test"
   },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^3.7.1",
@@ -20,5 +20,6 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-only-warn": "^1.0.2",
     "typescript-eslint-language-service": "^3.0.0"
-  }
+  },
+  "yalcSig": "b87bbab05aab95b9f7ad2a15fcf6f9fa"
 }
