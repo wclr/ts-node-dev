@@ -72,6 +72,12 @@ If you need to detect that you are running with `ts-node-dev`, check if `process
 
 - The good thing is that `ts-node-dev` watches used `tsconfig.json` file, and will reinitialize compilation on its change, but you have to restart the process manually when you update used version of `typescript` or make any other changes that may effect compilation results.
 
+## Issues
+
+If you have an issue, please create one. But, before:
+- try to check if there exits alike issues.
+- try to run your code with just [ts-node](https://github.com/TypeStrong/ts-node)
+- try to run your code with `--files` option enabled
 
 ## Versioning
 
