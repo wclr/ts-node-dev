@@ -77,7 +77,7 @@ If you need to detect that you are running with `ts-node-dev`, check if `process
 If you have an issue, please create one. But, before:
 - try to check if there exits alike issues.
 - try to run your code with just [ts-node](https://github.com/TypeStrong/ts-node)
-- try to run your code with `--files` option enabled
+- try to run your code with `--files` option enabled ([see ts-node docs](https://github.com/TypeStrong/ts-node#help-my-types-are-missing))
 
 ## Versioning
 

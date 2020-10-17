@@ -1,5 +1,9 @@
 # ts-node-dev changelog
 
+## 1.0.0-pre.66 (2020-10-17)
+
+- upgrade to ts-node v9
+
 ## 1.0.0-pre.65 (2020-10-15)
 
 - add --quiet option to silent [INFO] messages
