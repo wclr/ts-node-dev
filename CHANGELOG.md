@@ -1,6 +1,6 @@
 # ts-node-dev changelog
 
-## 1.0.0-pre.66 (2020-10-17)
+## 1.0.0 (2020-10-17)
 
 - upgrade to ts-node v9
 
