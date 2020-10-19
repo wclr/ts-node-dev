@@ -103,6 +103,7 @@ export const runDev = (
    */
   let compileReqWatcher: chokidar.FSWatcher
   function start() {
+    if (cfg.clear) process.stdout.write('\u001bc')
     for (const watched of (opts.watch || '').split(',')) {
       if (watched) watcher.add(watched)
     }
@@ -220,9 +221,7 @@ export const runDev = (
       compiler.init()
     }
     compiler.clearErrorCompile()
-
-    //if (cfg.clear) process.stdout.write("\u001b[2J\u001b[0;0H")
-    if (cfg.clear) process.stdout.write('\u001bc')
+    
     if (isManualRestart === true) {
       notify('Restarting', 'manual restart from user')
     } else {
