@@ -78,6 +78,8 @@ If you have an issue, please create one. But, before:
 - try to check if there exits alike issues.
 - try to run your code with just [ts-node](https://github.com/TypeStrong/ts-node)
 - try to run your code with `--files` option enabled ([see ts-node docs](https://github.com/TypeStrong/ts-node#help-my-types-are-missing))
+- try to run it with `--debug` flag and see the output
+- try to make create repro example
 
 ## Versioning
 
