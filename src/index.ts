@@ -209,9 +209,9 @@ export const runDev = (
     if (child.connected === undefined || child.connected === true) {
       log.debug('Disconnecting from child')
       child.disconnect()
-      //if (!willTerminate) {
-      killChild()
-      //}
+      if (!willTerminate) {
+        killChild()
+      }
     }
   }
 
@@ -221,7 +221,7 @@ export const runDev = (
       compiler.init()
     }
     compiler.clearErrorCompile()
-    
+
     if (isManualRestart === true) {
       notify('Restarting', 'manual restart from user')
     } else {
