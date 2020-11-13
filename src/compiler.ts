@@ -1,4 +1,5 @@
 import * as tsNode from 'ts-node'
+import * as lockfile from 'proper-lockfile'
 
 import fs from 'fs'
 import path from 'path'
@@ -230,25 +231,41 @@ export const makeCompiler = (
     },
     compile: function (params: CompileParams) {
       const fileName = params.compile
-      const code = fs.readFileSync(fileName, 'utf-8')
       const compiledPath = params.compiledPath
       function writeCompiled(code: string, fileName?: string) {
-        fs.writeFileSync(compiledPath, code)
-        fs.writeFileSync(compiledPath + '.done', '')
+        // Note: We can have current attempts to write compiled files
+        // which can cause weird issues where names are messed up.
+        // To prevent that we acquire a lock before writing.
+
+        // Acquire lock
+        let release: (() => void) | undefined
+        try {
+          release = lockfile.lockSync(compiledPath)
+        } catch {
+          // File is already being written by someone else, skip
+          return
+        }
+
+        // Write the compiled file
+        try {
+          fs.writeFileSync(compiledPath, code)
+          fs.writeFileSync(compiledPath + '.done', '')
+        } finally {
+          release()
+        }
       }
       if (fs.existsSync(compiledPath)) {
         return
       }
       const starTime = new Date().getTime()
       const m: any = {
-        _compile: writeCompiled,
+        _compile: writeCompiled, // This will be called by the extension handler
       }
       const _compile = () => {
         const ext = path.extname(fileName)
         const extHandler = require.extensions[ext]!
 
         extHandler(m, fileName)
-        m._compile(code, fileName)
         log.debug(
           fileName,
           'compiled in',
