@@ -240,7 +240,7 @@ export const makeCompiler = (
         // Acquire lock
         let release: (() => void) | undefined
         try {
-          release = lockfile.lockSync(compiledPath)
+          release = lockfile.lockSync(compiledPath, { realpath: false })
         } catch {
           // File is already being written by someone else, skip
           return
