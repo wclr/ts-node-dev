@@ -1,5 +1,11 @@
 # ts-node-dev changelog
 
+## 1.1.0 (2020-12-10)
+
+- fix: not kill child process if it has its own exception handlers 
+- fix: use either `process.send` or `writeFile` fallback
+- fix: prevent handling of duplicate compilation requests
+
 ## 1.0.0 (2020-10-17)
 
 - upgrade to ts-node v9
