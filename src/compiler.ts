@@ -44,6 +44,8 @@ export const makeCompiler = (
   const tsConfigPath =
     resolveSync(cwd, typeof project === 'string' ? project : undefined) || ''
 
+  const compiledPathsHash: Record<string, true> = {}
+
   const tmpDir = options['cache-directory']
     ? path.resolve(options['cache-directory'])
     : fs.mkdtempSync(path.join(os.tmpdir(), '.ts-node'))
@@ -170,6 +172,9 @@ export const makeCompiler = (
     clearTimeout(_errorCompileTimeout)
   }
   const registerTsNode = () => {
+    Object.keys(compiledPathsHash).forEach((key) => {
+      delete compiledPathsHash[key]
+    })
     // revert back original handler extensions
     // in case of re-registering
     ;['.js', '.jsx', '.ts', '.tsx'].forEach(function (ext) {
@@ -232,9 +237,20 @@ export const makeCompiler = (
       const fileName = params.compile
       const code = fs.readFileSync(fileName, 'utf-8')
       const compiledPath = params.compiledPath
+      
+      // Prevent occasional duplicate compilation requests
+      if (compiledPathsHash[compiledPath]) {
+        return
+      }      
+      compiledPathsHash[compiledPath] = true
+      
       function writeCompiled(code: string, fileName?: string) {
-        fs.writeFileSync(compiledPath, code)
-        fs.writeFileSync(compiledPath + '.done', '')
+        fs.writeFile(compiledPath, code, (err) => {
+          err && log.error(err)
+          fs.writeFile(compiledPath + '.done', '', (err) => {
+            err && log.error(err)
+          })
+        })
       }
       if (fs.existsSync(compiledPath)) {
         return
