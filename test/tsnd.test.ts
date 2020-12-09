@@ -159,7 +159,7 @@ describe('ts-node-dev', function () {
     await ps.waitForLine(/JS MODULE/)
     t.ok(true, 'ok')
     await ps.exit()
-  })
+  })  
 
   it('should handle -r esm option and load JS modules', async () => {
     const ps = spawnTsNodeDev([`--respawn`, `-r esm`, `js-module.js`].join(' '))
