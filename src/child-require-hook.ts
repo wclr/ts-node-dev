@@ -38,15 +38,27 @@ const waitForFile = function (fileName: string) {
   }
 }
 
-const compile = (code: string, fileName: string) => {
-  const compiledPath = getCompiledPath(code, fileName, compiledDir)
-  process.send &&
-    process.send({
-      compile: fileName,
-      compiledPath: compiledPath,
-    })
+const sendFsCompileRequest = (fileName: string, compiledPath: string) => {
   const compileRequestFile = [compiledDir, compilationId + '.req'].join(sep)
   fs.writeFileSync(compileRequestFile, [fileName, compiledPath].join('\n'))
+}
+
+const compile = (code: string, fileName: string) => {
+  const compiledPath = getCompiledPath(code, fileName, compiledDir)
+  if (process.send) {
+    try {
+      process.send({
+        compile: fileName,
+        compiledPath: compiledPath,
+      })
+    } catch (e) {
+      console.warn('Error while sending compile request via process.send')
+      sendFsCompileRequest(fileName, compiledPath)
+    }
+  } else {
+    sendFsCompileRequest(fileName, compiledPath)
+  }
+
   waitForFile(compiledPath + '.done')
   const compiled = fs.readFileSync(compiledPath, 'utf-8')
   return compiled
