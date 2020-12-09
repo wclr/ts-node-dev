@@ -104,27 +104,35 @@ export const runDev = (
   let compileReqWatcher: chokidar.FSWatcher
   function start() {
     if (cfg.clear) process.stdout.write('\u001bc')
+
     for (const watched of (opts.watch || '').split(',')) {
       if (watched) watcher.add(watched)
     }
+
     let cmd = nodeArgs.concat(wrapper, script, scriptArgs)
     const childHookPath = compiler.getChildHookPath()
     cmd = (opts.priorNodeArgs || []).concat(['-r', childHookPath]).concat(cmd)
+
     log.debug('Starting child process %s', cmd.join(' '))
+
     child = fork(cmd[0], cmd.slice(1), {
       cwd: process.cwd(),
       env: process.env,
     })
+
     starting = false
-    //const compileReqWatcher = filewatcher({ forcePolling: opts.poll })
+
     if (compileReqWatcher) {
       compileReqWatcher.close()
     }
+
     compileReqWatcher = chokidar.watch([], {
       usePolling: opts.poll,
       interval: parseInt(opts.interval) || undefined,
     })
+
     let currentCompilePath: string
+
     fs.writeFileSync(compiler.getCompileReqFilePath(), '')
     compileReqWatcher.add(compiler.getCompileReqFilePath())
     compileReqWatcher.on('change', function (file) {
@@ -138,7 +146,7 @@ export const runDev = (
         const compiledPath = split[1]
         if (currentCompilePath == compiledPath) return
         currentCompilePath = compiledPath
-        // console.log('compileReqWatcher file change', compile);
+
         if (compiledPath) {
           compiler.compile({
             compile: compile,
@@ -147,9 +155,14 @@ export const runDev = (
         }
       })
     })
+
     child.on('message', function (message: CompileParams) {
-      if (!message.compiledPath || currentCompilePath === message.compiledPath)
+      if (
+        !message.compiledPath ||
+        currentCompilePath === message.compiledPath
+      ) {
         return
+      }
       currentCompilePath = message.compiledPath
       compiler.compile(message)
     })
@@ -247,21 +260,12 @@ export const runDev = (
       start()
     }
   }
-  //compiler.restart = restart
 
   // Relay SIGTERM
   process.on('SIGTERM', function () {
     log.debug('Process got SIGTERM')
     killChild()
-    // if (opts['restart-terminated']) {
-    //   const timeout = opts['restart-terminated'] || 0
-    //   log.info('Restarting terminated in ' + timeout + ' seconds')
-    //   setTimeout(() => {
-    //     start()
-    //   }, timeout)
-    // } else {
     process.exit(0)
-    //}
   })
 
   const compiler = makeCompiler(opts, {
