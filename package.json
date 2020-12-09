@@ -27,7 +27,6 @@
     "singleQuote": true,
     "semi": false
   },
-  "preferGlobal": true,
   "engines": {
     "node": ">=0.8.0"
   },
@@ -66,7 +65,7 @@
     "@types/tape": "^4.13.0",
     "@types/touch": "^3.1.1",
     "@types/ts-nameof": "^4.2.1",
-    "@whitecolor/eslint-config": "file:.yalc/@whitecolor/eslint-config",
+    "@whitecolor/eslint-config": "^1.0.0",
     "chai": "^4.2.0",
     "coffee-script": "^1.8.0",
     "eslint": "^7.7.0",

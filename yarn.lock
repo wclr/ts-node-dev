@@ -223,18 +223,6 @@
   resolved "https://registry.yarnpkg.com/@types/ts-nameof/-/ts-nameof-4.2.1.tgz#21bd84748601f3a220812152dc9bae7dc3051fa0"
   integrity sha512-NgMmD70b8NwX6BYhKh70xWkquAow6iq3kRAPp4sMAk4Mre9PrqZgvpq5+JbDLWIJPc4Q9ctkwSQjVAOlfuvlyQ==
 
-"@typescript-eslint/eslint-plugin@^3.7.1":
-  version "3.9.1"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-3.9.1.tgz#8cf27b6227d12d66dd8dc1f1a4b04d1daad51c2e"
-  integrity sha512-XIr+Mfv7i4paEdBf0JFdIl9/tVxyj+rlilWIfZ97Be0lZ7hPvUbS5iHt9Glc8kRI53dsr0PcAEudbf8rO2wGgg==
-  dependencies:
-    "@typescript-eslint/experimental-utils" "3.9.1"
-    debug "^4.1.1"
-    functional-red-black-tree "^1.0.1"
-    regexpp "^3.0.0"
-    semver "^7.3.2"
-    tsutils "^3.17.1"
-
 "@typescript-eslint/experimental-utils@3.9.1":
   version "3.9.1"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/experimental-utils/-/experimental-utils-3.9.1.tgz#b140b2dc7a7554a44f8a86fb6fe7cbfe57ca059e"
@@ -283,15 +271,14 @@
   dependencies:
     eslint-visitor-keys "^1.1.0"
 
-"@whitecolor/eslint-config@file:.yalc/@whitecolor/eslint-config":
+"@whitecolor/eslint-config@^1.0.0":
   version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@whitecolor/eslint-config/-/eslint-config-1.0.0.tgz#6a959dbcb38e3b0f04968d3d4a47df0983e7a1fc"
+  integrity sha512-lSZGYqCixP9p4sOBQJMKaCZn01ibCNymqI/4jJSefbWT4mnzLk4Tx2DYyQpsj18KZBL6WlIZrEPuiv92d4H5DA==
   dependencies:
-    "@typescript-eslint/eslint-plugin" "^3.7.1"
     "@typescript-eslint/parser" "^3.7.1"
-    eslint "^7.6.0"
     eslint-config-prettier "^6.11.0"
     eslint-plugin-only-warn "^1.0.2"
-    typescript-eslint-language-service "^3.0.0"
 
 abbrev@1:
   version "1.1.0"
@@ -1428,7 +1415,7 @@ eslint-visitor-keys@^1.1.0, eslint-visitor-keys@^1.3.0:
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-1.3.0.tgz#30ebd1ef7c2fdff01c3a4f151044af25fab0523e"
   integrity sha512-6J72N8UNa462wa/KFODt/PJ3IU60SDpC3QXC1Hjc1BXXpfL2C9R5+AU7jhe0F6GREqVMh4Juu+NY7xn+6dipUQ==
 
-eslint@^7.6.0, eslint@^7.7.0:
+eslint@^7.7.0:
   version "7.7.0"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-7.7.0.tgz#18beba51411927c4b64da0a8ceadefe4030d6073"
   integrity sha512-1KUxLzos0ZVsyL81PnRN335nDtQ8/vZUD6uMtWbF+5zDtjKcsklIi78XoE0MVL93QvWTu+E5y44VyyCsOMBrIg==
@@ -3888,7 +3875,7 @@ regexp.prototype.flags@^1.3.0:
     define-properties "^1.1.3"
     es-abstract "^1.17.0-next.1"
 
-regexpp@^3.0.0, regexpp@^3.1.0:
+regexpp@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/regexpp/-/regexpp-3.1.0.tgz#206d0ad0a5648cffbdb8ae46438f3dc51c9f78e2"
   integrity sha512-ZOIzd8yVsQQA7j8GCSlPGXwg5PfmA1mrq0JP4nGhh54LaKN3xdai/vHUDu74pKwV8OxseMS65u2NImosQcSD0Q==
@@ -4798,13 +4785,6 @@ typedarray-to-buffer@^3.1.5:
   integrity sha512-zdu8XMNEDepKKR+XYOXAVPtWui0ly0NtohUscw+UmaHiAWT8hrV1rr//H6V+0DvJ3OQ19S979M0laLfX8rm82Q==
   dependencies:
     is-typedarray "^1.0.0"
-
-typescript-eslint-language-service@^3.0.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/typescript-eslint-language-service/-/typescript-eslint-language-service-3.1.0.tgz#89c9d724056da8dd7757d559b34a892f27c1fca5"
-  integrity sha512-6Lc9AEE3uFBPwD2GughCO2RBtY26RcjJsVLaYHJnRYzJMFQvUqycghMSypzFHplH9MkO6e+h/Mc2/ODjv6dK8A==
-  dependencies:
-    read-pkg-up "^7.0.0"
 
 typescript@^3.5.3, typescript@^3.9.5:
   version "3.9.5"
