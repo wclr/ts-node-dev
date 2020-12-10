@@ -264,7 +264,7 @@ export const makeCompiler = (
         const extHandler = require.extensions[ext]!
 
         extHandler(m, fileName)
-        m._compile(code, fileName)
+
         log.debug(
           fileName,
           'compiled in',
