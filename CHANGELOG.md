@@ -1,5 +1,9 @@
 # ts-node-dev changelog
 
+## 1.1.1 (2020-12-10)
+
+- fix: remove duplicate compilation call
+
 ## 1.1.0 (2020-12-10)
 
 - fix: not kill child process if it has its own exception handlers 
