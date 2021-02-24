@@ -41,7 +41,7 @@
     "manual": "yarn ts-node test/manual/run.ts"
   },
   "dependencies": {
-    "chokidar": "^3.4.0",
+    "chokidar": "^3.5.1",
     "dateformat": "~1.0.4-1.2.3",
     "dynamic-dedupe": "^0.3.0",
     "minimist": "^1.2.5",
