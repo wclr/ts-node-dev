@@ -1,5 +1,10 @@
 # ts-node-dev changelog
 
+## 1.1.2 (2021-02-25)
+
+- fix: update chokidar version
+
+
 ## 1.1.1 (2020-12-10)
 
 - fix: remove duplicate compilation call
