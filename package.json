@@ -67,6 +67,7 @@
     "@types/ts-nameof": "^4.2.1",
     "@whitecolor/eslint-config": "^1.0.0",
     "chai": "^4.2.0",
+    "chalk": "^4.1.0",
     "coffee-script": "^1.8.0",
     "eslint": "^7.7.0",
     "esm": "^3.2.22",
