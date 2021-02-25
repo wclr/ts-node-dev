@@ -1,5 +1,9 @@
 # ts-node-dev changelog
 
+## 1.1.3 (2021-02-25)
+
+- fix: update bin scripts paths
+
 ## 1.1.2 (2021-02-25)
 
 - fix: update chokidar version
