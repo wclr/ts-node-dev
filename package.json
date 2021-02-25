@@ -91,6 +91,9 @@
       "optional": true
     }
   },
+  "np": {
+    "yarn": false
+  },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
   }
