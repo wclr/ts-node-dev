@@ -364,7 +364,7 @@ describe('ts-node-dev', function () {
 
   it('should handle --file-change-hook flag', async () => {
     writeFile('test.ts', 'a')
-    const ps = spawnTsNodeDev([`--file-change-hook`, `fileChangHook.js`, `--respawn`, `--watch`, `test.ts`, `simple.ts`].join(' '))
+    const ps = spawnTsNodeDev([`--file-change-hook`, `fileChangeHook.js`, `--respawn`, `--watch`, `test.ts`, `simple.ts`].join(' '))
     await ps.waitForLine(/v1/)
     writeFile('test.ts', 'b')
     await ps.waitForLine(/Restarting.*test.ts/)
