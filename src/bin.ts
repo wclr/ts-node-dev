@@ -94,6 +94,7 @@ const devFlags = {
     'debounce',
     'watch',
     'cache-directory',
+    'file-change-hook'
   ],
 }
 
@@ -117,6 +118,7 @@ type DevOptions = {
   'exec-check': boolean
   'exit-child': boolean
   'cache-directory': string
+  'file-change-hook': string
   'error-recompile': boolean
   quiet: boolean
   'tree-kill': boolean

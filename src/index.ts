@@ -1,6 +1,8 @@
 import { fork, ChildProcess } from 'child_process'
 import chokidar from 'chokidar'
 import fs from 'fs'
+import path from 'path'
+import vm from 'vm'
 import readline from 'readline'
 
 const kill = require('tree-kill')
@@ -240,6 +242,25 @@ export const runDev = (
     } else {
       notify('Restarting', file + ' has been modified')
     }
+
+    if (opts['file-change-hook']) {
+      const scriptPath = path.resolve(process.cwd(), opts['file-change-hook'])
+      const code = `require("${scriptPath}").default("${file}");`
+      try {
+        const result = vm.runInNewContext(code, {
+          require: require("esm")(module),
+          module,
+          console
+        });
+        if (!result) {
+          notify('FileChangeHook', 'Hook exit code: 0.')
+        }
+      } catch (err) {
+        notify('FileChangeHook', err)
+        console.log(err)
+      }
+    }
+
     compiler.compileChanged(file)
     if (starting) {
       log.debug('Already starting')

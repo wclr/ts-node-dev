@@ -66,7 +66,7 @@ describe('ts-node-dev', function () {
     await ps.waitForLine(/\[ERROR\]/)
     const out = ps.getStdout()
     const err = ps.getStderr()
-    
+
     t.ok(/Compilation error in/.test(err), 'Reports error file')
     t.ok(/[ERROR].*Unable to compile TypeScript/.test(out), 'Report TS error')
     t.ok(/Argument of type/.test(out), 'Report TS error diagnostics')
@@ -159,7 +159,7 @@ describe('ts-node-dev', function () {
     await ps.waitForLine(/JS MODULE/)
     t.ok(true, 'ok')
     await ps.exit()
-  })  
+  })
 
   it('should handle -r esm option and load JS modules', async () => {
     const ps = spawnTsNodeDev([`--respawn`, `-r esm`, `js-module.js`].join(' '))
@@ -360,5 +360,16 @@ describe('ts-node-dev', function () {
     await ps.exit()
     const list = fs.readdirSync(cacheDir)
     t.ok(list[0] === 'compiled', '"compiled" dir is there')
+  })
+
+  it('should handle --file-change-hook flag', async () => {
+    writeFile('test.ts', 'a')
+    const ps = spawnTsNodeDev([`--file-change-hook`, `fileChangHook.js`, `--respawn`, `--watch`, `test.ts`, `simple.ts`].join(' '))
+    await ps.waitForLine(/v1/)
+    writeFile('test.ts', 'b')
+    await ps.waitForLine(/Restarting.*test.ts/)
+    t.ok(true, 'works')
+    await ps.exit()
+    await removeFile('test.ts')
   })
 })
