@@ -40,9 +40,9 @@ export const runDev = (
   // The child_process
   let child:
     | (ChildProcess & {
-        stopping?: boolean
-        respawn?: boolean
-      })
+      stopping?: boolean
+      respawn?: boolean
+    })
     | undefined
 
   const wrapper = resolveMain(__dirname + '/wrap.js')
@@ -92,12 +92,12 @@ export const runDev = (
 
   log.info(
     'ts-node-dev ver. ' +
-      version +
-      ' (using ts-node ver. ' +
-      tsNodeVersion +
-      ', typescript ver. ' +
-      tsVersion +
-      ')'
+    version +
+    ' (using ts-node ver. ' +
+    tsNodeVersion +
+    ', typescript ver. ' +
+    tsVersion +
+    ')'
   )
 
   /**
@@ -250,7 +250,8 @@ export const runDev = (
         const result = vm.runInNewContext(code, {
           require: require("esm")(module),
           module,
-          console
+          console,
+          process
         });
         if (!result) {
           notify('FileChangeHook', 'Hook exit code: 0.')
