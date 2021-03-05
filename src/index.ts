@@ -244,9 +244,9 @@ export const runDev = (
     }
 
     if (opts['file-change-hook']) {
-      const scriptPath = path.resolve(process.cwd(), opts['file-change-hook'])
-      const code = `require("${scriptPath}").default("${file}");`
       try {
+        const scriptPath = path.resolve(process.cwd(), opts['file-change-hook'])
+        const code = `require("${scriptPath}").default("${file}");`
         const result = vm.runInNewContext(code, {
           require: require("esm")(module),
           module,
