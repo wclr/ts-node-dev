@@ -44,7 +44,7 @@
     "chokidar": "^3.5.1",
     "dateformat": "~1.0.4-1.2.3",
     "dynamic-dedupe": "^0.3.0",
-    "esm": "3.2.22",
+    "esm": "^3.2.25",
     "minimist": "^1.2.5",
     "mkdirp": "^1.0.4",
     "resolve": "^1.0.0",
