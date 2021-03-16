@@ -256,8 +256,8 @@ export const makeCompiler = (
 
       const starTime = new Date().getTime()
 
-	  const fileName = params.compile
-	  const code = params.code || fs.readFileSync(fileName, 'utf-8')
+      const fileName = params.compile
+      const code = params.code || fs.readFileSync(fileName, 'utf-8')
       const m: any = {
         _compile: writeCompiled,
       }

@@ -222,7 +222,7 @@ export const runDev = (
     if (child.connected === undefined || child.connected === true) {
       if (willTerminate) {
         log.debug('Disconnecting from child')
-		child.disconnect()
+        child.disconnect()
       } else {
         killChild()
       }
