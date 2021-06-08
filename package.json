@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "chokidar": "^3.5.1",
-    "dateformat": "~1.0.4-1.2.3",
+    "dateformat": "^4.5.1",
     "dynamic-dedupe": "^0.3.0",
     "minimist": "^1.2.5",
     "mkdirp": "^1.0.4",
