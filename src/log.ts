@@ -1,6 +1,5 @@
 const util = require('util')
 import { Config } from './cfg'
-const fmt = require('dateformat')
 
 const colors = {
   info: '36',
@@ -27,7 +26,7 @@ type LogLevel = keyof typeof colors
 export const makeLog = function (cfg: Config) {
   function log(msg: string, level: LogLevel) {
     if (cfg.quiet && level === 'info') return
-    if (cfg.timestamp) msg = color(fmt(cfg.timestamp), '30;1') + ' ' + msg
+    if (cfg.timestamp) msg = color(new Date(cfg.timestamp).toLocaleString(), '30;1') + ' ' + msg
     const c = colors[level.toLowerCase() as LogLevel] || '32'
     console.log('[' + color(level.toUpperCase(), c) + '] ' + msg)
   }
