@@ -17,7 +17,6 @@ export type Config = {
   fork: boolean
   notify: boolean
   deps: number
-  timestamp: number
   clear: boolean
   dedupe: boolean
   ignore: string[]
@@ -58,7 +57,6 @@ export const makeCfg = (main: string, opts: Partial<Options>): Config => {
     fork: c.fork !== false,
     notify: c.notify !== false,
     deps: c.deps,
-    timestamp: c.timestamp || (c.timestamp !== false && 'HH:MM:ss'),
     clear: !!c.clear,
     dedupe: !!c.dedupe,
     ignore: ignore,
