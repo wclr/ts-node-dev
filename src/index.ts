@@ -16,7 +16,6 @@ import { makeLog } from './log'
 const version = require('../package.json').version
 const tsNodeVersion = require('ts-node').VERSION
 const tsVersion = require('typescript').version
-const signals: NodeJS.Signals[] = ['SIGINT', 'SIGTERM']
 
 export const runDev = (
   script: string,
@@ -119,7 +118,6 @@ export const runDev = (
     child = fork(cmd[0], cmd.slice(1), {
       cwd: process.cwd(),
       env: process.env,
-      detached: true,
     })
 
     starting = false
@@ -169,15 +167,11 @@ export const runDev = (
       compiler.compile(message)
     })
 
-    child.on('close', (code: number, signal: string) => {
-      log.debug('Child closed with code %s', code)
-      if (signal) {
-        log.debug(`Exiting process with signal ${signal}`)
-        process.kill(process.pid, signal)
-      } else {
-        log.debug(`Exiting process with code ${code}`)
-        process.exit(code)
-      }
+    child.on('exit', function (code) {
+      log.debug('Child exited with code %s', code)
+      if (!child) return
+      if (!child.respawn) process.exit(code || 0)
+      child = undefined
     })
 
     if (cfg.respawn) {
@@ -209,14 +203,14 @@ export const runDev = (
     })
     compiler.writeReadyFile()
   }
-  const killChild = (signal: NodeJS.Signals) => {
+  const killChild = () => {
     if (!child) return
-    log.debug(`Sending ${signal} to child pid`, child.pid)
+    log.debug('Sending SIGTERM kill to child pid', child.pid)
     if (opts['tree-kill']) {
       log.debug('Using tree-kill')
       kill(child.pid)
     } else {
-      child.kill(signal)
+      child.kill('SIGTERM')
     }
   }
   function stop(willTerminate?: boolean) {
@@ -229,8 +223,8 @@ export const runDev = (
       log.debug('Disconnecting from child')
       child.disconnect()
       if (!willTerminate) {
+        killChild()
       }
-      killChild('SIGTERM')
     }
   }
 
@@ -267,17 +261,11 @@ export const runDev = (
     }
   }
 
-  signals.forEach((signal: NodeJS.Signals) =>
-    process.on(signal, () => {
-      log.debug(`Process got ${signal}, killing child`)
-      killChild(signal)
-    })
-  )
-
-  process.on('exit', () => {
-    if(child) {
-      child.kill()
-    }
+  // Relay SIGTERM
+  process.on('SIGTERM', function () {
+    log.debug('Process got SIGTERM')
+    killChild()
+    process.exit(0)
   })
 
   const compiler = makeCompiler(opts, {
