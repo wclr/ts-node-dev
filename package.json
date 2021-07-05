@@ -1,6 +1,6 @@
 {
   "name": "ts-node-dev",
-  "version": "1.1.6",
+  "version": "1.1.8",
   "description": "Compiles your TS app and restarts when files are modified.",
   "keywords": [
     "restart",
@@ -32,8 +32,9 @@
   },
   "scripts": {
     "ts-node-dev": "node ./lib/bin",
-    "tsnd": "yarn ts-node-dev",
-    "test": "ts-node -T node_modules/mocha/bin/mocha test/*.test.ts",
+    "build": "tsc -p tsconfig.build.json",
+    "release": "np",
+    "test": "yarn build && ts-node -T node_modules/mocha/bin/mocha test/*.test.ts",
     "test-dev": "yarn ts-node-dev -T --respawn --deps --watch lib node_modules/mocha/bin/mocha test/*.test.ts --output",
     "test-docker": "docker-compose up",
     "ci": "yarn test",
@@ -42,7 +43,6 @@
   },
   "dependencies": {
     "chokidar": "^3.5.1",
-    "dateformat": "~1.0.4-1.2.3",
     "dynamic-dedupe": "^0.3.0",
     "esm": "^3.2.25",
     "minimist": "^1.2.5",

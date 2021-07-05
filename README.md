@@ -6,7 +6,7 @@ It restarts target node process when any of required files changes (as standard 
 
 ## Install
 
-![npm (scoped)](https://img.shields.io/npm/v/ts-node-dev.svg?maxAge=86400) [![Build Status](https://travis-ci.org/whitecolor/ts-node-dev.svg?branch=master)](https://travis-ci.org/whitecolor/ts-node-dev)
+![npm (scoped)](https://img.shields.io/npm/v/ts-node-dev.svg?maxAge=86400) [![Build Status](https://travis-ci.com/wclr/ts-node-dev.svg?branch=master)](https://travis-ci.com/wclr/ts-node-dev)
 
 ```
 yarn add ts-node-dev --dev

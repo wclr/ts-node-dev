@@ -1,6 +1,5 @@
 const util = require('util')
 import { Config } from './cfg'
-const fmt = require('dateformat')
 
 const colors = {
   info: '36',
@@ -20,6 +19,12 @@ export type Log = LogFn & {
 
 type LogLevel = keyof typeof colors
 
+const formatDate = (date: Date) => {
+  return [date.getHours(), date.getMinutes(), date.getSeconds()]
+    .map((n) => n.toString().padStart(2, '0'))
+    .join(':')
+}
+
 /**
  * Logs a message to the console. The level is displayed in ANSI colors,
  * either bright red in case of an error or green otherwise.
@@ -27,7 +32,7 @@ type LogLevel = keyof typeof colors
 export const makeLog = function (cfg: Config) {
   function log(msg: string, level: LogLevel) {
     if (cfg.quiet && level === 'info') return
-    if (cfg.timestamp) msg = color(fmt(cfg.timestamp), '30;1') + ' ' + msg
+    if (cfg.timestamp) msg = color(formatDate(new Date()), '30;1') + ' ' + msg
     const c = colors[level.toLowerCase() as LogLevel] || '32'
     console.log('[' + color(level.toUpperCase(), c) + '] ' + msg)
   }
@@ -43,7 +48,7 @@ export const makeLog = function (cfg: Config) {
     if (!cfg.debug) return
     log(util.format.apply(util, arguments), 'debug')
   }
-  log.info = function () {    
+  log.info = function () {
     log(util.format.apply(util, arguments), 'info')
   }
 
