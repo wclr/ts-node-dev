@@ -27,6 +27,16 @@ export type CompileParams = {
   compiledPath: string
 }
 
+const parse = (value: string | undefined): object | undefined => {
+  return typeof value === 'string' ? JSON.parse(value) : undefined
+}
+
+function split(value: string | undefined) {
+  return typeof value === 'string'
+    ? value.split(/ *, */g).filter((v) => v !== '')
+    : undefined
+}
+
 export const makeCompiler = (
   options: Options,
   {
@@ -185,30 +195,28 @@ export const makeCompiler = (
       ? path.resolve(cwd, options._[0])
       : undefined
 
-    const DEFAULTS = tsNode.DEFAULTS
-
     tsNode.register({
       // --dir does not work (it gives a boolean only) so we only check for script-mode
       dir: getCwd(options['dir'], options['script-mode'], scriptPath),
-      scope: options['scope'] || DEFAULTS.scope,
-      emit: options['emit'] || DEFAULTS.emit,
-      files: options['files'] || DEFAULTS.files,
-      pretty: options['pretty'] || DEFAULTS.pretty,
-      transpileOnly: options['transpile-only'] || DEFAULTS.transpileOnly,
-      ignore: options['ignore']
-        ? tsNode.split(options['ignore'])
-        : DEFAULTS.ignore,
-      preferTsExts: options['prefer-ts-exts'] || DEFAULTS.preferTsExts,
-      logError: options['log-error'] || DEFAULTS.logError,
+      scope: options['scope'],
+      scopeDir: options['scopeDir'],
+      emit: options['emit'],
+      files: options['files'],
+      pretty: options['pretty'],
+      transpileOnly: options['transpile-only'],
+      ignore: options['ignore'] ? split(options['ignore']) : undefined,
+      preferTsExts: options['prefer-ts-exts'],
+      logError: options['log-error'],
       project: options['project'],
       skipProject: options['skip-project'],
+      transpiler: options['transpiler'],
       skipIgnore: options['skip-ignore'],
-      compiler: options['compiler'] || DEFAULTS.compiler,
-      compilerHost: options['compiler-host'] || DEFAULTS.compilerHost,
+      compiler: options['compiler'],
+      compilerHost: options['compiler-host'],
       ignoreDiagnostics: options['ignore-diagnostics']
-        ? tsNode.split(options['ignore-diagnostics'])
-        : DEFAULTS.ignoreDiagnostics,
-      compilerOptions: tsNode.parse(options['compiler-options']),
+        ? split(options['ignore-diagnostics'])
+        : undefined,
+      compilerOptions: parse(options['compiler-options']),
     })
   }
 
@@ -237,13 +245,13 @@ export const makeCompiler = (
       const fileName = params.compile
       const code = fs.readFileSync(fileName, 'utf-8')
       const compiledPath = params.compiledPath
-      
+
       // Prevent occasional duplicate compilation requests
       if (compiledPathsHash[compiledPath]) {
         return
-      }      
+      }
       compiledPathsHash[compiledPath] = true
-      
+
       function writeCompiled(code: string, fileName?: string) {
         fs.writeFile(compiledPath, code, (err) => {
           err && log.error(err)
@@ -277,7 +285,11 @@ export const makeCompiler = (
       } catch (e) {
         console.error('Compilation error in', fileName)
         const errorCode =
-          'throw ' + 'new Error(' + JSON.stringify(e.message) + ')' + ';'
+          'throw ' +
+          'new Error(' +
+          JSON.stringify((e as Error).message) +
+          ')' +
+          ';'
         writeCompiled(errorCode)
 
         // reinitialize ts-node compilation to clean up state after error
