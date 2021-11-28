@@ -52,6 +52,7 @@ Look up flags and options can be used [in ts-node's docs](https://github.com/Typ
 * `--rs` - Allow to restart with "rs" line entered in stdio, disabled by default.
 * `--notify` - to display desktop-notifications (Notifications are only displayed if `node-notifier` is installed).
 * `--cache-directory` - tmp dir which is used to keep the compiled sources (by default os tmp directory is used)
+* `--file-change-hook` - Bind a file watch hook.
 
 If you need to detect that you are running with `ts-node-dev`, check if `process.env.TS_NODE_DEV` is set.
 

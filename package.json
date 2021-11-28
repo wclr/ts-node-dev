@@ -44,6 +44,7 @@
   "dependencies": {
     "chokidar": "^3.5.1",
     "dynamic-dedupe": "^0.3.0",
+    "esm": "^3.2.25",
     "minimist": "^1.2.5",
     "mkdirp": "^1.0.4",
     "resolve": "^1.0.0",
@@ -70,7 +71,6 @@
     "chalk": "^4.1.0",
     "coffee-script": "^1.8.0",
     "eslint": "^7.7.0",
-    "esm": "^3.2.22",
     "fs-extra": "^9.0.1",
     "mocha": "^8.1.1",
     "np": "^6.5.0",

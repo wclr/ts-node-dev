@@ -1,6 +1,8 @@
 import { fork, ChildProcess } from 'child_process'
 import chokidar from 'chokidar'
 import fs from 'fs'
+import path from 'path'
+import vm from 'vm'
 import readline from 'readline'
 
 const kill = require('tree-kill')
@@ -38,9 +40,9 @@ export const runDev = (
   // The child_process
   let child:
     | (ChildProcess & {
-        stopping?: boolean
-        respawn?: boolean
-      })
+      stopping?: boolean
+      respawn?: boolean
+    })
     | undefined
 
   const wrapper = resolveMain(__dirname + '/wrap.js')
@@ -90,12 +92,12 @@ export const runDev = (
 
   log.info(
     'ts-node-dev ver. ' +
-      version +
-      ' (using ts-node ver. ' +
-      tsNodeVersion +
-      ', typescript ver. ' +
-      tsVersion +
-      ')'
+    version +
+    ' (using ts-node ver. ' +
+    tsNodeVersion +
+    ', typescript ver. ' +
+    tsVersion +
+    ')'
   )
 
   /**
@@ -240,6 +242,26 @@ export const runDev = (
     } else {
       notify('Restarting', file + ' has been modified')
     }
+
+    if (opts['file-change-hook']) {
+      try {
+        const scriptPath = path.resolve(process.cwd(), opts['file-change-hook'])
+        const code = `require("${scriptPath}").default("${file}");`
+        const result = vm.runInNewContext(code, {
+          require: require("esm")(module),
+          module,
+          console,
+          process
+        });
+        if (!result) {
+          notify('FileChangeHook', 'Hook exit code: 0.')
+        }
+      } catch (err) {
+        notify('FileChangeHook', err)
+        console.log(err)
+      }
+    }
+
     compiler.compileChanged(file)
     if (starting) {
       log.debug('Already starting')
