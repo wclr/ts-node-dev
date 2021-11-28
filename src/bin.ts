@@ -30,6 +30,8 @@ const tsNodeFlags = {
     'ignore',
     'ignore-diagnostics',
     'compiler-options',
+    'scopeDir',
+    'transpiler'
   ],
 }
 
@@ -58,6 +60,8 @@ type TSNodeOptions = {
   'transpile-only': boolean
   pretty: boolean
   scope: boolean
+  scopeDir: string,
+  transpiler: string
   'log-error': boolean
   'skip-project': boolean
   'skip-ignore': boolean

@@ -1,6 +1,6 @@
 {
   "name": "ts-node-dev",
-  "version": "1.1.8",
+  "version": "2.0.0-0",
   "description": "Compiles your TS app and restarts when files are modified.",
   "keywords": [
     "restart",
@@ -51,7 +51,7 @@
     "rimraf": "^2.6.1",
     "source-map-support": "^0.5.12",
     "tree-kill": "^1.2.2",
-    "ts-node": "^9.0.0",
+    "ts-node": "^10.4.0",
     "tsconfig": "^7.0.0"
   },
   "devDependencies": {
