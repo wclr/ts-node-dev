@@ -115,6 +115,7 @@ type DevOptions = {
   clear: boolean
   cls: boolean
   'ignore-watch': string
+  debounce: string
   'all-deps': boolean
   'deps-level': string
   'compile-timeout': string

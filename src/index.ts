@@ -228,7 +228,17 @@ export const runDev = (
     }
   }
 
+  let debounceTimeout: ReturnType<typeof setTimeout>
+  const defaultDebounce: string = (opts.debounce === '') ? '1000' : opts.debounce
+  const debounceTime: number = parseInt(defaultDebounce, 10) || 0
   function restart(file: string, isManualRestart?: boolean) {
+    clearTimeout(debounceTimeout)
+    debounceTimeout = setTimeout(() => {
+      restartAfterDebounce(file, isManualRestart)
+    }, debounceTime)
+  }
+
+  function restartAfterDebounce(file: string, isManualRestart?: boolean) {
     if (file === compiler.tsConfigPath) {
       notify('Reinitializing TS compilation', '')
       compiler.init()
