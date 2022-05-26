@@ -15,6 +15,7 @@ const tsNodeFlags = {
     'files',
     'pretty',
     'transpile-only',
+    'swc',
     'prefer-ts-exts',
     'prefer-ts',
     'log-error',
@@ -37,6 +38,7 @@ const tsNodeFlags = {
 
 const tsNodeAlias = {
   'transpile-only': 'T',
+  'swc': 'W',
   'compiler-host': 'H',
   ignore: 'I',
   'ignore-diagnostics': 'D',
@@ -58,6 +60,7 @@ type TSNodeOptions = {
   emit: boolean
   files: boolean
   'transpile-only': boolean
+  swc: boolean
   pretty: boolean
   scope: boolean
   scopeDir: string,
