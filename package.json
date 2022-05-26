@@ -44,7 +44,7 @@
   "dependencies": {
     "chokidar": "^3.5.1",
     "dynamic-dedupe": "^0.3.0",
-    "minimist": "^1.2.5",
+    "minimist": "^1.2.6",
     "mkdirp": "^1.0.4",
     "resolve": "^1.0.0",
     "rimraf": "^2.6.1",
