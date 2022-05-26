@@ -92,7 +92,8 @@
     }
   },
   "np": {
-    "yarn": false
+    "yarn": false,
+    "cleanup": false
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
