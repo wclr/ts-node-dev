@@ -242,8 +242,6 @@ export const makeCompiler = (
       }
     },
     compile: function (params: CompileParams) {
-      const fileName = params.compile
-      const code = fs.readFileSync(fileName, 'utf-8')
       const compiledPath = params.compiledPath
 
       // Prevent occasional duplicate compilation requests
@@ -263,7 +261,10 @@ export const makeCompiler = (
       if (fs.existsSync(compiledPath)) {
         return
       }
+
       const starTime = new Date().getTime()
+
+      const fileName = params.compile
       const m: any = {
         _compile: writeCompiled,
       }

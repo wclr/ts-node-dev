@@ -81,6 +81,10 @@ If you have an issue, please create one. But, before:
 - try to run it with `--debug` flag and see the output
 - try to make create repro example
 
+## Building
+
+Run `tsc --build tsconfig.build.json` to transpile this project.
+
 ## Versioning
 
 Currently versioning is not stable and it is still treated as pre-release. You might expect some options API changes. If you want to avoid unexpected problems it is recommended to fixate the installed version and update only in case of issues, you may consult [CHANGELOG](CHANGELOG.md) for updates.
