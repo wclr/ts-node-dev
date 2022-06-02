@@ -35,10 +35,19 @@ if (cfg.fork) {
   // too. We also need to relay messages about required files to the parent.
   const newFork = function (
     modulePath: string,
-    args: string[],
-    options: ForkOptions
-  ) {    
-    const child = oldFork(__filename, [modulePath].concat(args), options)
+    args?: string[] | ForkOptions,
+    options?: ForkOptions
+  ) {
+
+    let forkArgs: string[];
+    if (args instanceof Array) {
+      forkArgs = [modulePath].concat(args);
+    } else {
+      forkArgs = [modulePath];
+      options = args;
+    }
+
+    const child = oldFork(__filename, forkArgs, options)
     ipc.relay(child)
     return child
   }
