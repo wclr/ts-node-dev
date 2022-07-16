@@ -33,6 +33,7 @@
   "scripts": {
     "ts-node-dev": "node ./lib/bin",
     "build": "tsc -p tsconfig.build.json",
+    "prepare": "npm run build",
     "release": "np",
     "test": "yarn build && ts-node -T node_modules/mocha/bin/mocha test/*.test.ts",
     "test-dev": "yarn ts-node-dev -T --respawn --deps --watch lib node_modules/mocha/bin/mocha test/*.test.ts --output",

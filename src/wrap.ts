@@ -67,18 +67,22 @@ process.on('uncaughtException', function (err: any) {
     console.error((err && err.stack) || err)
   }
   
-  ipc.send({
-    error: isTsError ? '' : (err && err.name) || 'Error',
-    // lastRequired: lastRequired,
-    message: err ? err.message : '',
-    code: err && err.code,    
-    willTerminate: hasCustomHandler,
-  })
+  if (process.connected) {
+    ipc.send({
+      error: isTsError ? '' : (err && err.name) || 'Error',
+      // lastRequired: lastRequired,
+      message: err ? err.message : '',
+      code: err && err.code,    
+      willTerminate: hasCustomHandler,
+    })
+  }
 })
 
 // Hook into require() and notify the parent process about required files
 makeHook(cfg, module, function (file) {
-  ipc.send({ required: file })
+  if (process.connected) {
+    ipc.send({ required: file })
+  }
 })
 
 // Check if a module is registered for this extension
