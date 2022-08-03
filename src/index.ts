@@ -203,23 +203,28 @@ export const runDev = (
     })
     compiler.writeReadyFile()
   }
-  const killChild = (depth = 0) => {
+  const killChild = (signal: 'SIGINT' | 'SIGTERM' = 'SIGTERM') => {
     if (!child) return
-    depth += 1;
-    const signal = depth > 3 ? 'SIGINT' : 'SIGTERM';
     log.debug(`Sending ${signal} kill to child pid`, child.pid)
 
-    const cancelRetry = function () {
-      child.off('exit', cancelRetry);
-      if (retryTimeout) {
-        clearTimeout(retryTimeout);
+    const cancelForceKill = function (args: any) {
+      if (child) {
+        child.off('exit', cancelForceKill);
+        if (forceKillChildTimeout) {
+          clearTimeout(forceKillChildTimeout);
+        }
       }
     };
-    child.on('exit', cancelRetry);
-    const retryTimeout = setTimeout(function () {
-      child.off('exit', cancelRetry);
-      killChild(depth)
-    }, 1000);
+
+    child.on('exit', cancelForceKill);
+
+    const forceKillChildTimeout = setTimeout(function () {
+      if (child) {
+        log.info('Failed to shutdown gracefully. Forcing a shutdown...');
+        child.off('exit', cancelForceKill);
+        killChild('SIGINT')
+      }
+    }, parseInt(opts['shutdown-timeout']));
 
     if (opts['tree-kill']) {
       log.debug('Using tree-kill')
