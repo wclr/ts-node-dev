@@ -203,14 +203,29 @@ export const runDev = (
     })
     compiler.writeReadyFile()
   }
-  const killChild = () => {
+  const killChild = (depth = 0) => {
     if (!child) return
-    log.debug('Sending SIGTERM kill to child pid', child.pid)
+    depth += 1;
+    const signal = depth > 3 ? 'SIGINT' : 'SIGTERM';
+    log.debug(`Sending ${signal} kill to child pid`, child.pid)
+
+    const cancelRetry = function () {
+      child.off('exit', cancelRetry);
+      if (retryTimeout) {
+        clearTimeout(retryTimeout);
+      }
+    };
+    child.on('exit', cancelRetry);
+    const retryTimeout = setTimeout(function () {
+      child.off('exit', cancelRetry);
+      killChild(depth)
+    }, 1000);
+
     if (opts['tree-kill']) {
       log.debug('Using tree-kill')
       kill(child.pid)
     } else {
-      child.kill('SIGTERM')
+      child.kill(signal)
     }
   }
   function stop(willTerminate?: boolean) {
