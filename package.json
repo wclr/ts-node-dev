@@ -83,6 +83,7 @@
     "typescript": "^3.9.5"
   },
   "peerDependencies": {
+    "@types/node": "*",
     "node-notifier": "*",
     "typescript": "*"
   },
